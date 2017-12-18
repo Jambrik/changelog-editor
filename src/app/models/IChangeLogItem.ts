@@ -4,7 +4,7 @@ export interface IChangeLogItem {
     date: Date;    
     ticketNumber?: string;
     type: "bugfix" | "feature";
-    decription: IDescription;    
+    descriptions: IDescription[];
     category?: string;
     subCategory?: string;
     keywords: string[];

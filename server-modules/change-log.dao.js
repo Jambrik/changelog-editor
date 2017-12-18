@@ -24,14 +24,12 @@ exports.changeLogVersions = function (param, res) {
             if(program){
                 let path = program.path;
                 console.log("path", path);
-                fs.readdir(path, function(err, items) {
-                    console.log(items);
+                fs.readdir(path, function(err, items) {                    
                     if (err) 
                         throw err;
                     let versions = [];
                     for (var i=0; i<items.length; i++) {
-                        versions.push(items[i].substring(items[i].length-13, items[i].length-5));
-                        console.log(items[i]);
+                        versions.push(items[i].substring(items[i].length-13, items[i].length-5));                        
                     }
             
                     res.json(versions);

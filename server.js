@@ -9,6 +9,7 @@ var changeLogDao = require('./server-modules/change-log.dao');
 var configDao = require('./server-modules/config.dao');
 var app = express();
 var morgan = require('morgan')
+var converterDao = require('./server-modules/converter.dao');
 
 router.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -47,6 +48,16 @@ router.route('/config')
   .get(function (req, res) {
     let config = configDao.mainConfigLoad();    
     res.json(config);  
+
+  });
+
+
+  router.route('/convert-all')  
+  .get(function (req, res) {
+    converterDao.convertAll();
+    res.json({
+      done: true
+    });  
 
   });
 
