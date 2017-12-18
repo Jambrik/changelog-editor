@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+/change-log-editor-common.config.json
+/change-log-editor-personal.config.json
