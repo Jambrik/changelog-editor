@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule, ButtonModule, DataTableModule, DialogModule, DropdownModule }  from 'primeng/primeng';
-import { ChanegeListComponent } from './chanege-list/chanege-list.component';
+import { ChangeListComponent } from './change-list/change-list.component';
 import { AppComponent } from './app.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
 import { LeftNavbarComponent } from './left-navbar/left-navbar.component';
@@ -20,7 +20,7 @@ import { ChangeLogService } from './services/change-log.service';
 @NgModule({
   declarations: [
     AppComponent,
-    ChanegeListComponent,
+    ChangeListComponent,
     TopNavbarComponent,
     LeftNavbarComponent,
     ProgramListComponent,
@@ -37,7 +37,9 @@ import { ChangeLogService } from './services/change-log.service';
     ButtonModule,
     DropdownModule,
     RouterModule.forRoot(ROUTES, {
-      useHash: true})
+      useHash: true,
+      onSameUrlNavigation: "reload",
+    })
   ],
   providers: [ConfigService, NavbarService, ChangeLogService],
   bootstrap: [AppComponent]

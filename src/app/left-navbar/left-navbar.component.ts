@@ -14,9 +14,16 @@ export class LeftNavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  public get actualProgram(): string{
+  public get actualProgramName(): string{
     if(this.navbarService.actualProgram)
       return this.navbarService.actualProgram.name
+    else  
+      return undefined;
+  }
+
+  public get actualProgramId(): number{
+    if(this.navbarService.actualProgram)
+      return this.navbarService.actualProgram.id
     else  
       return undefined;
   }
@@ -24,4 +31,6 @@ export class LeftNavbarComponent implements OnInit {
   public get versions(): string[] {
     return this.navbarService.actualVersions;
   }
+
+
 }
