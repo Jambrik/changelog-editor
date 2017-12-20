@@ -9,9 +9,10 @@ exports.convertFromOldFormat = function (oldChangeLogList){
 
     
     if(oldChangeLogList && oldChangeLogList.changes){
+        var i = 1;
         oldChangeLogList.changes.forEach(change => {                    
             newChangeLogList.changes.push(
-                {
+                {   id: i,
                     date: change.date,
                     ticketNumber: change.lgw,
                     type: change.type,
@@ -26,6 +27,7 @@ exports.convertFromOldFormat = function (oldChangeLogList){
                     keywords: []
                 }
             );
+            i++;
         });
     }       
     return newChangeLogList;
