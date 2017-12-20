@@ -14,4 +14,8 @@ export class ChangeLogService {
     return this.http.get<string[]>(environment.backEndUrl +"api/versions/" + programId);
   }  
 
+
+  public getChangeLogs(programId: number, version: string): Observable<string[]> {
+    return this.http.get<string[]>(environment.backEndUrl +"api/change-log-load/" + programId + "/" + version);
+  }  
 }
