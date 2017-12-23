@@ -17,13 +17,7 @@ export class NavbarService {
   }
 
   set actualProgram(value: IProgram) {    
-    this._actualProgram = value;
-    this.changeLogService.getVersionsForProgramId(value.id)
-    .subscribe((versions) => {
-      versions.sort(StringHelpers.sortDesc);
-      this.actualVersions = versions;
-    })
-    
+    this._actualProgram = value;    
   }
 
   get actualVersions(): string[] {

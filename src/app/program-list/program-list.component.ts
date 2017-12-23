@@ -26,10 +26,5 @@ export class ProgramListComponent implements OnInit {
     )
   }
 
-  public openProgram(program: IProgram) {
-    this.navbarService.actualProgram = program;
-
-  }
-
 
 }

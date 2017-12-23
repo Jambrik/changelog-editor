@@ -1,9 +1,8 @@
-
 <h1>
     Verzió: {{version}}
 </h1>
-
-<div *ngFor="let change of changeList.changes">
+<div *ngIf="changeList">
+    <div *ngFor="let change of changeList.changes">
         <app-change-log-item [item]="change"></app-change-log-item>
+    </div>
 </div>
-
