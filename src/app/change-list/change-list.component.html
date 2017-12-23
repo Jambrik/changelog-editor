@@ -1,5 +1,9 @@
 
+<h1>
+    Verzió: {{version}}
+</h1>
 
-Verzió: {{version}} <br/>
-ProgramId: {{programId}}
+<div *ngFor="let change of changeList.changes">
+        <app-change-log-item [item]="change"></app-change-log-item>
+</div>
 

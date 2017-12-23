@@ -2,6 +2,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { IChaneLogList } from '../models/IChangeLogList';
 
 @Injectable()
 export class ChangeLogService {
@@ -15,7 +16,7 @@ export class ChangeLogService {
   }  
 
 
-  public getChangeLogs(programId: number, version: string): Observable<string[]> {
-    return this.http.get<string[]>(environment.backEndUrl +"api/change-log-load/" + programId + "/" + version);
+  public getChangeLogs(programId: number, version: string): Observable<IChaneLogList> {
+    return this.http.get<IChaneLogList>(environment.backEndUrl +"api/change-log-load/" + programId + "/" + version);
   }  
 }

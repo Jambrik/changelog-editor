@@ -15,6 +15,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { ConfigService } from './services/config.service';
 import { NavbarService } from './services/navbar.service';
 import { ChangeLogService } from './services/change-log.service';
+import { ChangeLogItemComponent } from './change-log-item/change-log-item.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ChangeLogService } from './services/change-log.service';
     TopNavbarComponent,
     LeftNavbarComponent,
     ProgramListComponent,
-    ConfigEditorComponent
+    ConfigEditorComponent,
+    ChangeLogItemComponent
   ],
   imports: [
     BrowserModule,

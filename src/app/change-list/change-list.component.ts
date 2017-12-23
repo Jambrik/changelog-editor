@@ -1,6 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChangeLogService } from '../services/change-log.service';
+import { IChaneLogList } from '../models/IChangeLogList';
 
 interface City {
   name: string,
@@ -16,7 +17,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   @Input() filterText: string;
   public programId: number;
   public version: string;
-
+  public changeList: IChaneLogList;
 
 
   constructor(
@@ -30,6 +31,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
       let version  = params['version'];
       this.programId = parseInt(programId);
       this.version = version;    
+      this.changeLogService.getChangeLogs(programId, version)
+      .subscribe(data => {
+        console.log("change list loaded", data);
+          this.changeList = data;
+      })
     });
   }
 

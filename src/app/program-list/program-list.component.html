@@ -11,7 +11,7 @@
         <h4 class="card-title">{{program.name}}</h4>
         <p class="card-text">
           <b>Fájl elérési útvonal:</b> {{program.path}}</p>
-        <a href="#" class="btn btn-primary" (click)="openProgram(program)">Megnyit</a>
+        <a href="#" class="btn btn-primary" href="/" [routerLink]="['/change-list', program.id, '01.10.00']">Megnyit</a>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@
         <p class="card-text">
           Új program hozzáadása...
         </p>
-        <a href="#" class="btn btn-primary" >Megnyit</a>
+        <a href="#" class="btn btn-primary" >Létrehoz</a>
       </div>
     </div>
   </div>

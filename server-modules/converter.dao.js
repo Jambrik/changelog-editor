@@ -18,11 +18,11 @@ exports.convertFromOldFormat = function (oldChangeLogList){
                     type: change.type,
                     descriptions: [{
                         lang: "hu",
-                        description: change.hu
+                        text: change.hu
                     },
                     {
                         lang: "en",
-                        description: change.en
+                        text: change.en
                     }],
                     keywords: []
                 }
