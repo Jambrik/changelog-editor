@@ -41,7 +41,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
       let programIdInt = parseInt(programId);
       if (this.programId != programIdInt) {
         this.configService.getConfig()
-          .subscribe((config) => {            
+          .subscribe((config) => {
             this.programId = programIdInt;
             this.program = ConfigHelper.getProgramById(config.programs, this.programId);
             this.navbarService.actualProgram = this.program;
@@ -76,9 +76,17 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   private getChanges() {
     this.changeLogService.getChangeLogs(this.programId, this.version)
-      .subscribe(data => {
-        console.log("change list loaded", data);
-        this.changeList = data;
+      .subscribe(chaneLogList => {
+        console.log("change list loaded", chaneLogList);
+        chaneLogList.changes.sort((a, b) => {
+          if (a.date > b.date)
+            return -1;
+          else if (a.date < b.date)
+            return 1;
+          else
+            return 0;
+        });
+        this.changeList = chaneLogList;
       });
 
   }

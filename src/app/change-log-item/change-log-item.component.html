@@ -14,29 +14,88 @@
     </div>
   </div>
 
-  <div class="card-block">  
-    <div class="card-text" *ngFor="let description of changeLogItem.descriptions">
-      <div class="cardcard-primary p-1">
-        <blockquote class="card-blockquote">
-          <div>
-            <div class="row bortder border border-bottom-0 border-right-0 border-info">
-              <div class="col-1 border border-info bg-info text-light rounded">
-                  {{description.lang}}
+  <div class="card-block">
+    <div class="row">
+      <div class="col-lg-9 col-sm-6">
+        <div class="card-text" *ngFor="let description of changeLogItem.descriptions">
+          <div class="cardcard-primary p-1">
+            <blockquote class="card-blockquote">
+              <div>
+                <div class="row bortder border border-bottom-0 border-right-0 border-info">
+                  <div class="col-lg-1 col-md-3 col-sm-6 border border-info bg-info text-light rounded">
+                    {{description.lang}}
+                  </div>
+                  <div class="col-lg-11 col-md-9 col-sm-6">
+                    {{description.text}}
+                  </div>
+                </div>
               </div>
-              <div class="col-11">
-                  {{description.text}}
-              </div>
-            </div>            
-          </div>          
-        </blockquote>
+            </blockquote>
+          </div>
+        </div>
       </div>
-
+      <div class="col-lg-3 col-sm-6 border border-primary bg bg-light">
+        <dl class="row">
+          <dt class="col-lg-6">
+            Kategória
+          </dt>
+          <dd class="col-lg-6">
+              {{(changeLogItem.category) ? changeLogItem.category: 'N.A.'}}
+          </dd>
+          <dt class="col-lg-6">
+            Alkategória
+          </dt>
+          <dd class="col-lg-6">
+            {{(changeLogItem.subCategory) ? changeLogItem.subCategory: 'N.A.'}}
+          </dd>
+          <dt class="col-lg-6">
+            Kulcsszavak
+          </dt>
+          <dd class="col-lg-6">
+            <div *ngIf="changeLogItem.keywords && changeLogItem.keywords.length > 0">
+              <div *ngFor="let keyword of changeLogItem.keywords">
+                {{keyword}}
+              </div>
+            </div>
+            <div *ngIf="!changeLogItem.keywords || changeLogItem.keywords.length == 0">
+              N.A.
+            </div>
+          </dd>
+          <dt class="col-lg-6">
+            Létrehozó
+          </dt>
+          <dd class="col-lg-6">
+            {{(changeLogItem.cru) ? changeLogItem.cru: 'N.A.'}}
+          </dd>
+          <dt class="col-lg-6">
+            Létrehozva
+          </dt>
+          <dd class="col-lg-6">
+            {{(changeLogItem.crd) ? changeLogItem.crd: 'N.A.'}}
+          </dd>
+          <dt class="col-lg-6">
+            Utolsó módosító
+          </dt>
+          <dd class="col-lg-6">
+            {{(changeLogItem.lmu) ? changeLogItem.lmu: 'N.A.'}}
+          </dd>
+          <dt class="col-lg-6">
+            Utoljára módosítva
+          </dt>
+          <dd class="col-lg-6">
+            {{(changeLogItem.lmd) ? changeLogItem.lmd: 'N.A.'}}
+          </dd>
+        </dl>
+      </div>
     </div>
 
-    
+
+
   </div>
   <div class="card-footer text-muted">
-    {{changeLogItem.date}}    
-    <a href="#" class="btn btn-primary pull-right"><span class="fa fa-edit"></span></a>
-  </div>  
+    {{changeLogItem.date}}
+    <a href="#" class="btn btn-primary pull-right">
+      <span class="fa fa-edit"></span>
+    </a>
+  </div>
 </div>
