@@ -3,10 +3,10 @@
   <div class="card-header">
     <div class="row">
       <div class="col-6">
-        Jegyszám: {{changeLogItem.ticketNumber}}
+        <b>Jegyszám:</b> {{changeLogItem.ticketNumber}}
       </div>
       <div class="col-6">
-        <div class="pull-right" [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
+        <div class="pull-right text-uppercase" [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
 
           {{changeLogItem.type}}
         </div>
@@ -37,6 +37,6 @@
   </div>
   <div class="card-footer text-muted">
     {{changeLogItem.date}}    
-    <a href="#" class="btn btn-primary pull-right">Módosítás</a>
+    <a href="#" class="btn btn-primary pull-right"><span class="fa fa-edit"></span></a>
   </div>  
 </div>
