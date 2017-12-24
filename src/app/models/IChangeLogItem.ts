@@ -9,4 +9,8 @@ export interface IChangeLogItem {
     category?: string;
     subCategory?: string;
     keywords: string[];
+    cru?: string;
+    crd?: Date;
+    lmu?: string;
+    lmd?: Date;
 }
