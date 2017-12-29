@@ -8,6 +8,8 @@ import { StringHelpers } from '../helpers/string-helpers';
 export class NavbarService {
   private _actualProgram: IProgram;
   private _actualVersions: string[];
+  private _actualVersion: string;
+
   constructor(private changeLogService: ChangeLogService) { 
 
   }
@@ -26,6 +28,14 @@ export class NavbarService {
 
   set actualVersions(value: string[]){
     this._actualVersions = value;
+  }
+
+  get actualVersion(): string {
+    return this._actualVersion;
+  } 
+
+  set actualVersion(value: string){
+    this._actualVersion = value;
   }
 
 }

@@ -1,8 +1,14 @@
 <h1>
     Verzió: {{version}}
 </h1>
+<div class="clearfix">
+    <a href="#" class="btn btn-primary pull-right">
+        <span class="fa fa-plus">Új bejegyzés</span>
+    </a>
+</div>
+
 <div *ngIf="changeList">
     <div *ngFor="let change of changeList.changes">
-        <app-change-log-item [item]="change"></app-change-log-item>
+        <app-change-log-item [item]="change" [action]="action" [modId]="id"></app-change-log-item>        
     </div>
 </div>

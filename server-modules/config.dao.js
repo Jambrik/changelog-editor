@@ -1,5 +1,6 @@
 var fs = require('fs-extra');
 var configHelper = require('./config-helpers');
+var changeLogDao = require('./change-log.dao');
 
 exports.mainConfigLoad = function() {
     console.log("Config reading");
@@ -8,5 +9,10 @@ exports.mainConfigLoad = function() {
     //Reading the personal part: (program path)
     let configPersonal = fs.readJsonSync('change-log-editor-personal.config.json');        
     configHelper.configFilesMerge(configCommon, configPersonal);
+    //GetVersionInfo:
+    configCommon.programs.forEach(program => {
+        let versions = changeLogDao.getVersionsByProgram(program);
+        program.versions = versions;
+    });
     return configCommon;
 }

@@ -23,7 +23,9 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
   public program: IProgram;
   public version: string;
-  public changeList: IChaneLogList;
+  public changeList: IChaneLogList;  
+  public action: "read" | "mod" | "new";
+  public id: number;
 
 
   constructor(
@@ -33,12 +35,19 @@ export class ChangeListComponent implements OnInit, OnChanges {
     private configService: ConfigService) { }
 
   ngOnInit() {
+    console.log("change-list init");
     //Because we load always the same component, the init run only once. So we subscribe the router params changes:
     this.route.params.subscribe(params => {
       let programId = params['program-id'];
       let version = params['version'];
-      console.log("programId, version", programId, version);
+      let id = params["id"];
+      this.action = params["action"];
+      if(!this.action){
+        this.action = "read";
+      }
+      console.log("programId, version, action, id", programId, version, this.action, id);
       let programIdInt = parseInt(programId);
+      this.id = parseInt(id);
       if (this.programId != programIdInt) {
         this.configService.getConfig()
           .subscribe((config) => {
@@ -53,16 +62,19 @@ export class ChangeListComponent implements OnInit, OnChanges {
                 versions.sort(StringHelpers.sortDesc);
                 this.navbarService.actualVersions = versions;
                 //If version is the latest we have to find that
-                if ((version == "latest") && (versions.length > 0)) {
+                if ((version=="last") && (versions.length > 0)) {
                   this.version = versions[0];
+                } else {
+                  this.version = version;
                 }
                 this.getChanges();
               });
           });
-      } else {
+      } else if(version != this.version) {
         this.version = version;
         this.getChanges();
       }
+      this.navbarService.actualVersion = version;
 
     });
   }

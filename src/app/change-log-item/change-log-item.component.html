@@ -1,14 +1,21 @@
-<div class="card">
+<div class="card" [class.border-success]="isEditing()">
 
   <div class="card-header">
     <div class="row">
       <div class="col-6">
-        <b>Jegyszám:</b> {{changeLogItem.ticketNumber}}
+        <b>Jegyszám:</b>
+        <span *ngIf="!isEditing()">
+          {{changeLogItem.ticketNumber}}
+        </span>
+        <input *ngIf="isEditing()" type="text" name="" id="" [(ngModel)]="changeLogItem.ticketNumber">
       </div>
       <div class="col-6">
-        <div class="pull-right text-uppercase" [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
+        <div class="pull-right" [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
+          <span class="text-uppercase" *ngIf="!isEditing()">
+            {{changeLogItem.type}}
+          </span>
 
-          {{changeLogItem.type}}
+          <p-dropdown [options]="types" [(ngModel)]="changeLogItem.type" *ngIf="isEditing()"></p-dropdown>          
         </div>
       </div>
     </div>
@@ -26,7 +33,11 @@
                     {{description.lang}}
                   </div>
                   <div class="col-lg-11 col-md-9 col-sm-6">
-                    {{description.text}}
+                    <span *ngIf="!isEditing()" style="width: 100%; height: 120px">
+                        {{description.text}}
+                    </span>       
+                    <textarea *ngIf="isEditing()" name="" id="" cols="30" rows="10" style="width: 100%; height: 100px"
+                    [(ngModel)]="description.text"></textarea>             
                   </div>
                 </div>
               </div>
@@ -40,13 +51,19 @@
             Kategória
           </dt>
           <dd class="col-lg-6">
+            <span *ngIf="!isEditing()">
               {{(changeLogItem.category) ? changeLogItem.category: 'N.A.'}}
+            </span>
+            <input *ngIf="isEditing()" type="text" name="" id="" [(ngModel)]="changeLogItem.category" style="width: 95%">
           </dd>
           <dt class="col-lg-6">
             Alkategória
           </dt>
           <dd class="col-lg-6">
-            {{(changeLogItem.subCategory) ? changeLogItem.subCategory: 'N.A.'}}
+              <span *ngIf="!isEditing()">
+                {{(changeLogItem.subCategory) ? changeLogItem.subCategory: 'N.A.'}}
+              </span>
+              <input *ngIf="isEditing()" type="text" name="" id="" [(ngModel)]="changeLogItem.subCategory" style="width: 95%">
           </dd>
           <dt class="col-lg-6">
             Kulcsszavak
@@ -94,8 +111,17 @@
   </div>
   <div class="card-footer text-muted">
     {{changeLogItem.date}}
-    <a href="#" class="btn btn-primary pull-right">
+    <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', program.id, version, 'mod', changeLogItem.id]"
+      *ngIf="canBeModified()">
       <span class="fa fa-edit"></span>
+    </a>
+    <a href="/" class="btn btn-success pull-right" [routerLink]="['/change-list', program.id, version, 'read', 'none']"
+      *ngIf="isEditing()">
+      <span class="fa fa-save"></span>
+    </a>
+    <a href="/" class="btn btn-secondary pull-right" [routerLink]="['/change-list', program.id, version, 'read', 'none']"
+      *ngIf="isEditing()">
+      <span class="fa fa-close"></span>
     </a>
   </div>
 </div>

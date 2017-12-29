@@ -41,7 +41,7 @@ router.route('/versions/:program_id/')
       programId: req.params.program_id,
     }
     console.log("versions call program_id: " + req.params.program_id);
-    changeLogDao.changeLogVersions(param, res);
+    changeLogDao.changeLogVersions(param, res);    
   });
 
 router.route('/config')

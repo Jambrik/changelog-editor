@@ -6,8 +6,8 @@ import { ProgramListComponent } from './program-list/program-list.component';
 
 export const ROUTES: Routes = [
   { path: '',      component: ProgramListComponent },
-  { path: 'program-list',      component: ProgramListComponent },
-  { path: 'change-list/:program-id/:version',  component: ChangeListComponent },
+  { path: 'program-list',      component: ProgramListComponent },  
+  { path: 'change-list/:program-id/:version/:action/:id',  component: ChangeListComponent },  
   { path: 'config-editor',  component: ConfigEditorComponent},
   /*{ path: 'about', component: AboutComponent },
   { path: 'detail', loadChildren: './+detail#DetailModule'},
