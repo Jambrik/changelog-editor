@@ -1,11 +1,11 @@
-import { IDescription } from "./IDescription";
+import { I18n } from "./I18N";
 
 export interface IChangeLogItem {
     id: number,
     date: Date;    
     ticketNumber?: string;
     type: "bugfix" | "feature";
-    descriptions: IDescription[];
+    descriptions: I18n[];
     category?: string;
     subCategory?: string;
     keywords: string[];
