@@ -13,7 +13,7 @@ exports.convertFromOldFormat = function (oldChangeLogList){
         oldChangeLogList.changes.forEach(change => {                    
             newChangeLogList.changes.push(
                 {   id: i,
-                    date: change.date,
+                    date: new Date(change.date),
                     ticketNumber: change.lgw,
                     type: change.type,
                     descriptions: [{
