@@ -1,3 +1,4 @@
+import { I18n } from '../models/I18N';
 import { StringHelpers } from '../helpers/string-helpers';
 import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
@@ -7,6 +8,7 @@ import { NavbarService } from '../services/navbar.service';
 import { ConfigService } from '../services/config.service';
 import { IProgram } from '../models/IProgram';
 import { ConfigHelper } from '../helpers/config-helper';
+import { IChangeLogItem } from '../models/IChangeLogItem';
 
 interface City {
   name: string,
@@ -23,10 +25,10 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
   public program: IProgram;
   public version: string;
-  public changeList: IChaneLogList;  
+  public changeList: IChaneLogList;
   public action: "read" | "mod" | "new";
   public id: number;
-
+  public newChangeItem: IChangeLogItem;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,12 +44,20 @@ export class ChangeListComponent implements OnInit, OnChanges {
       let version = params['version'];
       let id = params["id"];
       this.action = params["action"];
-      if(!this.action){
+      if (!this.action) {
         this.action = "read";
-      }
+      };
+
       console.log("programId, version, action, id", programId, version, this.action, id);
       let programIdInt = parseInt(programId);
-      this.id = parseInt(id);
+      if (id == "null") {
+        this.id = null;
+      } else {
+        this.id = parseInt(id);
+      }
+
+      console.log("id", id);
+      console.log("this.id", this.id);
       if (this.programId != programIdInt) {
         this.configService.getConfig()
           .subscribe((config) => {
@@ -62,17 +72,27 @@ export class ChangeListComponent implements OnInit, OnChanges {
                 versions.sort(StringHelpers.sortDesc);
                 this.navbarService.actualVersions = versions;
                 //If version is the latest we have to find that
-                if ((version=="last") && (versions.length > 0)) {
+                if ((version == "last") && (versions.length > 0)) {
                   this.version = versions[0];
                 } else {
                   this.version = version;
                 }
                 this.getChanges();
+                if (this.action == "new") {
+                  this.newItemCreate();
+                }
               });
           });
-      } else if(version != this.version) {
+      } else if (version != this.version) {
         this.version = version;
         this.getChanges();
+        if (this.action == "new") {
+          this.newItemCreate();
+        }
+      } else {
+        if (this.action == "new") {
+          this.newItemCreate();
+        }
       }
       this.navbarService.actualVersion = version;
 
@@ -90,6 +110,10 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.changeLogService.getChangeLogs(this.programId, this.version)
       .subscribe(chaneLogList => {
         console.log("change list loaded", chaneLogList);
+        chaneLogList.changes.forEach(change => {
+          change.date = new Date(change.date);
+          
+        });
         chaneLogList.changes.sort((a, b) => {
           if (a.date > b.date)
             return -1;
@@ -104,6 +128,41 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
 
+  public isNewEditing(): boolean {
+    return (this.action == "new") && (this.newChangeItem != undefined);
+  }
+
+  public isReading(): boolean {
+    return (this.action == "read");
+  }
+
+  private getNewDescriptions(): I18n[] {
+    let resultList: I18n[] = [];
+    this.program.langs.forEach(lang => {
+      resultList.push({
+        lang: lang,
+        text: ""
+      })
+    });
+    return resultList;
+  }
+
+  private newItemCreate() {
+    this.newChangeItem = {
+      id: null,
+      type: "feature",
+      category: null,
+      subCategory: null,
+      ticketNumber: null,
+      date: new Date(),
+      keywords: [],
+      descriptions: this.getNewDescriptions(),
+      cru: null,
+      crd: null,
+      lmu: null,
+      lmd: null
+    };
+  }
 
 }
 

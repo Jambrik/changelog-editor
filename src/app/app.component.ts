@@ -9,6 +9,7 @@ import { Component, HostBinding, HostListener } from '@angular/core';
 })
 export class AppComponent {
   private isOpen:boolean = false;
+
   
       @HostBinding('class.open') get opened(){
         return this.isOpen;

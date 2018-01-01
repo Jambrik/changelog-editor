@@ -15,13 +15,14 @@
             {{changeLogItem.type}}
           </span>
 
-          <p-dropdown [options]="types" [(ngModel)]="changeLogItem.type" *ngIf="isEditing()"></p-dropdown>          
+          <p-dropdown [options]="types" [(ngModel)]="changeLogItem.type" *ngIf="isEditing()"></p-dropdown>
         </div>
       </div>
     </div>
   </div>
 
   <div class="card-block">
+    <p-messages [(value)]="msgs"></p-messages>
     <div class="row">
       <div class="col-lg-9 col-sm-6">
         <div class="card-text" *ngFor="let description of changeLogItem.descriptions">
@@ -33,11 +34,10 @@
                     {{description.lang}}
                   </div>
                   <div class="col-lg-11 col-md-9 col-sm-6">
-                    <span *ngIf="!isEditing()" style="width: 100%; height: 120px">
-                        {{description.text}}
-                    </span>       
-                    <textarea *ngIf="isEditing()" name="" id="" cols="30" rows="10" style="width: 100%; height: 100px"
-                    [(ngModel)]="description.text"></textarea>             
+
+                    <div *ngIf="!isEditing()" style="width: 100%; height: 100px" [innerHTML]="description.text | safeHtml"></div>
+
+                    <textarea *ngIf="isEditing()" name="" id="" cols="30" rows="10" style="width: 100%; height: 100px" [(ngModel)]="description.text"></textarea>
                   </div>
                 </div>
               </div>
@@ -54,29 +54,32 @@
             <span *ngIf="!isEditing()">
               {{(changeLogItem.category) ? changeLogItem.category: 'N.A.'}}
             </span>
-            <input *ngIf="isEditing()" type="text" name="" id="" [(ngModel)]="changeLogItem.category" style="width: 95%">
+            <input *ngIf="false" type="text" name="" id="" [(ngModel)]="changeLogItem.category" style="width: 95%">
+            <div *ngIf="isEditing()">Nem szerkeszthető</div>
           </dd>
           <dt class="col-lg-6">
             Alkategória
           </dt>
           <dd class="col-lg-6">
-              <span *ngIf="!isEditing()">
-                {{(changeLogItem.subCategory) ? changeLogItem.subCategory: 'N.A.'}}
-              </span>
-              <input *ngIf="isEditing()" type="text" name="" id="" [(ngModel)]="changeLogItem.subCategory" style="width: 95%">
+            <span *ngIf="!isEditing()">
+              {{(changeLogItem.subCategory) ? changeLogItem.subCategory: 'N.A.'}}
+            </span>
+            <input *ngIf="false" type="text" name="" id="" [(ngModel)]="changeLogItem.subCategory" style="width: 95%">
+            <div *ngIf="isEditing()">Nem szerkeszthető</div>
           </dd>
           <dt class="col-lg-6">
             Kulcsszavak
           </dt>
           <dd class="col-lg-6">
-            <div *ngIf="changeLogItem.keywords && changeLogItem.keywords.length > 0">
+            <div *ngIf="!isEditing() && changeLogItem.keywords && (changeLogItem.keywords.length > 0)">
               <div *ngFor="let keyword of changeLogItem.keywords">
                 {{keyword}}
               </div>
             </div>
-            <div *ngIf="!changeLogItem.keywords || changeLogItem.keywords.length == 0">
+            <div *ngIf="!isEditing() && (!changeLogItem.keywords || changeLogItem.keywords.length == 0)">
               N.A.
             </div>
+            <div *ngIf="isEditing()">Nem szerkeszthető</div>
           </dd>
           <dt class="col-lg-6">
             Létrehozó
@@ -105,23 +108,41 @@
         </dl>
       </div>
     </div>
-
-
-
   </div>
   <div class="card-footer text-muted">
-    {{changeLogItem.date}}
+    <span *ngIf="!isEditing()">
+      {{changeLogItem.date | date: 'yyyy.MM.dd.'}}
+    </span>
+    <p-calendar *ngIf="isEditing()" [(ngModel)]="changeLogItem.date" dateFormat="yy.mm.dd"></p-calendar>
+    <a href="/" class="btn btn-danger pull-right" (click)="deleteMessageShow($event)"
+      *ngIf="canBeModified()">
+      <span class="fa fa-trash"></span>
+    </a>
     <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', program.id, version, 'mod', changeLogItem.id]"
       *ngIf="canBeModified()">
       <span class="fa fa-edit"></span>
-    </a>
-    <a href="/" class="btn btn-success pull-right" [routerLink]="['/change-list', program.id, version, 'read', 'none']"
-      *ngIf="isEditing()">
+    </a>    
+    <a href="/" class="btn btn-success pull-right" (click)="save($event)" *ngIf="isEditing()">
       <span class="fa fa-save"></span>
     </a>
-    <a href="/" class="btn btn-secondary pull-right" [routerLink]="['/change-list', program.id, version, 'read', 'none']"
-      *ngIf="isEditing()">
+    <a href="/" class="btn btn-secondary pull-right" [routerLink]="['/change-list', program.id, version, 'read', 'none']" *ngIf="isEditing()">
       <span class="fa fa-close"></span>
     </a>
   </div>
 </div>
+
+<p-dialog [(visible)]="deleteMessageShown" modal="true">
+    <p-header>
+        Megerősítés
+    </p-header>
+    Biztos, hogy törölni szeretné a bejegyzést?
+    <div class="p-2">
+      <a href="/" class="btn btn-secondary pull-right" (click)="cancelDelete($event)" >
+        <span class="fa fa-close">Mégsem</span>
+      </a>        
+      <a href="/" class="btn btn-danger pull-right" (click)="delete($event)">
+        <span class="fa fa-trash">Töröl</span>
+      </a>              
+    </div>
+    
+</p-dialog>

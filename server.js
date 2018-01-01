@@ -18,6 +18,8 @@ router.use(function (req, res, next) {
   next(); // make sure we go to the next routes and don't stop here
 });
 
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: false }));
 
 // test route to make sure everything is working (accessed at GET http://localhost:3333/api)
 router.get('/', function (req, res) {
@@ -30,7 +32,32 @@ router.route('/change-log-load/:program_id/:version')
       programId: req.params.program_id,
       version: req.params.version
     }
-    changeLogDao.changeLogLoad(param, res);
+    let cl = changeLogDao.changeLogLoad(param);
+    res.json(cl);
+  });
+
+  router.route('/change-log-write/')
+  .post(function (req, res) {
+    console.log(req.body);
+    var param = {
+      programId: req.body.programId,
+      version: req.body.version,
+      item: req.body.item
+    }
+    changeLogDao.changeLogSave(param);    
+    res.json({done: true});
+  });
+
+  router.route('/change-log-delete/')
+  .post(function (req, res) {
+    console.log(req.body);
+    var param = {
+      programId: req.body.programId,
+      version: req.body.version,
+      id: req.body.id
+    }
+    changeLogDao.changeLogDelete(param);    
+    res.json({done: true});
   });
 
 router.route('/versions/:program_id/')

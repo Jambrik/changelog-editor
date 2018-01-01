@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { IChaneLogList } from '../models/IChangeLogList';
+import { IChangeLogItem } from '../models/IChangeLogItem';
 
 @Injectable()
 export class ChangeLogService {
@@ -19,4 +20,24 @@ export class ChangeLogService {
   public getChangeLogs(programId: number, version: string): Observable<IChaneLogList> {
     return this.http.get<IChaneLogList>(environment.backEndUrl +"api/change-log-load/" + programId + "/" + version);
   }  
+
+  public changeLogWrite(programId: number, version: string, item: IChangeLogItem) {
+    return this.http.post(environment.backEndUrl + "api/change-log-write", 
+      {
+        programId: programId,
+        version: version,
+        item: item 
+      }
+    );
+  }
+
+  public changeLogDelete(programId: number, version: string, id: number) {
+    return this.http.post(environment.backEndUrl + "api/change-log-delete", 
+      {
+        programId: programId,
+        version: version,
+        id: id
+      }
+    );
+  }
 }

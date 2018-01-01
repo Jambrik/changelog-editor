@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { InputTextModule, ButtonModule, DataTableModule, DialogModule, DropdownModule }  from 'primeng/primeng';
+import { InputTextModule, ButtonModule, DataTableModule, DialogModule, DropdownModule, MessageModule, MessagesModule, CalendarModule }  from 'primeng/primeng';
 import { ChangeListComponent } from './change-list/change-list.component';
 import { AppComponent } from './app.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
@@ -16,6 +16,8 @@ import { ConfigService } from './services/config.service';
 import { NavbarService } from './services/navbar.service';
 import { ChangeLogService } from './services/change-log.service';
 import { ChangeLogItemComponent } from './change-log-item/change-log-item.component';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 
 @NgModule({
@@ -26,13 +28,17 @@ import { ChangeLogItemComponent } from './change-log-item/change-log-item.compon
     LeftNavbarComponent,
     ProgramListComponent,
     ConfigEditorComponent,
-    ChangeLogItemComponent
+    ChangeLogItemComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     DataTableModule,
+    MessageModule,
+    MessagesModule,
+    CalendarModule,
     HttpClientModule,
     InputTextModule, 
     DialogModule,
@@ -43,7 +49,7 @@ import { ChangeLogItemComponent } from './change-log-item/change-log-item.compon
       onSameUrlNavigation: "reload",
     })
   ],
-  providers: [ConfigService, NavbarService, ChangeLogService],
+  providers: [ConfigService, NavbarService, ChangeLogService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

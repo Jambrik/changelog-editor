@@ -2,13 +2,17 @@
     Verzió: {{version}}
 </h1>
 <div class="clearfix">
-    <a href="#" class="btn btn-primary pull-right">
+    <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', programId, version, 'new', 'null']" *ngIf="isReading()">
         <span class="fa fa-plus">Új bejegyzés</span>
     </a>
+<div *ngIf="isNewEditing()">
+    <app-change-log-item [item]="newChangeItem" [action]="'new'" [modId]="'null'" (onDelete)="getChanges()"></app-change-log-item>
+</div>
+
 </div>
 
 <div *ngIf="changeList">
     <div *ngFor="let change of changeList.changes">
-        <app-change-log-item [item]="change" [action]="action" [modId]="id"></app-change-log-item>        
+        <app-change-log-item [item]="change" [action]="action" [modId]="id" (onDelete)="getChanges()"></app-change-log-item>
     </div>
 </div>
