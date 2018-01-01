@@ -1,15 +1,7 @@
 var fs = require('fs-extra');
+var uuidv1 = require('uuid/v1')
 
 exports.getNext = function(){
-
-    let idGeneratorJson = fs.readJsonSync('./server-modules/id-generator.json');
-    let id = idGeneratorJson.id;
-    if(!id){
-        id=0;
-    } else {
-        id++;
-    }
-    idGeneratorJson.id = id;
-    fs.writeJsonSync("./server-modules/id-generator.json", idGeneratorJson);
+    let id = uuidv1(); 
     return id;
 }

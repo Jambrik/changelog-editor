@@ -6,13 +6,13 @@
         <span class="fa fa-plus">Új bejegyzés</span>
     </a>
 <div *ngIf="isNewEditing()">
-    <app-change-log-item [item]="newChangeItem" [action]="'new'" [modId]="'null'" (onDelete)="getChanges()"></app-change-log-item>
+    <app-change-log-item [item]="newChangeItem" [action]="'new'" [modId]="'null'" (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
 </div>
 
 </div>
 
 <div *ngIf="changeList">
     <div *ngFor="let change of changeList.changes">
-        <app-change-log-item [item]="change" [action]="action" [modId]="id" (onDelete)="getChanges()"></app-change-log-item>
+        <app-change-log-item [item]="change" [action]="action" [modId]="id" (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
     </div>
 </div>

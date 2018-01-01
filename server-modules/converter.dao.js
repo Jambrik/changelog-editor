@@ -1,5 +1,6 @@
 var fs = require('fs-extra');
 var configDao = require('./config.dao');
+var idGenerator = require('./id-generator');
 
 exports.convertFromOldFormat = function (oldChangeLogList){
     let newChangeLogList = {
@@ -8,11 +9,10 @@ exports.convertFromOldFormat = function (oldChangeLogList){
     }
 
     
-    if(oldChangeLogList && oldChangeLogList.changes){
-        var i = 1;
+    if(oldChangeLogList && oldChangeLogList.changes){        
         oldChangeLogList.changes.forEach(change => {                    
             newChangeLogList.changes.push(
-                {   id: i,
+                {   id: idGenerator.getNext(),
                     date: new Date(change.date),
                     ticketNumber: change.lgw,
                     type: change.type,
@@ -26,8 +26,7 @@ exports.convertFromOldFormat = function (oldChangeLogList){
                     }],
                     keywords: []
                 }
-            );
-            i++;
+            );            
         });
     }       
     return newChangeLogList;

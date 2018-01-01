@@ -1,7 +1,7 @@
 import { I18n } from "./I18N";
 
 export interface IChangeLogItem {
-    id: number,
+    id: string;
     date: Date;    
     ticketNumber?: string;
     type: "bugfix" | "feature";

@@ -31,7 +31,7 @@ export class ChangeLogService {
     );
   }
 
-  public changeLogDelete(programId: number, version: string, id: number) {
+  public changeLogDelete(programId: number, version: string, id: string) {
     return this.http.post(environment.backEndUrl + "api/change-log-delete", 
       {
         programId: programId,

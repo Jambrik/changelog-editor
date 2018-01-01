@@ -17,8 +17,8 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   
   @Input("item") changeLogItem: IChangeLogItem;
   @Input() action: "read" | "mod" | "new";
-  @Input() modId: number;
-  @Output() onDelete: EventEmitter<void> = new EventEmitter();
+  @Input() modId: string;
+  @Output() onDeleteOrAddingNew: EventEmitter<void> = new EventEmitter();
   msgs: Message[] = [];
   deleteMessageShown: boolean = false;  
 
@@ -66,7 +66,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     this.changeLogService.changeLogWrite(this.program.id, this.version, this.changeLogItem)
       .subscribe((x) => {
-        this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none']);
+        if(this.changeLogItem.id == null) {
+          this.onDeleteOrAddingNew.emit();        
+          this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none']);        
       },
       (error) => {
         this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
@@ -88,7 +90,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     this.changeLogService.changeLogDelete(this.program.id, this.version, this.changeLogItem.id)
       .subscribe((x) => {
         console.log("delete done", x);
-        this.onDelete.emit();
+        this.onDeleteOrAddingNew.emit();
       },
       (error) => {
         this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });

@@ -27,7 +27,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public version: string;
   public changeList: IChaneLogList;
   public action: "read" | "mod" | "new";
-  public id: number;
+  public id: string;
   public newChangeItem: IChangeLogItem;
 
   constructor(
@@ -53,7 +53,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
       if (id == "null") {
         this.id = null;
       } else {
-        this.id = parseInt(id);
+        this.id = id;
       }
 
       console.log("id", id);
