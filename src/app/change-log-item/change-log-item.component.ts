@@ -14,13 +14,14 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
   styleUrls: ['./change-log-item.component.scss']
 })
 export class ChangeLogItemComponent implements OnInit, OnChanges {
-  
+
   @Input("item") changeLogItem: IChangeLogItem;
   @Input() action: "read" | "mod" | "new";
   @Input() modId: string;
   @Output() onDeleteOrAddingNew: EventEmitter<void> = new EventEmitter();
   msgs: Message[] = [];
-  deleteMessageShown: boolean = false;  
+  deleteMessageShown: boolean = false;
+  isEditor: boolean = true;
 
   public types = [
     { label: "BUGFIX", value: "bugfix" },
@@ -35,11 +36,11 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     private messageService: MessageService
   ) { }
 
-  ngOnInit() {    
+  ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    
+
   }
   public isEditing(): boolean {
     return ((this.action == "mod") && (this.modId == this.changeLogItem.id)) || ((this.action == "new") && (this.changeLogItem.id == null));
@@ -66,9 +67,10 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     this.changeLogService.changeLogWrite(this.program.id, this.version, this.changeLogItem)
       .subscribe((x) => {
-        if(this.changeLogItem.id == null) {
-          this.onDeleteOrAddingNew.emit();        
-          this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none']);        
+        if (this.changeLogItem.id == null) {
+          this.onDeleteOrAddingNew.emit();
+        }
+        this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none']);
       },
       (error) => {
         this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });

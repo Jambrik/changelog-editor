@@ -4,7 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { InputTextModule, ButtonModule, DataTableModule, DialogModule, DropdownModule, MessageModule, MessagesModule, CalendarModule }  from 'primeng/primeng';
+import { InputTextModule, ButtonModule, DataTableModule, DialogModule, DropdownModule, MessageModule, MessagesModule, 
+  CalendarModule, EditorModule, InputSwitchModule }  from 'primeng/primeng';
 import { ChangeListComponent } from './change-list/change-list.component';
 import { AppComponent } from './app.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
@@ -39,6 +40,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     MessageModule,
     MessagesModule,
     CalendarModule,
+    EditorModule,
+    InputSwitchModule,
     HttpClientModule,
     InputTextModule, 
     DialogModule,
