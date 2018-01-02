@@ -11,12 +11,15 @@
       </div>
       <div class="col-2">
         <span *ngIf="isEditing()">
-          Okos szerkesztő:
-          <p-inputSwitch onLabel="Igen" offLabel="Nem" [(ngModel)]="isEditor"></p-inputSwitch>
+            Okos szerkesztő:                      
+            <p-inputSwitch onLabel="Igen" offLabel="Nem" [(ngModel)]="isEditor"></p-inputSwitch>          
         </span>
       </div>
-      <div class="col-1">
-        <button *ngIf="isEditing() && isMoreThenOneLang()" (click)="showTranslatePanel()">Forsítás</button>
+      <div class="col-1">        
+        <a href="/" class="btn btn-secondary pull-right" *ngIf="isEditing() && isMoreThenOneLang()" (click)="showTranslatePanel()">
+          <span class="fa fa-language"></span>
+          Fordítás
+        </a>
       </div>
       <div class="col-6">
         <div class="pull-right" [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
