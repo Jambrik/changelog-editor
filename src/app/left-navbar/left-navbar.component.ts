@@ -32,5 +32,13 @@ export class LeftNavbarComponent implements OnInit {
     return this.navbarService.actualVersions;
   }
 
+  public isReading(): boolean {
+    return this.navbarService.actualAction == "read";
+  }
+
+  public isActual(version: string): boolean {
+    return this.navbarService.actualVersion == version;
+  }
+
 
 }

@@ -7,18 +7,23 @@
   <h4 *ngIf="!actualProgramName">
     Nincs program kiválsztva
   </h4>
-  <ul class="nav nav-pills flex-column">
+  <ul *ngIf="isReading()" class="nav nav-pills flex-column">
     <li class="nav-item" *ngIf="actualProgramName">
       <a class="nav-link" href="#">
         Új verzió léltrehozása
       </a>
     </li>
-    <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>
+    <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>    
     <li class="nav-item" *ngFor="let version of versions">
       <a class="nav-link" href="/" [routerLink]="['/change-list', actualProgramId, version, 'read', 'none']" routerLinkActive="active">
         {{version}}
       </a>
     </li>
   </ul>
+  <ul *ngIf="!isReading()" class="nav nav-pills flex-column">      
+      <li class="nav-link active" [class.active]="isActual(version)" *ngFor="let version of versions">        
+          {{version}}        
+      </li>
+    </ul>
 
 </nav>

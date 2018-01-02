@@ -9,6 +9,7 @@ export class NavbarService {
   private _actualProgram: IProgram;
   private _actualVersions: string[];
   private _actualVersion: string;
+  private _actualAction: string;
 
   constructor(private changeLogService: ChangeLogService) { 
 
@@ -36,6 +37,14 @@ export class NavbarService {
 
   set actualVersion(value: string){
     this._actualVersion = value;
+  }
+
+  get actualAction(): string {
+    return this._actualAction;
+  }
+
+  set actualAction(value: string) {    
+    this._actualAction = value;    
   }
 
 }

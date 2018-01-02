@@ -44,6 +44,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
       let version = params['version'];
       let id = params["id"];
       this.action = params["action"];
+      this.navbarService.actualAction = this.action;
       if (!this.action) {
         this.action = "read";
       };
@@ -63,7 +64,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
           .subscribe((config) => {
             this.programId = programIdInt;
             this.program = ConfigHelper.getProgramById(config.programs, this.programId);
-            this.navbarService.actualProgram = this.program;
+            this.navbarService.actualProgram = this.program;            
             console.log("New program id", programId);
             //First of all we have get the versions
             this.changeLogService.getVersionsForProgramId(programId)
