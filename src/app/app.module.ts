@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule, ButtonModule, DataTableModule, DialogModule, DropdownModule, MessageModule, MessagesModule, 
-  CalendarModule, EditorModule, InputSwitchModule }  from 'primeng/primeng';
+  CalendarModule, EditorModule, InputSwitchModule, SelectButtonModule }  from 'primeng/primeng';
 import { ChangeListComponent } from './change-list/change-list.component';
 import { AppComponent } from './app.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
@@ -19,6 +19,7 @@ import { ChangeLogService } from './services/change-log.service';
 import { ChangeLogItemComponent } from './change-log-item/change-log-item.component';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { TranslateService } from './services/translate.service';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     CalendarModule,
     EditorModule,
     InputSwitchModule,
+    SelectButtonModule,
     HttpClientModule,
     InputTextModule, 
     DialogModule,
@@ -52,7 +54,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
       onSameUrlNavigation: "reload",
     })
   ],
-  providers: [ConfigService, NavbarService, ChangeLogService, MessageService],
+  providers: [ConfigService, NavbarService, ChangeLogService, MessageService, TranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

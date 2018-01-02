@@ -2,15 +2,21 @@
 
   <div class="card-header">
     <div class="row">
-      <div class="col-6">
+      <div class="col-3">
         <b>Jegyszám:</b>
         <span *ngIf="!isEditing()">
           {{changeLogItem.ticketNumber}}
         </span>
         <input *ngIf="isEditing()" type="text" name="" id="" [(ngModel)]="changeLogItem.ticketNumber">
+      </div>
+      <div class="col-2">
         <span *ngIf="isEditing()">
-          Okos szerkesztő: <p-inputSwitch onLabel="Igen" offLabel="Nem" [(ngModel)]="isEditor"></p-inputSwitch>
+          Okos szerkesztő:
+          <p-inputSwitch onLabel="Igen" offLabel="Nem" [(ngModel)]="isEditor"></p-inputSwitch>
         </span>
+      </div>
+      <div class="col-1">
+        <button *ngIf="isEditing() && isMoreThenOneLang()" (click)="showTranslatePanel()">Forsítás</button>
       </div>
       <div class="col-6">
         <div class="pull-right" [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
@@ -38,8 +44,8 @@
                   </div>
                   <div class="col-lg-11 col-md-9 col-sm-6">
 
-                    <div *ngIf="!isEditing()" style="width: 100%; min-height: 100px;" [innerHTML]="description.text | safeHtml"></div>
-                    <p-editor *ngIf="isEditing()&&isEditor" [(ngModel)]="description.text" [style]="{'height':'100px'}"></p-editor>                    
+                    <div *ngIf="!isEditing()" style="width: 100%; min-height: 100px;  " [innerHTML]="description.text | safeHtml"></div>
+                    <p-editor *ngIf="isEditing()&&isEditor" [(ngModel)]="description.text" [style]="{'height':'100px'}"></p-editor>
                     <textarea *ngIf="isEditing()&&!isEditor" cols="30" rows="10" style="width: 100%; height: 100px" [(ngModel)]="description.text"></textarea>
 
                   </div>
@@ -118,35 +124,59 @@
       {{changeLogItem.date | date: 'yyyy.MM.dd.'}}
     </span>
     <p-calendar *ngIf="isEditing()" [(ngModel)]="changeLogItem.date" dateFormat="yy.mm.dd"></p-calendar>
-    <a href="/" class="btn btn-danger pull-right" (click)="deleteMessageShow($event)"
-      *ngIf="canBeModified()">
+    <a href="/" class="btn btn-danger pull-right" (click)="deleteMessageShow($event)" *ngIf="canBeModified()">
       <span class="fa fa-trash"></span>
     </a>
     <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', program.id, version, 'mod', changeLogItem.id]"
       *ngIf="canBeModified()">
       <span class="fa fa-edit"></span>
-    </a>    
+    </a>
     <a href="/" class="btn btn-success pull-right" (click)="save($event)" *ngIf="isEditing()">
       <span class="fa fa-save"></span>
     </a>
-    <a href="/" class="btn btn-secondary pull-right" [routerLink]="['/change-list', program.id, version, 'read', 'none']" *ngIf="isEditing()">
+    <a href="/" class="btn btn-secondary pull-right" (click)="cancelMod($event)" *ngIf="isEditing()">
       <span class="fa fa-close"></span>
     </a>
   </div>
 </div>
 
 <p-dialog [(visible)]="deleteMessageShown" modal="true">
-    <p-header>
-        Megerősítés
-    </p-header>
-    Biztos, hogy törölni szeretné a bejegyzést?
-    <div class="p-2">
-      <a href="/" class="btn btn-secondary pull-right" (click)="cancelDelete($event)" >
-        <span class="fa fa-close">Mégsem</span>
-      </a>        
-      <a href="/" class="btn btn-danger pull-right" (click)="delete($event)">
-        <span class="fa fa-trash">Töröl</span>
-      </a>              
-    </div>
-    
+  <p-header>
+    Megerősítés
+  </p-header>
+  Biztos, hogy törölni szeretné a bejegyzést?
+  <div class="p-2">
+    <a href="/" class="btn btn-secondary pull-right" (click)="cancelDelete($event)">
+      <span class="fa fa-close">Mégsem</span>
+    </a>
+    <a href="/" class="btn btn-danger pull-right" (click)="delete($event)">
+      <span class="fa fa-trash">Töröl</span>
+    </a>
+  </div>
+
+</p-dialog>
+
+<p-dialog [(visible)]="translatePanelShown" modal="true">
+  <p-header>
+    Fordítás
+  </p-header>
+  <div class="p-2">
+    Forrásnyelv:
+    <span *ngIf="froms&&froms.length>0">
+      <p-dropdown [options]="froms" [(ngModel)]="selectedFrom"></p-dropdown>
+    </span>
+  </div>
+  <div class="p-2">
+    Cél nyelvek:
+    <p-selectButton [options]="tos" [(ngModel)]="selectedTos" [multiple]="true"></p-selectButton>
+  </div>
+  <div class="p-2">
+    <a href="/" class="btn btn-secondary pull-right" (click)="cancelTranslate($event)">
+      <span class="fa fa-close">Mégsem</span>
+    </a>
+    <a href="/" class="btn btn-primary pull-right" (click)="translate($event)">
+      <span class="fa fa-language">Fordít</span>
+    </a>
+  </div>
+
 </p-dialog>

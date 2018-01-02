@@ -10,6 +10,7 @@ var configDao = require('./server-modules/config.dao');
 var app = express();
 var morgan = require('morgan')
 var converterDao = require('./server-modules/converter.dao');
+var translate = require('./server-modules/translate');
 
 router.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -69,6 +70,13 @@ router.route('/versions/:program_id/')
     }
     console.log("versions call program_id: " + req.params.program_id);
     changeLogDao.changeLogVersions(param, res);    
+  });
+
+  router.route('/translate/')
+  .post(function (req, res) {
+    console.log(req.body);
+    
+    translate.translate(req.body.text, req.body.from, req.body.to, res);    
   });
 
 router.route('/config')
