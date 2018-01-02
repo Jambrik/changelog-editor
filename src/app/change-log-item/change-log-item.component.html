@@ -16,7 +16,7 @@
         </span>
       </div>
       <div class="col-1">        
-        <a href="/" class="btn btn-secondary pull-right" *ngIf="isEditing() && isMoreThenOneLang()" (click)="showTranslatePanel()">
+        <a href="/" class="btn btn-secondary pull-right" *ngIf="isEditing() && isMoreThenOneLang()" (click)="showTranslatePanel($event)">
           <span class="fa fa-language"></span>
           Fordítás
         </a>

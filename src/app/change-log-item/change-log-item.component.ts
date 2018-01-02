@@ -160,7 +160,8 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     return selectedDescription;
   }
 
-  public showTranslatePanel() {    
+  public showTranslatePanel(event: Event) {
+    event.preventDefault();    
     this.translatePanelShown = true;
     this.fillFromsAndTos();
   }
