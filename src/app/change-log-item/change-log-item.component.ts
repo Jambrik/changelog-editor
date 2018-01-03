@@ -11,6 +11,7 @@ import { ILabelValue } from '../models/ILableValue';
 import { GoogleTranslateService } from '../services/google-translate.service';
 import { I18n } from '../models/I18N';
 import * as _ from 'lodash';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-change-log-item',
@@ -44,7 +45,8 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     private changeLogService: ChangeLogService,
     private router: Router,
     private messageService: MessageService,
-    private googleTranslateService: GoogleTranslateService
+    private googleTranslateService: GoogleTranslateService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
@@ -87,7 +89,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         if (this.changeLogItem.id == null) {
           this.onDeleteOrAddingNew.emit();
         }
-        this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none']);
+        this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], {queryParams: {lang: this.getActualLang()}});
       },
       (error) => {
         this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
@@ -97,7 +99,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
     this.changeLogItem = _.cloneDeep(this.changeLogItemOri);
-    this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none']);    
+    this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], {queryParams: {lang: this.getActualLang()}});    
   }
 
   public deleteMessageShow(event: Event) {
@@ -200,4 +202,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     return this.program && this.program.langs && (this.program.langs.length > 1);
   }
 
+  public getActualLang(): string {
+    return this.translateService.currentLang;
+  }
 }

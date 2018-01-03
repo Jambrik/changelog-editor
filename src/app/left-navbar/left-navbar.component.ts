@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarService } from '../services/navbar.service';
 import { ChangeLogService } from '../services/change-log.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-left-navbar',
@@ -9,7 +10,11 @@ import { ChangeLogService } from '../services/change-log.service';
 })
 export class LeftNavbarComponent implements OnInit {
 
-  constructor(private navbarService: NavbarService) { }
+  constructor(
+    private navbarService: NavbarService,
+    private translateService: TranslateService
+  
+  ) { }
 
   ngOnInit() {
   }
@@ -38,6 +43,10 @@ export class LeftNavbarComponent implements OnInit {
 
   public isActual(version: string): boolean {
     return this.navbarService.actualVersion == version;
+  }
+
+  public getActualLang(): string {
+    return this.translateService.currentLang;
   }
 
 

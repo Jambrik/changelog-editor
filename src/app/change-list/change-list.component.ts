@@ -9,6 +9,7 @@ import { ConfigService } from '../services/config.service';
 import { IProgram } from '../models/IProgram';
 import { ConfigHelper } from '../helpers/config-helper';
 import { IChangeLogItem } from '../models/IChangeLogItem';
+import { TranslateService } from '@ngx-translate/core';
 
 interface City {
   name: string,
@@ -34,7 +35,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private changeLogService: ChangeLogService,
     private navbarService: NavbarService,
-    private configService: ConfigService) { }
+    private configService: ConfigService,
+    private translate: TranslateService) { }
 
   ngOnInit() {
     console.log("change-list init");
@@ -42,6 +44,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.route.params.subscribe(params => {
       let programId = params['program-id'];
       let version = params['version'];
+      let lang = params["lang"];
+      console.log("Lang:", lang);
       let id = params["id"];
       this.action = params["action"];
       this.navbarService.actualAction = this.action;
@@ -163,6 +167,10 @@ export class ChangeListComponent implements OnInit, OnChanges {
       lmu: null,
       lmd: null
     };
+  }
+
+  public getActualLang(): string {
+    return this.translate.currentLang;
   }
 
 }

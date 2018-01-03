@@ -2,7 +2,9 @@
     {{'VERSION' | translate}}: {{version}}
 </h1>
 <div class="clearfix">
-    <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', programId, version, 'new', 'null']" *ngIf="isReading()">
+    <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', programId, version, 'new', 'null']" 
+    [queryParams]="{lang: getActualLang()}"
+    *ngIf="isReading()">
         <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
     </a>
 <div *ngIf="isNewEditing()">

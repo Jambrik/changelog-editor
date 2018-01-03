@@ -137,6 +137,7 @@
       <span class="fa fa-trash"></span>
     </a>
     <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', program.id, version, 'mod', changeLogItem.id]"
+    [queryParams]="{lang: getActualLang()}"
       *ngIf="canBeModified()">
       <span class="fa fa-edit"></span>
     </a>

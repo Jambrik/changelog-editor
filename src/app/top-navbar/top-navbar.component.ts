@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { StringHelpers } from '../helpers/string-helpers';
 import { IProgram } from '../models/IProgram';
 import { ConfigService } from '../services/config.service';
@@ -15,13 +16,20 @@ export class TopNavbarComponent implements OnInit {
   constructor(
     private configService: ConfigService,
     private navbarService: NavbarService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { 
     translate.setDefaultLang("hu");
     translate.use("hu");    
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(queryParams => {
+      let lang = queryParams["lang"];
+      console.log("languae from top navbar:", lang);
+      this.translate.use(lang);
+    });
     this.configService.getConfig().subscribe(
       (data) => {
         console.log("program list", data);
@@ -63,7 +71,11 @@ export class TopNavbarComponent implements OnInit {
 
   public changeLang(event: Event, lang: string){
     event.preventDefault();
-    this.translate.use(lang);        
+    this.router.navigate(this.route.snapshot.url, {queryParams: {lang: lang}});
+  }
+
+  public getActualLang(): string {
+    return this.translate.currentLang;
   }
 
 }

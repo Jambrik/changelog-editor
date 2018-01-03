@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 import { IProgram } from '../models/IProgram';
 import { NavbarService } from '../services/navbar.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-program-list',
@@ -12,7 +13,9 @@ import { NavbarService } from '../services/navbar.service';
 export class ProgramListComponent implements OnInit {
   public programs: IProgram[];
   constructor(private configService: ConfigService,
-    private navbarService: NavbarService) { }
+    private navbarService: NavbarService,
+    private translateService: TranslateService
+  ) { }
 
   ngOnInit() {
     this.configService.getConfig().subscribe(
@@ -38,5 +41,8 @@ export class ProgramListComponent implements OnInit {
 
   }
 
+  public getActualLang(): string {
+    return this.translateService.currentLang;
+  }
 
 }
