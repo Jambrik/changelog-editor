@@ -8,7 +8,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { Message } from 'primeng/components/common/api';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ILabelValue } from '../models/ILableValue';
-import { TranslateService } from '../services/translate.service';
+import { GoogleTranslateService } from '../services/google-translate.service';
 import { I18n } from '../models/I18N';
 import * as _ from 'lodash';
 
@@ -44,7 +44,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     private changeLogService: ChangeLogService,
     private router: Router,
     private messageService: MessageService,
-    private translateService: TranslateService
+    private googleTranslateService: GoogleTranslateService
   ) { }
 
   ngOnInit() {
@@ -132,7 +132,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     if(d != null){
       this.selectedTos.forEach(to => {
         if(to != this.selectedFrom) {
-          this.translateService.translate(d.text, this.selectedFrom, to)
+          this.googleTranslateService.translate(d.text, this.selectedFrom, to)
             .subscribe((translateData) => {              
               d = this.getDescriptionByLang(to);
               d.text = translateData.translate;

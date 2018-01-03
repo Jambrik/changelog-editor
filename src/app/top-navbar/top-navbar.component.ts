@@ -3,6 +3,7 @@ import { IProgram } from '../models/IProgram';
 import { ConfigService } from '../services/config.service';
 import { Component, OnInit } from '@angular/core';
 import { NavbarService } from '../services/navbar.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-top-navbar',
@@ -13,8 +14,12 @@ export class TopNavbarComponent implements OnInit {
   public programs: IProgram[];
   constructor(
     private configService: ConfigService,
-    private navbarService: NavbarService
-  ) { }
+    private navbarService: NavbarService,
+    private translate: TranslateService
+  ) { 
+    translate.setDefaultLang("hu");
+    translate.use("hu");    
+  }
 
   ngOnInit() {
     this.configService.getConfig().subscribe(
@@ -50,6 +55,15 @@ export class TopNavbarComponent implements OnInit {
       return "last";
     }
 
+  }
+
+  public isSelected(lang: string): boolean {
+    return this.translate.currentLang == lang;
+  }
+
+  public changeLang(event: Event, lang: string){
+    event.preventDefault();
+    this.translate.use(lang);        
   }
 
 }

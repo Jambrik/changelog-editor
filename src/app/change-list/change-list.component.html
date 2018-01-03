@@ -1,9 +1,9 @@
-<h1>
-    Verzió: {{version}}
+<h1 translate>
+    {{'VERSION' | translate}}: {{version}}
 </h1>
 <div class="clearfix">
     <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', programId, version, 'new', 'null']" *ngIf="isReading()">
-        <span class="fa fa-plus">Új bejegyzés</span>
+        <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
     </a>
 <div *ngIf="isNewEditing()">
     <app-change-log-item [item]="newChangeItem" [action]="'new'" [modId]="'null'" (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>

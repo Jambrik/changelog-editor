@@ -46,5 +46,5 @@ export class NavbarService {
   set actualAction(value: string) {    
     this._actualAction = value;    
   }
-
+  
 }

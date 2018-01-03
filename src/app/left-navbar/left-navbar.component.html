@@ -4,13 +4,13 @@
       {{actualProgramName}}
     </h4>
   </div>
-  <h4 *ngIf="!actualProgramName">
-    Nincs program kiválsztva
+  <h4 *ngIf="!actualProgramName" translate>
+    NO_PROGRAM_CHOSEN
   </h4>
   <ul *ngIf="isReading()" class="nav nav-pills flex-column">
     <li class="nav-item" *ngIf="actualProgramName">
-      <a class="nav-link" href="#">
-        Új verzió léltrehozása
+      <a class="nav-link" href="#" translate>
+        NEW_VERSION_CREATION
       </a>
     </li>
     <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>    

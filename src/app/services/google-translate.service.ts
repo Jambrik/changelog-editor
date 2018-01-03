@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { ITranslate } from '../models/ITranslateData';
 
 @Injectable()
-export class TranslateService {
+export class GoogleTranslateService {
 
   constructor(private http: HttpClient) { }
 

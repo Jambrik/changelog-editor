@@ -12,15 +12,20 @@ import { TopNavbarComponent } from './top-navbar/top-navbar.component';
 import { LeftNavbarComponent } from './left-navbar/left-navbar.component';
 import { ProgramListComponent } from './program-list/program-list.component';
 import { ConfigEditorComponent } from './config-editor/config-editor.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ConfigService } from './services/config.service';
 import { NavbarService } from './services/navbar.service';
 import { ChangeLogService } from './services/change-log.service';
 import { ChangeLogItemComponent } from './change-log-item/change-log-item.component';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
-import { TranslateService } from './services/translate.service';
+import { GoogleTranslateService } from './services/google-translate.service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -52,9 +57,16 @@ import { TranslateService } from './services/translate.service';
     RouterModule.forRoot(ROUTES, {
       useHash: true,
       onSameUrlNavigation: "reload",
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
     })
   ],
-  providers: [ConfigService, NavbarService, ChangeLogService, MessageService, TranslateService],
+  providers: [ConfigService, NavbarService, ChangeLogService, MessageService, GoogleTranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
