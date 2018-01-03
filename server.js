@@ -72,6 +72,12 @@ router.route('/versions/:program_id/')
     changeLogDao.changeLogVersions(param, res);    
   });
 
+  router.route('/new-version/:program_id/:version')
+  .get(function (req, res) {            
+    changeLogDao.newVersion(req.params.program_id, req.params.version);    
+    res.json({done: true});
+  });
+
   router.route('/translate/')
   .post(function (req, res) {
     console.log(req.body);

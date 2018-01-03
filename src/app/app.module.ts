@@ -22,6 +22,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { GoogleTranslateService } from './services/google-translate.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -36,7 +37,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProgramListComponent,
     ConfigEditorComponent,
     ChangeLogItemComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    NewVersionCreatationComponent
   ],
   imports: [
     BrowserModule,

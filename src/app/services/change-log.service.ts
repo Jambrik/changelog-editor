@@ -40,4 +40,8 @@ export class ChangeLogService {
       }
     );
   }
+
+  public createNewVersion(programId: number, version: string){
+    return this.http.get<IChaneLogList>(environment.backEndUrl +"api/new-version/" + programId + "/" + version);
+  }
 }

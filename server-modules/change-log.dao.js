@@ -78,7 +78,7 @@ exports.changeLogSave = function (param) {
             }
         });
     }
-    
+
     this.changeLogFileSave(param.programId, param.version, changeLogs);
 
 }
@@ -101,8 +101,14 @@ exports.changeLogDelete = function (param) {
 }
 
 exports.changeLogFileSave = function (programId, version, changeLogs) {
-    let config = configDao.mainConfigLoad();    
+    let config = configDao.mainConfigLoad();
     let program = configHelpers.getProgramById(config, programId);
-    console.log("changeLogSave programId", programId);    
+    console.log("changeLogSave programId", programId);
     fs.writeJsonSync(program.path + "/" + "changelog." + version + ".json", changeLogs);
 }
+
+exports.newVersion = function (programId, version) {
+    let changeLogs = {changes: []};
+    this.changeLogFileSave(programId, version, changeLogs);
+}
+

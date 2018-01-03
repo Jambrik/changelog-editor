@@ -1,0 +1,24 @@
+<h1 *ngIf="program">
+  {{program.name}}
+</h1>
+
+<div class="card">
+  <h3 class="card-header" translate>NEW_VERSION_CREATION</h3>
+  <div class="card-block">
+    <div class="p-4">
+      <span class="ui-float-label">
+        <input id="float-input" type="text" size="30" pInputText [(ngModel)]="version" required>
+        <label for="float-input" translate>VERSION</label>
+      </span>
+      <div *ngIf="smaller" class="p-2 alert alert-warning">
+        <span>A verziószámnak nagyobbnak kell lenni a megelőző verziónál!</span>
+      </div>
+    </div>
+    <a href="/" class="btn btn-secondary pull-right" (click)="cancel($event)">
+      <span class="fa fa-close"></span>
+    </a>
+    <a href="/" class="btn btn-success pull-right" (click)="save($event)">
+      <span class="fa fa-save"></span>
+    </a>
+  </div>
+</div>
