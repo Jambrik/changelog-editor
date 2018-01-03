@@ -18,6 +18,9 @@ export class ProgramListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.navbarService.actualProgram = null;
+    this.navbarService.actualVersion = "";
+    this.navbarService.actualVersions = [];
     this.configService.getConfig().subscribe(
       (data) => {
         console.log("program list", data);
