@@ -1,3 +1,4 @@
+import { StringHelpers } from '../helpers/string-helpers';
 import { IProgram } from '../models/IProgram';
 import { ConfigService } from '../services/config.service';
 import { Component, OnInit } from '@angular/core';
@@ -38,6 +39,17 @@ export class TopNavbarComponent implements OnInit {
       return this.navbarService.actualProgram.name
     else  
       return "";
+  }
+
+  public getLastVersion(program: IProgram): string {
+    if (program.versions && (program.versions.length > 0)) {
+      program.versions.sort(StringHelpers.sortDesc);
+      return program.versions[0];
+    }
+    else {
+      return "last";
+    }
+
   }
 
 }

@@ -18,7 +18,8 @@
           Program
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a *ngFor="let program of programs" class="dropdown-item" href="#" [routerLink]="['/change-list', program.id, 'latest']">
+          <a *ngFor="let program of programs" class="dropdown-item" href="#" 
+          [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']">
             {{program.name}}
           </a>          
         </div>
