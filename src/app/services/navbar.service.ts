@@ -11,6 +11,7 @@ export class NavbarService {
   private _actualVersion: string;
   private _actualAction: string;
 
+
   constructor(private changeLogService: ChangeLogService) { 
 
   }
@@ -46,5 +47,5 @@ export class NavbarService {
   set actualAction(value: string) {    
     this._actualAction = value;    
   }
-  
+
 }

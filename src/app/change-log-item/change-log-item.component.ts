@@ -23,6 +23,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   @Input("item") changeLogItem: IChangeLogItem;
   @Input() action: "read" | "mod" | "new";
   @Input() modId: string;
+  @Input() selectedLangs: string[];
   @Output() onDeleteOrAddingNew: EventEmitter<void> = new EventEmitter();
   msgs: Message[] = [];
   deleteMessageShown: boolean = false;
@@ -33,6 +34,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   selectedFrom: string;
   selectedTos: string[] = [];
   changeLogItemOri: IChangeLogItem;
+  descriptions: I18n[] = [];
 
   public types: ILabelValue[] = [
     { label: "BUGFIX", value: "bugfix" },
@@ -53,11 +55,15 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.action.currentValue != changes.action.previousValue){
-      if((changes.action.currentValue == "mod") &&(this.modId == this.changeLogItem.id)) {
+    if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
+      if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
         this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
         console.log("this.changeLogItemOri", this.changeLogItemOri);
       }
+    }
+
+    if(changes.selectedLangs && (changes.selectedLangs.currentValue != changes.selectedLangs.previousValue)){      
+      this.descriptions = this.getDescriptions();
     }
 
   }
@@ -89,7 +95,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         if (this.changeLogItem.id == null) {
           this.onDeleteOrAddingNew.emit();
         }
-        this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], {queryParams: {lang: this.getActualLang()}});
+        this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
       },
       (error) => {
         this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
@@ -99,7 +105,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
     this.changeLogItem = _.cloneDeep(this.changeLogItemOri);
-    this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], {queryParams: {lang: this.getActualLang()}});    
+    this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
   }
 
   public deleteMessageShow(event: Event) {
@@ -115,7 +121,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     this.translatePanelShown = false;
   }
-  
+
   public delete(event: Event) {
     event.preventDefault();
     this.changeLogService.changeLogDelete(this.program.id, this.version, this.changeLogItem.id)
@@ -130,12 +136,12 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public translate(event: Event) {
     event.preventDefault();
-    let d = this.getDescriptionByLang(this.selectedFrom);    
-    if(d != null){
+    let d = this.getDescriptionByLang(this.selectedFrom);
+    if (d != null) {
       this.selectedTos.forEach(to => {
-        if(to != this.selectedFrom) {
+        if (to != this.selectedFrom) {
           this.googleTranslateService.translate(d.text, this.selectedFrom, to)
-            .subscribe((translateData) => {              
+            .subscribe((translateData) => {
               d = this.getDescriptionByLang(to);
               d.text = translateData.translate;
               this.translatePanelShown = false;
@@ -148,22 +154,22 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     }
   }
 
-  private getDescriptionByLang(lang: string): I18n{
+  private getDescriptionByLang(lang: string): I18n {
     console.log("lang", lang);
     console.log("this.changeLogItem.descriptions", this.changeLogItem.descriptions);
     let selectedDescription: I18n = null;
     this.changeLogItem.descriptions.forEach(description => {
-      if(description.lang == lang){
+      if (description.lang == lang) {
         console.log("getDescriptionByLang in if");
         selectedDescription = description;
       }
-    });    
+    });
 
     return selectedDescription;
   }
 
   public showTranslatePanel(event: Event) {
-    event.preventDefault();    
+    event.preventDefault();
     this.translatePanelShown = true;
     this.fillFromsAndTos();
   }
@@ -204,5 +210,16 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public getActualLang(): string {
     return this.translateService.currentLang;
+  }
+
+  public getDescriptions() {
+    console.log("getDescriptions");
+    let descriptions: I18n[] = [];
+    this.changeLogItem.descriptions.forEach(description => {      
+      if (this.selectedLangs.indexOf(description.lang) > -1) {
+        descriptions.push(description);
+      }
+    });
+    return descriptions;
   }
 }

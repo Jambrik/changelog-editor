@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StringHelpers } from '../helpers/string-helpers';
 import { IProgram } from '../models/IProgram';
 import { ConfigService } from '../services/config.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavbarService } from '../services/navbar.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -11,11 +11,12 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './top-navbar.component.html',
   styleUrls: ['./top-navbar.component.scss']
 })
-export class TopNavbarComponent implements OnInit {
+export class TopNavbarComponent implements OnInit, OnChanges {
+  public filterText: string;
   public programs: IProgram[];
   constructor(
     private configService: ConfigService,
-    private navbarService: NavbarService,
+    public navbarService: NavbarService,
     private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router
@@ -29,6 +30,12 @@ export class TopNavbarComponent implements OnInit {
       let lang = queryParams["lang"];
       console.log("languae from top navbar:", lang);
       this.translate.use(lang);
+      let filter = queryParams["filter"];
+      if(filter) {
+        this.filterText = filter;
+      } else {
+        this.filterText = "";
+      }
     });
     this.configService.getConfig().subscribe(
       (data) => {
@@ -40,6 +47,19 @@ export class TopNavbarComponent implements OnInit {
         console.log("error",error);
       }
     )
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    
+  }
+
+  filterTextChange(event: string) {
+    console.log("filterText changed event", event);
+    this.filterText = event;
+    this.router.navigate(this.route.snapshot.url, {queryParams: {
+      lang: this.getActualLang(),
+      filter: this.filterText}
+    });
   }
 
   public openProgram(program: IProgram) {
@@ -76,6 +96,15 @@ export class TopNavbarComponent implements OnInit {
 
   public getActualLang(): string {
     return this.translate.currentLang;
+  }
+
+  public apply(event: Event){
+    event.preventDefault();
+    console.log("apply");
+    this.router.navigate(this.route.snapshot.url, {queryParams: {
+      lang: this.getActualLang(),
+      filter: this.filterText}
+    });
   }
 
 }

@@ -10,6 +10,7 @@ import { IProgram } from '../models/IProgram';
 import { ConfigHelper } from '../helpers/config-helper';
 import { IChangeLogItem } from '../models/IChangeLogItem';
 import { TranslateService } from '@ngx-translate/core';
+import { ILabelValue } from '../models/ILableValue';
 
 interface City {
   name: string,
@@ -22,14 +23,17 @@ interface City {
   styleUrls: ['./change-list.component.scss']
 })
 export class ChangeListComponent implements OnInit, OnChanges {
-  @Input() filterText: string;
   public programId: number;
   public program: IProgram;
   public version: string;
   public changeList: IChaneLogList;
+  public oriChangeList: IChaneLogList;
   public action: "read" | "mod" | "new";
   public id: string;
   public newChangeItem: IChangeLogItem;
+  public langs: ILabelValue[] = [];
+  public selectedLangs: string[] = [];
+  public filterText: string = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -68,7 +72,17 @@ export class ChangeListComponent implements OnInit, OnChanges {
           .subscribe((config) => {
             this.programId = programIdInt;
             this.program = ConfigHelper.getProgramById(config.programs, this.programId);
-            this.navbarService.actualProgram = this.program;            
+            this.langs = [];
+            this.selectedLangs = [];
+            this.program.langs.forEach(lang => {
+              this.langs.push({
+                label: lang,
+                value: lang
+              });
+              this.selectedLangs.push(lang);
+            });
+
+            this.navbarService.actualProgram = this.program;
             console.log("New program id", programId);
             //First of all we have get the versions
             this.changeLogService.getVersionsForProgramId(programId)
@@ -102,24 +116,60 @@ export class ChangeListComponent implements OnInit, OnChanges {
       this.navbarService.actualVersion = version;
 
     });
+
+    this.route.queryParams.subscribe((queryParams) => {
+
+      this.filterText = queryParams["filter"];
+      if (this.oriChangeList) {
+        this.changeList = this.filter(this.oriChangeList);
+      }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if (changes.filterText.currentValue != changes.filterText.previousValue) {
-      //this.changeLogService.getChangeLogs(programId, version)
-    }
+
+  }
+
+  private filter(inputChangeList: IChaneLogList): IChaneLogList {
+    let changeList = {
+      releaseDate: inputChangeList.releaseDate,
+      version: inputChangeList.version,
+      changes: []
+    };
+    inputChangeList.changes.forEach(change => {
+      let found = false;
+      console.log("this.filterText", this.filterText);
+      if ((this.filterText) && (this.filterText != "")) {
+        if (change.ticketNumber.toUpperCase().indexOf(this.filterText.toUpperCase()) > -1) {
+          found = true;
+        } else {
+          change.descriptions.forEach(description => {
+            if (description.text.toUpperCase().indexOf(this.filterText.toUpperCase()) > -1) {
+              console.log("description.text.indexOf(this.actualFilterText)", description.text.indexOf(this.filterText));
+              found = true;
+            }
+          });
+        }
+      } else {
+        found = true;
+      }
+
+      if (found) {
+        changeList.changes.push(change);
+      }
+    });
+    return changeList;
   }
 
   private getChanges() {
     this.changeLogService.getChangeLogs(this.programId, this.version)
-      .subscribe(chaneLogList => {
-        console.log("change list loaded", chaneLogList);
-        chaneLogList.changes.forEach(change => {
+      .subscribe(changeList => {
+
+        changeList.changes.forEach(change => {
           change.date = new Date(change.date);
-          
         });
-        chaneLogList.changes.sort((a, b) => {
+        changeList.changes.sort((a, b) => {
           if (a.date > b.date)
             return -1;
           else if (a.date < b.date)
@@ -127,7 +177,10 @@ export class ChangeListComponent implements OnInit, OnChanges {
           else
             return 0;
         });
-        this.changeList = chaneLogList;
+
+        this.oriChangeList = changeList;
+
+        this.changeList = this.filter(this.oriChangeList);
       });
 
   }
