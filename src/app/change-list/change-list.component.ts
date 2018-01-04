@@ -11,6 +11,7 @@ import { ConfigHelper } from '../helpers/config-helper';
 import { IChangeLogItem } from '../models/IChangeLogItem';
 import { TranslateService } from '@ngx-translate/core';
 import { ILabelValue } from '../models/ILableValue';
+import * as _ from 'lodash';
 
 interface City {
   name: string,
@@ -140,14 +141,21 @@ export class ChangeListComponent implements OnInit, OnChanges {
     inputChangeList.changes.forEach(change => {
       let found = false;
       console.log("this.filterText", this.filterText);
+      let newChange: IChangeLogItem = _.cloneDeep(change);
       if ((this.filterText) && (this.filterText != "")) {
-        if (change.ticketNumber.toUpperCase().indexOf(this.filterText.toUpperCase()) > -1) {
-          found = true;
-        } else {
-          change.descriptions.forEach(description => {
-            if (description.text.toUpperCase().indexOf(this.filterText.toUpperCase()) > -1) {
-              console.log("description.text.indexOf(this.actualFilterText)", description.text.indexOf(this.filterText));
-              found = true;
+        let bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText);
+        found = bs.bool;
+        if (found){
+          newChange.ticketNumber = bs.str;
+        }
+        if (!found) {
+          newChange.descriptions.forEach(description => {
+            if (!found){
+              let bs = StringHelpers.findAndGreen(description.text, this.filterText);
+              found = bs.bool;
+              if (found){
+                description.text = bs.str;
+              }
             }
           });
         }
@@ -156,7 +164,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
       }
 
       if (found) {
-        changeList.changes.push(change);
+        changeList.changes.push(newChange);
       }
     });
     return changeList;

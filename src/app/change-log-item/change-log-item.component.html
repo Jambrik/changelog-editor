@@ -8,8 +8,7 @@
             TICKETNUMBER
           </span>:
         </b>
-        <span *ngIf="!isEditing()">
-          {{changeLogItem.ticketNumber}}
+        <span *ngIf="!isEditing()" [innerHTML]="changeLogItem.ticketNumber | safeHtml">          
         </span>
         <input *ngIf="isEditing()" type="text" name="" id="" [(ngModel)]="changeLogItem.ticketNumber">
       </div>

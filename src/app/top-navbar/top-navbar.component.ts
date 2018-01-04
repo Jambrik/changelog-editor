@@ -20,9 +20,9 @@ export class TopNavbarComponent implements OnInit, OnChanges {
     private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router
-  ) { 
+  ) {
     translate.setDefaultLang("hu");
-    translate.use("hu");    
+    translate.use("hu");
   }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
       console.log("languae from top navbar:", lang);
       this.translate.use(lang);
       let filter = queryParams["filter"];
-      if(filter) {
+      if (filter) {
         this.filterText = filter;
       } else {
         this.filterText = "";
@@ -41,24 +41,26 @@ export class TopNavbarComponent implements OnInit, OnChanges {
       (data) => {
         console.log("program list", data);
         this.programs = data.programs;
-        
+
       },
       (error) => {
-        console.log("error",error);
+        console.log("error", error);
       }
     )
   }
 
-  ngOnChanges(changes: SimpleChanges){
-    
+  ngOnChanges(changes: SimpleChanges) {
+
   }
 
   filterTextChange(event: string) {
     console.log("filterText changed event", event);
     this.filterText = event;
-    this.router.navigate(this.route.snapshot.url, {queryParams: {
-      lang: this.getActualLang(),
-      filter: this.filterText}
+    this.router.navigate(this.route.snapshot.url, {
+      queryParams: {
+        lang: this.getActualLang(),
+        filter: this.filterText
+      }
     });
   }
 
@@ -67,10 +69,10 @@ export class TopNavbarComponent implements OnInit, OnChanges {
 
   }
 
-  public get actualProgram(): string{
-    if(this.navbarService.actualProgram)
+  public get actualProgram(): string {
+    if (this.navbarService.actualProgram)
       return this.navbarService.actualProgram.name
-    else  
+    else
       return "";
   }
 
@@ -89,21 +91,28 @@ export class TopNavbarComponent implements OnInit, OnChanges {
     return this.translate.currentLang == lang;
   }
 
-  public changeLang(event: Event, lang: string){
+  public changeLang(event: Event, lang: string) {
     event.preventDefault();
-    this.router.navigate(this.route.snapshot.url, {queryParams: {lang: lang}});
+    this.router.navigate(this.route.snapshot.url, {
+      queryParams: {
+        lang: lang,
+        filter: this.filterText
+      }
+    });
   }
 
   public getActualLang(): string {
     return this.translate.currentLang;
   }
 
-  public apply(event: Event){
+  public apply(event: Event) {
     event.preventDefault();
     console.log("apply");
-    this.router.navigate(this.route.snapshot.url, {queryParams: {
-      lang: this.getActualLang(),
-      filter: this.filterText}
+    this.router.navigate(this.route.snapshot.url, {
+      queryParams: {
+        lang: this.getActualLang(),
+        filter: this.filterText
+      }
     });
   }
 
