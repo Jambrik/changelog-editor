@@ -1,3 +1,35 @@
-<p>
-  config-editor works!
-</p>
+<div *ngIf="programs">
+
+    <p-dataTable [value]="programs" selectionMode="single" [(selection)]="selectedProgram" (onRowSelect)="onRowSelect($event)" 
+    [paginator]="true" rows="15" [responsive]="true">
+        <p-header translate>PROGRAMS</p-header>
+        <p-column field="id" header="{{'ID' | translate}}" [sortable]="true"></p-column>
+        <p-column field="name" header="{{'NAME' | translate}}" [sortable]="true"></p-column>
+        <p-column field="path" header="{{'PATH' | translate}}" [sortable]="true"></p-column>
+        <p-column field="langList" header="{{'LANG_LIST' | translate}}" [sortable]="true"></p-column>
+        <p-footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button></div></p-footer>
+    </p-dataTable>
+</div>
+
+<p-dialog header="{{'PROGRAMS_DETAILS' | translate}}" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="program">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="id">Id</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="id" [(ngModel)]="program.id" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="name">Year</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="program.name" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="path">Brand</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="path" [(ngModel)]="program.path" /></div>
+        </div>        
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+        </div>
+    </p-footer>
+</p-dialog>

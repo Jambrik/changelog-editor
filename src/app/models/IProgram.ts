@@ -8,5 +8,5 @@ export interface IProgram {
     langs: string[];
     versions: string[];
     categories: ICategory[];
-    keywords: IKeyword[];
+    keywords: IKeyword[];    
 }

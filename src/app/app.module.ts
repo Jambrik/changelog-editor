@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule, ButtonModule, DataTableModule, DialogModule, DropdownModule, MessageModule, MessagesModule, 
-  CalendarModule, EditorModule, InputSwitchModule, SelectButtonModule }  from 'primeng/primeng';
+  CalendarModule, EditorModule, InputSwitchModule, SelectButtonModule, ProgressSpinnerModule }  from 'primeng/primeng';
 import { ChangeListComponent } from './change-list/change-list.component';
 import { AppComponent } from './app.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
@@ -53,6 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SelectButtonModule,
     HttpClientModule,
     InputTextModule, 
+    ProgressSpinnerModule,
     DialogModule,
     ButtonModule,
     DropdownModule,

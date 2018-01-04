@@ -16,18 +16,13 @@ exports.changeLogLoad = function (param) {
 };
 
 
-exports.changeLogVersions = function (param, res) {
-    //Get the program path:
-    console.log("in the changeLogVersion");
-    console.log("programId", param.programId);
+exports.changeLogVersions = function (param, res) {        
     if (param.programId) {
         let config = configDao.mainConfigLoad();
         if (config) {
             let program = configHelpers.getProgramById(config, param.programId);
-            if (program) {
-                console.log("before getVersionsByProgram");
-                let versions = this.getVersionsByProgram(program);
-                console.log("after getVersionsByProgram");
+            if (program) {                
+                let versions = this.getVersionsByProgram(program);                
                 res.json(versions);
             }
         }

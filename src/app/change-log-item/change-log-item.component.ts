@@ -57,8 +57,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
       if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
-        this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
-        console.log("this.changeLogItemOri", this.changeLogItemOri);
+        this.changeLogItemOri = _.cloneDeep(this.changeLogItem);        
       }
     }
 
@@ -125,8 +124,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   public delete(event: Event) {
     event.preventDefault();
     this.changeLogService.changeLogDelete(this.program.id, this.version, this.changeLogItem.id)
-      .subscribe((x) => {
-        console.log("delete done", x);
+      .subscribe((x) => {        
         this.onDeleteOrAddingNew.emit();
       },
       (error) => {
@@ -154,13 +152,10 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     }
   }
 
-  private getDescriptionByLang(lang: string): I18n {
-    console.log("lang", lang);
-    console.log("this.changeLogItem.descriptions", this.changeLogItem.descriptions);
+  private getDescriptionByLang(lang: string): I18n {    
     let selectedDescription: I18n = null;
     this.changeLogItem.descriptions.forEach(description => {
-      if (description.lang == lang) {
-        console.log("getDescriptionByLang in if");
+      if (description.lang == lang) {        
         selectedDescription = description;
       }
     });
@@ -212,8 +207,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     return this.translateService.currentLang;
   }
 
-  public getDescriptions() {
-    console.log("getDescriptions");
+  public getDescriptions() {    
     let descriptions: I18n[] = [];
     this.changeLogItem.descriptions.forEach(description => {      
       if (this.selectedLangs.indexOf(description.lang) > -1) {

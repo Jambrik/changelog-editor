@@ -3,7 +3,7 @@
 </h1>
 <div>
     <span translate>SHOWN_LANGS</span>:
-    <p-selectButton [options]="langs" [(ngModel)]="selectedLangs" [multiple]="true"></p-selectButton>    
+    <p-selectButton [options]="langs" [(ngModel)]="selectedLangs" [multiple]="true"></p-selectButton>
 </div>
 
 <div class="clearfix">
@@ -12,18 +12,17 @@
         <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
     </a>
     <div *ngIf="isNewEditing()">
-        <app-change-log-item [item]="newChangeItem" [action]="'new'" [modId]="'null'" 
-        [selectedLangs]="selectedLangs"
-        (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
+        <app-change-log-item [item]="newChangeItem" [action]="'new'" [modId]="'null'" [selectedLangs]="selectedLangs" (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
     </div>
 </div>
 
-
-
+<div [hidden]="!loading" class="container">
+    <div class="row justify-content-md-center">
+            <p-progressSpinner animationDuration=".5s"></p-progressSpinner>
+    </div>
+</div>
 <div *ngIf="changeList">
     <div *ngFor="let change of changeList.changes">
-        <app-change-log-item [item]="change" [action]="action" [modId]="id" 
-        [selectedLangs]="selectedLangs"
-        (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
+        <app-change-log-item [item]="change" [action]="action" [modId]="id" [selectedLangs]="selectedLangs" (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
     </div>
 </div>

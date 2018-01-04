@@ -35,6 +35,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public langs: ILabelValue[] = [];
   public selectedLangs: string[] = [];
   public filterText: string = "";
+  public loading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -139,8 +140,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
       changes: []
     };
     inputChangeList.changes.forEach(change => {
-      let found = false;
-      console.log("this.filterText", this.filterText);
+      let found = false;      
       let newChange: IChangeLogItem = _.cloneDeep(change);
       if ((this.filterText) && (this.filterText != "")) {
         let bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText);
@@ -171,6 +171,10 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   private getChanges() {
+    this.loading = true;
+    if(this.changeList){
+      this.changeList.changes = []; 
+    }
     this.changeLogService.getChangeLogs(this.programId, this.version)
       .subscribe(changeList => {
 
@@ -189,6 +193,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         this.oriChangeList = changeList;
 
         this.changeList = this.filter(this.oriChangeList);
+        this.loading = false;
       });
 
   }
