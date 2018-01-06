@@ -33,8 +33,10 @@
     </ul>
     <form class="form-inline mt-2 mt-md-0"  (ngSubmit)="apply($event)">
       <input class="form-control mr-sm-2" type="text" placeholder="{{'SEARCH' | translate}}" aria-label="Search"
-      [ngModel]="filterText"  (ngModelChange)="filterTextChange($event)" name="filter">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" translate>SEARCH</button>
+      [ngModel]="filterText"  (ngModelChange)="filterTextChange($event)" name="filter"
+      [disabled]="action!='read'"/>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+      [disabled]="action!='read'" translate>SEARCH</button>
     </form>
 
     <a class="nav-link" [class.border] = "isSelected('hu')" href="/" (click)="changeLang($event, 'hu')">

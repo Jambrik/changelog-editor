@@ -105,6 +105,10 @@ export class TopNavbarComponent implements OnInit, OnChanges {
     return this.translate.currentLang;
   }
 
+  public get action(): string {
+    return this.navbarService.actualAction;
+  }
+
   public apply(event: Event) {
     event.preventDefault();
     console.log("apply");
