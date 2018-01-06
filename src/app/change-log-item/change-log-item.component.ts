@@ -89,6 +89,10 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public save(event: Event) {
     event.preventDefault();
+    if(this.changeLogItem.id == null){
+      this.changeLogItem.cru = "ANONYMOUS";
+      this.changeLogItem.crd = new Date();
+    }
     this.changeLogService.changeLogWrite(this.program.id, this.version, this.changeLogItem)
       .subscribe((x) => {
         if (this.changeLogItem.id == null) {

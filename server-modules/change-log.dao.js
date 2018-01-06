@@ -55,7 +55,7 @@ exports.changeLogSave = function (param) {
         version: param.version
     });
     if (param.item.id == null) {
-        let id = idGenerator.getNext();
+        let id = idGenerator.getNext();        
         param.item.id = id;
         changeLogs.changes.push(param.item);
     } else {
