@@ -99,7 +99,7 @@ exports.changeLogFileSave = function (programId, version, changeLogs) {
     let config = configDao.mainConfigLoad();
     let program = configHelpers.getProgramById(config, programId);
     console.log("changeLogSave programId", programId);
-    fs.writeJsonSync(program.path + "/" + "changelog." + version + ".json", changeLogs);
+    fs.writeJsonSync(program.path + "/" + "changelog." + version + ".json", changeLogs, {spaces: "\t"});
 }
 
 exports.newVersion = function (programId, version) {
