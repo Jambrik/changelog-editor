@@ -27,13 +27,25 @@
         </a>
       </div>
       <div class="col-6">
-        <div class="pull-right" [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
-          <span class="text-uppercase" *ngIf="!isEditing()">
-            {{changeLogItem.type}}
-          </span>
-
-          <p-dropdown [options]="types" [(ngModel)]="changeLogItem.type" *ngIf="isEditing()"></p-dropdown>
+        <div class="pull-right" >
+            <span style="font-weight: bold" translate>TYPE</span>:
+          <span [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
+            <span *ngIf="!isEditing()">
+              {{changeLogItem.type | translate}}
+            </span>
+            <p-dropdown [options]="types" [(ngModel)]="changeLogItem.type" *ngIf="isEditing()"></p-dropdown>
+          </span>  
         </div>
+        <div class="pull-right pr-4">  
+          <span style="font-weight: bold" translate>IMPORTANCE</span>:
+            <span [class.text-primary]="changeLogItem.importance == 'high'" 
+            [class.text-secondary]="changeLogItem.importance == 'low'"             
+            *ngIf="!isEditing()">
+              {{changeLogItem.importance | translate}}
+            </span>
+  
+            <p-dropdown [options]="importances" [(ngModel)]="changeLogItem.importance" *ngIf="isEditing()"></p-dropdown>
+          </div>
       </div>
     </div>
   </div>

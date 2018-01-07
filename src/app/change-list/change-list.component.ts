@@ -142,7 +142,10 @@ export class ChangeListComponent implements OnInit, OnChanges {
     inputChangeList.changes.forEach(change => {
       let found = false;      
       let newChange: IChangeLogItem = _.cloneDeep(change);
-      if ((this.filterText) && (this.filterText != "")) {
+      if(!newChange.importance || (newChange.importance == null)) {
+        newChange.importance = "normal";
+      }
+      if ((this.filterText) && (this.filterText != "")) {        
         let bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText);
         found = bs.bool;
         if (found){
@@ -222,6 +225,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.newChangeItem = {
       id: null,
       type: "feature",
+      importance: "normal",
       category: null,
       subCategory: null,
       ticketNumber: null,

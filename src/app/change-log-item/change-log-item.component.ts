@@ -12,6 +12,7 @@ import { GoogleTranslateService } from '../services/google-translate.service';
 import { I18n } from '../models/I18N';
 import * as _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-change-log-item',
@@ -35,11 +36,16 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   selectedTos: string[] = [];
   changeLogItemOri: IChangeLogItem;
   descriptions: I18n[] = [];
+  private BUGFIX: string = "bugfix";
+  private FEATURE: string = "feature";
+  private LOW: string = "low";
+  private NORMAL: string = "normal";
+  private HIGH: string = "high";
+  public types: ILabelValue[];
 
-  public types: ILabelValue[] = [
-    { label: "BUGFIX", value: "bugfix" },
-    { label: "FEATURE", value: "feature" }
-  ];
+  public importances: ILabelValue[];
+
+
 
   public selectedType: any;
   constructor(
@@ -52,16 +58,45 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
+    this.types = [];
+    this.translateService.get([this.BUGFIX, this.FEATURE])
+      .subscribe((t) => {
+        if (t.bugfix) {
+          this.types.push({ value: this.BUGFIX, label: t.bugfix })
+        }
+
+        if (t.feature) {
+          this.types.push({ value: this.FEATURE, label: t.feature })
+        }
+
+      });
+
+    this.importances = [];
+    this.translateService.get([this.LOW, this.NORMAL, this.HIGH])
+    .subscribe((t) => {
+      if(t.low){
+        this.importances.push({value: this.LOW, label: t.low});
+      }
+
+      if(t.normal){
+        this.importances.push({value: this.NORMAL, label: t.normal});
+      }
+
+      if(t.high){
+        this.importances.push({value: this.HIGH, label: t.high});
+      }
+    });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
       if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
-        this.changeLogItemOri = _.cloneDeep(this.changeLogItem);        
+        this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
       }
     }
 
-    if(changes.selectedLangs && (changes.selectedLangs.currentValue != changes.selectedLangs.previousValue)){      
+    if (changes.selectedLangs && (changes.selectedLangs.currentValue != changes.selectedLangs.previousValue)) {
       this.descriptions = this.getDescriptions();
     }
 
@@ -89,7 +124,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public save(event: Event) {
     event.preventDefault();
-    if(this.changeLogItem.id == null){
+    if (this.changeLogItem.id == null) {
       this.changeLogItem.cru = "ANONYMOUS";
       this.changeLogItem.crd = new Date();
     }
@@ -128,7 +163,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   public delete(event: Event) {
     event.preventDefault();
     this.changeLogService.changeLogDelete(this.program.id, this.version, this.changeLogItem.id)
-      .subscribe((x) => {        
+      .subscribe((x) => {
         this.onDeleteOrAddingNew.emit();
       },
       (error) => {
@@ -156,10 +191,10 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     }
   }
 
-  private getDescriptionByLang(lang: string): I18n {    
+  private getDescriptionByLang(lang: string): I18n {
     let selectedDescription: I18n = null;
     this.changeLogItem.descriptions.forEach(description => {
-      if (description.lang == lang) {        
+      if (description.lang == lang) {
         selectedDescription = description;
       }
     });
@@ -211,9 +246,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     return this.translateService.currentLang;
   }
 
-  public getDescriptions() {    
+  public getDescriptions() {
     let descriptions: I18n[] = [];
-    this.changeLogItem.descriptions.forEach(description => {      
+    this.changeLogItem.descriptions.forEach(description => {
       if (this.selectedLangs.indexOf(description.lang) > -1) {
         descriptions.push(description);
       }
