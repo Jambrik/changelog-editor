@@ -16,6 +16,7 @@ exports.convertFromOldFormat = function (oldChangeLogList){
                     date: new Date(change.date),
                     ticketNumber: change.lgw,
                     type: change.type,
+                    importance: "normal",
                     descriptions: [{
                         lang: "hu",
                         text: change.hu
@@ -43,7 +44,7 @@ exports.convertAll = () => {
             console.log("change-logs-path: ", path);
             let oldChangeLog = fs.readJsonSync(path);            
             let newChangeLog = this.convertFromOldFormat(oldChangeLog);  
-            fs.writeJson(path+"2.json", newChangeLog);
+            fs.writeJson(path+"2.json", newChangeLog, {spaces: "\t"});
         }
 
 
