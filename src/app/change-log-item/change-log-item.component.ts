@@ -12,7 +12,7 @@ import { GoogleTranslateService } from '../services/google-translate.service';
 import { I18n } from '../models/I18N';
 import * as _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Rx';
+import { Constants } from '../constants/constants';
 
 @Component({
   selector: 'app-change-log-item',
@@ -36,11 +36,6 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   selectedTos: string[] = [];
   changeLogItemOri: IChangeLogItem;
   descriptions: I18n[] = [];
-  private BUGFIX: string = "bugfix";
-  private FEATURE: string = "feature";
-  private LOW: string = "low";
-  private NORMAL: string = "normal";
-  private HIGH: string = "high";
   public types: ILabelValue[];
 
   public importances: ILabelValue[];
@@ -58,32 +53,33 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
+    console.log("ngOnInit");
     this.types = [];
-    this.translateService.get([this.BUGFIX, this.FEATURE])
+    this.translateService.get([Constants.BUGFIX, Constants.FEATURE])
       .subscribe((t) => {
         if (t.bugfix) {
-          this.types.push({ value: this.BUGFIX, label: t.bugfix })
+          this.types.push({ value: Constants.BUGFIX, label: t.bugfix })
         }
 
         if (t.feature) {
-          this.types.push({ value: this.FEATURE, label: t.feature })
-        }
+          this.types.push({ value: Constants.FEATURE, label: t.feature })
+        }        
 
       });
 
     this.importances = [];
-    this.translateService.get([this.LOW, this.NORMAL, this.HIGH])
+    this.translateService.get([Constants.LOW, Constants.NORMAL, Constants.HIGH])
     .subscribe((t) => {
       if(t.low){
-        this.importances.push({value: this.LOW, label: t.low});
+        this.importances.push({value: Constants.LOW, label: t.low});
       }
 
       if(t.normal){
-        this.importances.push({value: this.NORMAL, label: t.normal});
+        this.importances.push({value: Constants.NORMAL, label: t.normal});
       }
 
       if(t.high){
-        this.importances.push({value: this.HIGH, label: t.high});
+        this.importances.push({value: Constants.HIGH, label: t.high});
       }
     });
 

@@ -139,6 +139,30 @@
 			"crd": "2018-01-07T07:04:10.094Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "8f428b50-f40b-11e7-928d-69eac41394d9",
+			"type": "feature",
+			"importance": "normal",
+			"category": null,
+			"subCategory": null,
+			"ticketNumber": null,
+			"date": "2018-01-08T00:32:38.383Z",
+			"keywords": [],
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>A megjelenített verziós változások szűrhetőek, típusra és fontosságra is.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Displayed version changes can be filtered, type, and importance.</p>"
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-01-08T00:33:34.311Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }

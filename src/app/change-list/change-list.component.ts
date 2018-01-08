@@ -12,11 +12,9 @@ import { IChangeLogItem } from '../models/IChangeLogItem';
 import { TranslateService } from '@ngx-translate/core';
 import { ILabelValue } from '../models/ILableValue';
 import * as _ from 'lodash';
+import { Constants } from '../constants/constants';
+import { Subscription } from 'rxjs/Subscription';
 
-interface City {
-  name: string,
-  code: string
-}
 
 @Component({
   selector: 'app-change-list',
@@ -36,15 +34,26 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public selectedLangs: string[] = [];
   public filterText: string = "";
   public loading: boolean = false;
+  public types: ILabelValue[] = [];
+  public selectedTypes: string[] = [];
+  public importances: ILabelValue[] = [];
+  public selectedImportances: string[] = [];
+  private typesSubscribe: Subscription;;
+  private importanceSubscribe: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private changeLogService: ChangeLogService,
     private navbarService: NavbarService,
     private configService: ConfigService,
-    private translate: TranslateService) { }
+    private translateService: TranslateService) { }
 
   ngOnInit() {
+    this.selectedTypes = [Constants.BUGFIX, Constants.FEATURE];
+    this.selectedImportances = [Constants.LOW, Constants.NORMAL, Constants.HIGH];
+    console.log("CurrentLang", this.translateService.currentLang);
+    this.loadTypes();
+    this.loadImportance();
     console.log("change-list init");
     //Because we load always the same component, the init run only once. So we subscribe the router params changes:
     this.route.params.subscribe(params => {
@@ -120,7 +129,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
     });
 
     this.route.queryParams.subscribe((queryParams) => {
-
+      this.loadImportance();
+      this.loadTypes();
       this.filterText = queryParams["filter"];
       if (this.oriChangeList) {
         this.changeList = this.filter(this.oriChangeList);
@@ -133,50 +143,101 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   }
 
+  private loadTypes() {
+    console.log("in load types");
+    setTimeout(() => {
+      this.types = [];
+
+      this.typesSubscribe = this.translateService.get([Constants.BUGFIX, Constants.FEATURE])
+        .subscribe((t) => {
+          console.log("in load types subscribe");
+          if (t.bugfix) {
+            this.types.push({ value: Constants.BUGFIX, label: t.bugfix })
+          }
+
+          if (t.feature) {
+            this.types.push({ value: Constants.FEATURE, label: t.feature })
+          }
+          console.log("types", this.types);
+        });
+    }, 100);
+
+
+  }
+  private loadImportance() {
+    setTimeout(() => {
+      this.importances = [];
+
+      this.importanceSubscribe = this.translateService.get([Constants.LOW, Constants.NORMAL, Constants.HIGH])
+        .subscribe((t) => {
+          if (t.low) {
+            this.importances.push({ value: Constants.LOW, label: t.low });
+          }
+
+          if (t.normal) {
+            this.importances.push({ value: Constants.NORMAL, label: t.normal });
+          }
+
+          if (t.high) {
+            this.importances.push({ value: Constants.HIGH, label: t.high });
+          }
+        });
+    }, 100);
+
+  }
+
   private filter(inputChangeList: IChaneLogList): IChaneLogList {
     let changeList = {
       releaseDate: inputChangeList.releaseDate,
       version: inputChangeList.version,
       changes: []
     };
-    inputChangeList.changes.forEach(change => {
-      let found = false;      
-      let newChange: IChangeLogItem = _.cloneDeep(change);
-      if(!newChange.importance || (newChange.importance == null)) {
-        newChange.importance = "normal";
-      }
-      if ((this.filterText) && (this.filterText != "")) {        
-        let bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText);
-        found = bs.bool;
-        if (found){
-          newChange.ticketNumber = bs.str;
-        }
-        if (!found) {
-          newChange.descriptions.forEach(description => {
-            if (!found){
-              let bs = StringHelpers.findAndGreen(description.text, this.filterText);
-              found = bs.bool;
-              if (found){
-                description.text = bs.str;
-              }
-            }
-          });
-        }
-      } else {
-        found = true;
-      }
 
-      if (found) {
-        changeList.changes.push(newChange);
+    inputChangeList.changes.forEach(change => {      
+      console.log("change.importance", change.importance);
+      if ((this.selectedTypes.indexOf(change.type) > -1) && ((!change.importance && (this.selectedImportances.indexOf(Constants.NORMAL)>-1)) || (this.selectedImportances.indexOf(change.importance) > -1))) {        
+        let found = false;
+        let newChange: IChangeLogItem = _.cloneDeep(change);
+        if (!newChange.importance || (newChange.importance == null)) {
+          newChange.importance = "normal";
+        }
+        if ((this.filterText) && (this.filterText != null) && (this.filterText != "")) {
+          if (newChange.ticketNumber && (newChange.ticketNumber != null) && (newChange.ticketNumber != "")) {
+            let bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText);
+            found = bs.bool;
+
+            if (found) {
+              newChange.ticketNumber = bs.str;
+            }
+          }
+          if (!found) {
+            newChange.descriptions.forEach(description => {
+              if (!found) {
+                let bs = StringHelpers.findAndGreen(description.text, this.filterText);
+                found = bs.bool;
+                if (found) {
+                  description.text = bs.str;
+                }
+              }
+            });
+          }
+        } else {
+          found = true;
+        }
+
+        if (found) {
+          changeList.changes.push(newChange);
+        }
       }
     });
+    
     return changeList;
   }
 
   private getChanges() {
     this.loading = true;
-    if(this.changeList){
-      this.changeList.changes = []; 
+    if (this.changeList) {
+      this.changeList.changes = [];
     }
     this.changeLogService.getChangeLogs(this.programId, this.version)
       .subscribe(changeList => {
@@ -240,7 +301,20 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   public getActualLang(): string {
-    return this.translate.currentLang;
+    return this.translateService.currentLang;
+  }
+
+
+  public selectedTypesChange(event: string[]) {    
+    console.log("selectedTypesChange", event);
+    this.selectedTypes = event;    
+    this.changeList = this.filter(this.oriChangeList);
+  }
+
+  public selectedImportancesChange(event: string[]) {    
+    console.log("selectedImportancesChange", event);
+    this.selectedImportances = event;    
+    this.changeList = this.filter(this.oriChangeList);
   }
 
 }
