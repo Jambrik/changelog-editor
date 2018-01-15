@@ -163,6 +163,30 @@
 			"crd": "2018-01-08T00:33:34.311Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "c9d6bde0-f9b5-11e7-856f-65eb8c7b4834",
+			"type": "feature",
+			"importance": "normal",
+			"category": null,
+			"subCategory": null,
+			"ticketNumber": null,
+			"date": "2018-01-15T05:30:54.857Z",
+			"keywords": [],
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>A keresés optimalizálva. Most már nem az angular model frissítési sebességével szűri a program a találatot, hanem helyette az rxjs segítségével a gépelés befejezése után 300 ms-mal kezdi el azt a program. A kereső gomb lekerült mivel nincs már igazán funkciója.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Search optimized. Now it is not the refresh rate of the angular model that filters the hit, but instead of rxjs, the program starts at 300 ms after finishing typing. The search button has been removed since it has no real function any more. </p>"
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-01-15T05:34:42.849Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }

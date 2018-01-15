@@ -5,6 +5,12 @@ import { ConfigService } from '../services/config.service';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavbarService } from '../services/navbar.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-top-navbar',
@@ -14,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class TopNavbarComponent implements OnInit, OnChanges {
   public filterText: string;
   public programs: IProgram[];
+  public searchTerm$ = new Subject<string>();
   constructor(
     private configService: ConfigService,
     public navbarService: NavbarService,
@@ -47,10 +54,28 @@ export class TopNavbarComponent implements OnInit, OnChanges {
         console.log("error", error);
       }
     )
+
+    this.search(this.searchTerm$)
+    .subscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
 
+  }
+
+  search(terms: Observable<string>) {
+    return terms.debounceTime(300)
+      .distinctUntilChanged()
+      .switchMap(term => {
+        this.filterText = term;
+        console.log("filter text: " + this.filterText);
+        return this.router.navigate(this.route.snapshot.url, {
+          queryParams: {
+            lang: this.getActualLang(),
+            filter: this.filterText
+          }
+        });
+      });
   }
 
   filterTextChange(event: string) {
