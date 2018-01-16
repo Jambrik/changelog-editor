@@ -46,8 +46,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   constructor(
     private navbarService: NavbarService,
     private changeLogService: ChangeLogService,
-    private router: Router,
-    private messageService: MessageService,
+    private router: Router,    
     private googleTranslateService: GoogleTranslateService,
     private translateService: TranslateService
   ) { }
