@@ -121,7 +121,7 @@
             CREATED
           </dt>
           <dd class="col-lg-6">
-            {{(changeLogItem.crd) ? (changeLogItem.crd | date: "yyyy.MM.dd. hh.mm") : 'N.A.'}}
+            {{(changeLogItem.crd) ? (changeLogItem.crd | date: "yyyy.MM.dd. HH.mm") : 'N.A.'}}
           </dd>
           <dt class="col-lg-6" translate>
             LAST_MODIFIER
@@ -133,7 +133,7 @@
             LAST_MODIFIED
           </dt>
           <dd class="col-lg-6">
-            {{(changeLogItem.lmd) ? changeLogItem.lmd: 'N.A.'}}
+            {{(changeLogItem.lmd) ? (changeLogItem.lmd | date: "yyyy.MM.dd. HH.mm") : 'N.A.'}}
           </dd>
         </dl>
       </div>
@@ -152,12 +152,12 @@
       *ngIf="canBeModified()">
       <span class="fa fa-edit"></span>
     </a>
-    <a href="/" class="btn btn-success pull-right" (click)="save($event)" *ngIf="isEditing()">
-      <span class="fa fa-save"></span>
-    </a>
     <a href="/" class="btn btn-secondary pull-right" (click)="cancelMod($event)" *ngIf="isEditing()">
       <span class="fa fa-close"></span>
     </a>
+    <a href="/" class="btn btn-success pull-right" (click)="save($event)" *ngIf="isEditing()">
+      <span class="fa fa-save"></span>
+    </a>    
   </div>
 </div>
 

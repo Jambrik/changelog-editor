@@ -180,11 +180,59 @@
 				},
 				{
 					"lang": "en",
-					"text": "<p>Search optimized. Now it is not the refresh rate of the angular model that filters the hit, but instead of rxjs, the program starts at 300 ms after finishing typing. The search button has been removed since it has no real function any more. </p>"
+					"text": "<p>Search optimized. Now it is not the refresh rate of the angular model that filters the hit, but instead of rxjs, the program starts at 300 ms after finishing typing. The search button has been removed since it has no real function any more.</p>"
 				}
 			],
 			"cru": "ANONYMOUS",
 			"crd": "2018-01-15T05:34:42.849Z",
+			"lmu": null,
+			"lmd": null
+		},
+		{
+			"id": "7ad0d7f0-faf8-11e7-beba-491f5d38f91b",
+			"type": "feature",
+			"importance": "normal",
+			"category": null,
+			"subCategory": null,
+			"ticketNumber": null,
+			"date": "2018-01-16T20:01:50.894Z",
+			"keywords": [],
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>A módosításkor megjelenő mentés és mégsem gombok sorrendje felcserélve. Először a mentés jön és aztán a mégsem, ahogyan azt windowsos operációs rendszereken már megszokhattuk.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>The order of the save and cancel button changed during modification. First, the sae buttom is coming, and then the cancel. the way we used it on Windows operating systems.</p>"
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-01-16T20:04:37.712Z",
+			"lmu": "ANONYMOUS",
+			"lmd": "2018-01-16T20:12:52.400Z"
+		},
+		{
+			"id": "61f90580-faf9-11e7-beba-491f5d38f91b",
+			"type": "bugfix",
+			"importance": "normal",
+			"category": null,
+			"subCategory": null,
+			"ticketNumber": null,
+			"date": "2018-01-16T20:07:19.558Z",
+			"keywords": [],
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Mégsem gomb megnyomásának hatására nem állt vissza az eredeti értékére az éppen módosított bejegyzés. Javítva.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Pushing the cancel button the entry did not changed to its original value. Fixed. </p>"
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-01-16T20:11:05.530Z",
 			"lmu": null,
 			"lmd": null
 		}

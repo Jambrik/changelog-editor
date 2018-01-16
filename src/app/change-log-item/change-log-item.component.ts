@@ -88,6 +88,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
       if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
+        console.log("ngOnChanges");
         this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
       }
     }
@@ -123,6 +124,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     if (this.changeLogItem.id == null) {
       this.changeLogItem.cru = "ANONYMOUS";
       this.changeLogItem.crd = new Date();
+    } else {
+      this.changeLogItem.lmu = "ANONYMOUS";
+      this.changeLogItem.lmd = new Date();
     }
     this.changeLogService.changeLogWrite(this.program.id, this.version, this.changeLogItem)
       .subscribe((x) => {
@@ -139,6 +143,8 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
     this.changeLogItem = _.cloneDeep(this.changeLogItemOri);
+    this.descriptions = this.getDescriptions();
+    console.log("after _.clone(this.changeLogItemOri);", this.changeLogItem);
     this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
   }
 
