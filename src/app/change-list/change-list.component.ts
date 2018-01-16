@@ -14,6 +14,7 @@ import { ILabelValue } from '../models/ILableValue';
 import * as _ from 'lodash';
 import { Constants } from '../constants/constants';
 import { Subscription } from 'rxjs/Subscription';
+import { Message } from 'primeng/components/common/message';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public selectedImportances: string[] = [];
   private typesSubscribe: Subscription;;
   private importanceSubscribe: Subscription;
+  msgs: Message[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -258,7 +260,15 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
         this.changeList = this.filter(this.oriChangeList);
         this.loading = false;
-      });
+      },
+    (error)=> {
+      console.log("getChanges", error);
+      this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+      this.loading = false;
+    },
+  ()=> {
+    
+  });
 
   }
 

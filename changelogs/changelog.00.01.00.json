@@ -235,6 +235,30 @@
 			"crd": "2018-01-16T20:11:05.530Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "99aee240-fafb-11e7-beba-491f5d38f91b",
+			"type": "feature",
+			"importance": "normal",
+			"category": null,
+			"subCategory": null,
+			"ticketNumber": null,
+			"date": "2018-01-16T20:26:06.817Z",
+			"keywords": [],
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Ha hiba történik a változások betöltésekor, akkor mostantól a hiba okát a képernyőn láthatjuk.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>If occurs a mistake while loading changes, you will now see the cause of the error on the screen. </p>"
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-01-16T20:26:57.989Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }
