@@ -3,7 +3,7 @@
         <app-left-navbar></app-left-navbar>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
             <h1 translate>
-                {{'VERSION' | translate}}: {{version}}
+                {{'VERSION' | translate}}: {{printVersion()}}
             </h1>
             <p-messages [(value)]="msgs"></p-messages>
             <div class="row">

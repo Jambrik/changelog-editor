@@ -39,7 +39,7 @@ export class ProgramListComponent implements OnInit {
       return program.versions[0];
     }
     else {
-      return "last";
+      return "none";
     }
 
   }

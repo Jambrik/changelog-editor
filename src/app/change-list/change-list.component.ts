@@ -1,7 +1,7 @@
 import { I18n } from '../models/I18N';
 import { StringHelpers } from '../helpers/string-helpers';
 import { ActivatedRoute } from '@angular/router';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, transition } from '@angular/core';
 import { ChangeLogService } from '../services/change-log.service';
 import { IChaneLogList } from '../models/IChangeLogList';
 import { NavbarService } from '../services/navbar.service';
@@ -42,6 +42,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   private typesSubscribe: Subscription;;
   private importanceSubscribe: Subscription;
   msgs: Message[] = [];
+  private noVersionYetCaption: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,6 +52,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     private translateService: TranslateService) { }
 
   ngOnInit() {
+
     this.selectedTypes = [Constants.BUGFIX, Constants.FEATURE];
     this.selectedImportances = [Constants.LOW, Constants.NORMAL, Constants.HIGH];
     console.log("CurrentLang", this.translateService.currentLang);
@@ -133,6 +135,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.route.queryParams.subscribe((queryParams) => {
       this.loadImportance();
       this.loadTypes();
+      this.loadCaptionTranslations();
       this.filterText = queryParams["filter"];
       if (this.oriChangeList) {
         this.changeList = this.filter(this.oriChangeList);
@@ -143,6 +146,15 @@ export class ChangeListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
 
 
+  }
+
+  private loadCaptionTranslations() {
+    setTimeout(() => {    
+      this.translateService.get("NO_VERSION_YET")
+        .subscribe((translation) => {
+          this.noVersionYetCaption = translation;
+        })
+    }, 100);
   }
 
   private loadTypes() {
@@ -195,9 +207,9 @@ export class ChangeListComponent implements OnInit, OnChanges {
       changes: []
     };
 
-    inputChangeList.changes.forEach(change => {      
+    inputChangeList.changes.forEach(change => {
       console.log("change.importance", change.importance);
-      if ((this.selectedTypes.indexOf(change.type) > -1) && ((!change.importance && (this.selectedImportances.indexOf(Constants.NORMAL)>-1)) || (this.selectedImportances.indexOf(change.importance) > -1))) {        
+      if ((this.selectedTypes.indexOf(change.type) > -1) && ((!change.importance && (this.selectedImportances.indexOf(Constants.NORMAL) > -1)) || (this.selectedImportances.indexOf(change.importance) > -1))) {
         let found = false;
         let newChange: IChangeLogItem = _.cloneDeep(change);
         if (!newChange.importance || (newChange.importance == null)) {
@@ -232,43 +244,50 @@ export class ChangeListComponent implements OnInit, OnChanges {
         }
       }
     });
-    
+
     return changeList;
   }
 
   private getChanges() {
-    this.loading = true;
-    if (this.changeList) {
-      this.changeList.changes = [];
+    if (this.version != "none") {
+      this.loading = true;
+      if (this.changeList) {
+        this.changeList.changes = [];
+      }
+      this.changeLogService.getChangeLogs(this.programId, this.version)
+        .subscribe(changeList => {
+
+          changeList.changes.forEach(change => {
+            change.date = new Date(change.date);
+          });
+          changeList.changes.sort((a, b) => {
+            if (a.date > b.date)
+              return -1;
+            else if (a.date < b.date)
+              return 1;
+            else
+              return 0;
+          });
+
+          this.oriChangeList = changeList;
+
+          this.changeList = this.filter(this.oriChangeList);
+          this.loading = false;
+        },
+        (error) => {
+          console.log("getChanges", error);
+          this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+          this.loading = false;
+        });
+    } else {
+        this.oriChangeList = {
+          releaseDate: null,
+          version: null,
+          changes: []
+        };
+        this.changeList = _.cloneDeep(this.oriChangeList);
+      
     }
-    this.changeLogService.getChangeLogs(this.programId, this.version)
-      .subscribe(changeList => {
-
-        changeList.changes.forEach(change => {
-          change.date = new Date(change.date);
-        });
-        changeList.changes.sort((a, b) => {
-          if (a.date > b.date)
-            return -1;
-          else if (a.date < b.date)
-            return 1;
-          else
-            return 0;
-        });
-
-        this.oriChangeList = changeList;
-
-        this.changeList = this.filter(this.oriChangeList);
-        this.loading = false;
-      },
-    (error)=> {
-      console.log("getChanges", error);
-      this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-      this.loading = false;
-    },
-  ()=> {
-    
-  });
 
   }
 
@@ -315,18 +334,25 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
 
-  public selectedTypesChange(event: string[]) {    
+  public selectedTypesChange(event: string[]) {
     console.log("selectedTypesChange", event);
-    this.selectedTypes = event;    
+    this.selectedTypes = event;
     this.changeList = this.filter(this.oriChangeList);
   }
 
-  public selectedImportancesChange(event: string[]) {    
+  public selectedImportancesChange(event: string[]) {
     console.log("selectedImportancesChange", event);
-    this.selectedImportances = event;    
+    this.selectedImportances = event;
     this.changeList = this.filter(this.oriChangeList);
   }
 
+  public printVersion(){
+    if(this.version == "none" ) {
+      return this.noVersionYetCaption;
+    } else {
+      return this.version;
+    }
+  }
 }
 
 

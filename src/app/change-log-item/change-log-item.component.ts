@@ -142,7 +142,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
     this.changeLogItem = _.cloneDeep(this.changeLogItemOri);
-    this.descriptions = this.getDescriptions();
+    if(this.action == "mod"){
+      this.descriptions = this.getDescriptions();
+    }
     console.log("after _.clone(this.changeLogItemOri);", this.changeLogItem);
     this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
   }
