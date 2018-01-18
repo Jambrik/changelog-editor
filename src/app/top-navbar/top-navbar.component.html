@@ -8,8 +8,7 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/" [routerLink]="['/']" [queryParams]="{lang: getActualLang()}"
-        translate>HOMEPAGE
+        <a class="nav-link" href="/" [routerLink]="['/']" [queryParams]="{lang: getActualLang()}" translate>HOMEPAGE
           <span class="sr-only">(current)</span>
         </a>
       </li>
@@ -19,29 +18,32 @@
           PROGRAM
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a *ngFor="let program of programs" class="dropdown-item" href="#" 
-          [routerLink]="['change-list', program.id, getLastVersion(program), 'read', 'none']" [queryParams]="{lang: getActualLang()}">
+          <a *ngFor="let program of programs" class="dropdown-item" href="#" [routerLink]="['change-list', program.id, getLastVersion(program), 'read', 'none']"
+            [queryParams]="{lang: getActualLang()}">
             {{program.name}}
-          </a>          
+          </a>
         </div>
       </li>
       <li class="nav-item">
-        
-        <a class="nav-link" href="/" [routerLink]="['/config-editor']"
-        [queryParams]="{lang: getActualLang()}" translate>SETTINGS</a>
+
+        <a class="nav-link" href="/" [routerLink]="['/config-editor']" [queryParams]="{lang: getActualLang()}" translate>SETTINGS</a>
+      </li>
+      <li class="nav-item" *ngIf="getUserCode()">
+        <div class="navbar-text pl-5" translate> USER</div>
+        <div class="navbar-text">:</div>
+        <div class="navbar-text">{{getUserName()}} ({{ getUserCode() }})</div>
       </li>
     </ul>
-    <form class="form-inline mt-2 mt-md-0"  (ngSubmit)="apply($event)">
-      <input class="form-control mr-sm-2" type="text" placeholder="{{'SEARCH' | translate}}" aria-label="Search"
-      (keyup)="searchTerm$.next($event.target.value)" name="filter"
-      [disabled]="action!='read'"/>      
+    <form class="form-inline mt-2 mt-md-0" (ngSubmit)="apply($event)">
+      <input class="form-control mr-sm-2" type="text" placeholder="{{'SEARCH' | translate}}" aria-label="Search" (keyup)="searchTerm$.next($event.target.value)"
+        name="filter" [disabled]="action!='read'" />
     </form>
 
-    <a class="nav-link" [class.border] = "isSelected('hu')" href="/" (click)="changeLang($event, 'hu')">
+    <a class="nav-link" [class.border]="isSelected('hu')" href="/" (click)="changeLang($event, 'hu')">
       <img src="../../assets/flag-hungary.png" alt="hu">
     </a>
-    <a class="nav-link" [class.border] = "isSelected('en')" href="/" (click)="changeLang($event, 'en')">
+    <a class="nav-link" [class.border]="isSelected('en')" href="/" (click)="changeLang($event, 'en')">
       <img src="../../assets/flag-united-kingdom.png" alt="en">
-    </a>    
+    </a>
   </div>
 </nav>

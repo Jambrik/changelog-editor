@@ -13,6 +13,7 @@ import { I18n } from '../models/I18N';
 import * as _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from '../constants/constants';
+import { User } from '../models/IUser';
 
 @Component({
   selector: 'app-change-log-item',
@@ -120,11 +121,21 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public save(event: Event) {
     event.preventDefault();
+    let user: User;
+    user = this.navbarService.actualUser;
     if (this.changeLogItem.id == null) {
-      this.changeLogItem.cru = "ANONYMOUS";
+      if(user){
+        this.changeLogItem.cru = user.code;
+      } else {
+        this.changeLogItem.cru = "ANONYMOUS";
+      }
       this.changeLogItem.crd = new Date();
     } else {
-      this.changeLogItem.lmu = "ANONYMOUS";
+      if(user){
+        this.changeLogItem.lmu = user.code;
+      } else {
+        this.changeLogItem.lmu = "ANONYMOUS";
+      }
       this.changeLogItem.lmd = new Date();
     }
     this.changeLogService.changeLogWrite(this.program.id, this.version, this.changeLogItem)

@@ -3,6 +3,7 @@ import { IProgram } from '../models/IProgram';
 import { ChangeLogService } from './change-log.service';
 import { version } from 'punycode';
 import { StringHelpers } from '../helpers/string-helpers';
+import { User } from '../models/IUser';
 
 @Injectable()
 export class NavbarService {
@@ -10,6 +11,7 @@ export class NavbarService {
   private _actualVersions: string[];
   private _actualVersion: string;
   private _actualAction: string;
+  private _actualUser: User;
 
 
   constructor(private changeLogService: ChangeLogService) { 
@@ -48,4 +50,12 @@ export class NavbarService {
     this._actualAction = value;    
   }
 
+  get actualUser(): User {
+    return this._actualUser;
+  }
+
+  set actualUser(value: User) {    
+    this._actualUser = value;    
+  }
+  
 }

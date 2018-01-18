@@ -145,4 +145,16 @@ export class TopNavbarComponent implements OnInit, OnChanges {
     });
   }
 
+  public getUserName(): string {
+    if(this.navbarService.actualUser){
+      return this.navbarService.actualUser.name;
+    } 
+  }
+
+  public getUserCode(): string {
+    if(this.navbarService.actualUser){
+      return this.navbarService.actualUser.code;
+    }
+  }
+
 }

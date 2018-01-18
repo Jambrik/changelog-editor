@@ -9,7 +9,8 @@ exports.getProgramById = (config, programId) => {
 
 }
 
-exports.configFilesMerge =(common, personal) => {    
+exports.configFilesMerge =(common, personal) => {  
+    common.user = personal.user;  
     common.programs.forEach(program => {
         let personalProgram = this.getProgramById(personal, program.id);
             program.path = personalProgram.path;        
