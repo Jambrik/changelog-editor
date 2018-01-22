@@ -38,8 +38,7 @@ router.route('/change-log-load/:program_id/:version')
   });
 
   router.route('/change-log-write/')
-  .post(function (req, res) {
-    console.log(req.body);
+  .post(function (req, res) {    
     var param = {
       programId: req.body.programId,
       version: req.body.version,
@@ -50,8 +49,7 @@ router.route('/change-log-load/:program_id/:version')
   });
 
   router.route('/change-log-delete/')
-  .post(function (req, res) {
-    console.log(req.body);
+  .post(function (req, res) {    
     var param = {
       programId: req.body.programId,
       version: req.body.version,
@@ -61,14 +59,23 @@ router.route('/change-log-load/:program_id/:version')
     res.json({done: true});
   });
 
+  router.route('/change-log-release/')
+  .post(function (req, res) {    
+    var param = {
+      programId: req.body.programId,
+      version: req.body.version,
+      releaseDate: req.releaseDate
+    }
+    changeLogDao.changeLogRelease(param);    
+    res.json({done: true});
+  });
+
 router.route('/versions/:program_id/')
-  .get(function (req, res) {
-    console.log("versions call");
+  .get(function (req, res) {    
 
     var param = {
       programId: req.params.program_id,
-    }
-    console.log("versions call program_id: " + req.params.program_id);
+    }    
     changeLogDao.changeLogVersions(param, res);    
   });
 
@@ -79,8 +86,7 @@ router.route('/versions/:program_id/')
   });
 
   router.route('/translate/')
-  .post(function (req, res) {
-    console.log(req.body);
+  .post(function (req, res) {    
     
     translate.translate(req.body.text, req.body.from, req.body.to, res);    
   });
@@ -128,8 +134,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  console.log("A kért oldal nem található!");
+app.use(function (req, res, next) {  
   var err = new Error('Not Found');
   err.status = 404;
   next(err);

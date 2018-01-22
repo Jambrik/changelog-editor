@@ -7,6 +7,7 @@ import { ConfigHelper } from '../helpers/config-helper';
 import { StringHelpers } from '../helpers/string-helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { ChangeLogService } from '../services/change-log.service';
+import { IVersionMetaData } from '../models/IVersionMetaData';
 
 @Component({
   selector: 'app-new-version-creatation',
@@ -15,7 +16,7 @@ import { ChangeLogService } from '../services/change-log.service';
 })
 export class NewVersionCreatationComponent implements OnInit {
   public programId: number;
-  public version: string;
+  public version: IVersionMetaData;
   public smaller: boolean = false;
   constructor(
     private navbarService: NavbarService,
@@ -36,7 +37,7 @@ export class NewVersionCreatationComponent implements OnInit {
           .subscribe((config) => {
             this.programId = programIdInt;    
             this.navbarService.actualProgram = ConfigHelper.getProgramById(config.programs, this.programId);          
-            this.navbarService.actualProgram.versions.sort(StringHelpers.sortDesc);
+            this.navbarService.actualProgram.versions.sort(ConfigHelper.versionSorter);
             this.navbarService.actualVersions = this.navbarService.actualProgram.versions;
           });
         }
@@ -60,20 +61,20 @@ export class NewVersionCreatationComponent implements OnInit {
   }
 
   private valid(): boolean {
-    let lastVersion: string = this.getLastVersion();
-    this.smaller = this.version <= lastVersion;
+    let lastVersion: IVersionMetaData = this.getLastVersion();
+    this.smaller = this.version.version <= lastVersion.version;
     return !this.smaller;
   }
 
   public cancel(event: Event) {
     event.preventDefault();
-    let lastVersion: string = this.getLastVersion();
+    let lastVersion: IVersionMetaData = this.getLastVersion();
     if(lastVersion != null){
       this.router.navigate(["/change-list", this.program.id, lastVersion, 'read', 'none'], {queryParams: {lang: this.getActualLang()}});    
     }
   }
 
-  private getLastVersion(): string {
+  private getLastVersion(): IVersionMetaData {
     if(this.navbarService.actualProgram.versions.length > 0) {
       return this.navbarService.actualProgram.versions[0];
     } else 

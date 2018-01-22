@@ -1,6 +1,8 @@
 {
     "ADD": "Hozzáad",
-    "ARE_YOU_SURE_DELETE_THIS_CHANGE_LOG_ITEM": "Biztos, hogy törölni szeretné a bejegyzést?",
+    "ARE_YOU_SURE_DELETE_THIS_CHANGE_LOG_ITEM": "Biztos, hogy törölni szeretnéd a bejegyzést?",
+    "ARE_YOU_SURE_DELETE_RELEASED_CHANGE_LOG_ITEM": "Biztos, hogy törölni szeretnéd a már kiadott verzióhoz tartozó bejegyzést?",
+    "ARE_YOU_SURE_ADDING_MOD_TO_RELEASED_CHANGE_LOG": "Biztos, hogy hozzáadni / módosítani akarsz a már kiadott verziós változáson?",    
     "bugfix": "Hibajavítás",
     "CANCEL": "Mégsem",
     "CATEGORY": "Kategória",
@@ -29,12 +31,14 @@
     "NO_PROGRAM_CHOSEN": "Nincs program kiválasztva",
     "NO_VERSION_YET": "Nem lett még létrehozva verzió",
     "normal": "Normál",
-    "NOT_EDITABLE": "Not editable",
+    "NOT_EDITABLE": "Nem szerkeszthető",
+    "OK": "Rendben",
     "OPEN": "Megnyit",
     "PATH": "Fájl elérési útvonala",
     "PROGRAM": "Program",
     "PROGRAMS": "Programok",
     "PROGRAMS_DETAILS": "Program részletezés",
+    "RELEASE_DATE": "Kiadás dátuma",
     "SETTINGS": "Beállítások",
     "SEARCH": "Keresés",
     "SHOWN_LANGS": "Megjelenített nyelvek",
@@ -45,5 +49,6 @@
     "TRANSLATION": "Fordítás",
     "TYPE": "Típus",
     "USER": "Felhasználó",
-    "VERSION": "Verzió"
+    "VERSION": "Verzió",
+    "YES": "Igen"
 }

@@ -4,6 +4,7 @@ import { ConfigService } from '../services/config.service';
 import { IProgram } from '../models/IProgram';
 import { NavbarService } from '../services/navbar.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ConfigHelper } from '../helpers/config-helper';
 
 @Component({
   selector: 'app-program-list',
@@ -19,7 +20,7 @@ export class ProgramListComponent implements OnInit {
 
   ngOnInit() {
     this.navbarService.actualProgram = null;
-    this.navbarService.actualVersion = "";
+    this.navbarService.actualVersion = {version: ""};
     this.navbarService.actualVersions = [];
     this.configService.getConfig().subscribe(
       (data) => {
@@ -35,8 +36,8 @@ export class ProgramListComponent implements OnInit {
 
   public getLastVersion(program: IProgram): string {
     if (program.versions && (program.versions.length > 0)) {
-      program.versions.sort(StringHelpers.sortDesc);
-      return program.versions[0];
+      program.versions.sort(ConfigHelper.versionSorter);
+      return program.versions[0].version;
     }
     else {
       return "none";

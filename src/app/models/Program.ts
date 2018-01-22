@@ -1,6 +1,7 @@
 import { IProgram } from "./IProgram";
 import { ICategory } from "./ICategory";
 import { IKeyword } from "./IKeyword";
+import { IVersionMetaData } from "./IVersionMetaData";
 
 export class Program implements IProgram {
     constructor(
@@ -8,7 +9,7 @@ export class Program implements IProgram {
         public name: string,
         public path: string,
         public langs: string[],
-        public versions: string[],
+        public versions: IVersionMetaData[],
         public categories: ICategory[],
         public keywords: IKeyword[]) {
     }

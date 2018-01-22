@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarService } from '../services/navbar.service';
 import { ChangeLogService } from '../services/change-log.service';
 import { TranslateService } from '@ngx-translate/core';
+import { IVersionMetaData } from '../models/IVersionMetaData';
 
 @Component({
   selector: 'app-left-navbar',
@@ -33,7 +34,7 @@ export class LeftNavbarComponent implements OnInit {
       return undefined;
   }
 
-  public get versions(): string[] {
+  public get versions(): IVersionMetaData[] {
     return this.navbarService.actualVersions;
   }
 
@@ -41,7 +42,7 @@ export class LeftNavbarComponent implements OnInit {
     return this.navbarService.actualAction == "read";
   }
 
-  public isActual(version: string): boolean {
+  public isActual(version: IVersionMetaData): boolean {
     return this.navbarService.actualVersion == version;
   }
 

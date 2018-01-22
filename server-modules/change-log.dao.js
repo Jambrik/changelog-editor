@@ -26,25 +26,27 @@ exports.changeLogVersions = function (param, res) {
                 res.json(versions);
             }
         }
-    }
-
-
+    }    
 
 };
 
-exports.getVersionsByProgram = function (program) {
-    console.log("in the getVersionsByProgram");
-    console.log((program) ? "pr defined" : "prundef");
+exports.getVersionsByProgram = function (program) {    
     if (program) {
-        let path = program.path;
-        console.log("path", path);
-        var items = fs.readdirSync(path);
-        console.log("getVersionsByProgram.items", items);
+        let path = program.path;        
+        var files = fs.readdirSync(path);        
         let versions = [];
-        for (var i = 0; i < items.length; i++) {
-            versions.push(items[i].substring(items[i].length - 13, items[i].length - 5));
-        }
+        files.forEach(file => {
+            console.log("file: ", file);
+            let v = fs.readJsonSync(path + file);
+            console.log("v: ", v);
+            versions.push({
+                version: v.version,
+                releaseDate: v.releaseDate,
+                type: v.type
+            });
 
+        });
+        
         return versions;
     }
 }
@@ -95,15 +97,26 @@ exports.changeLogDelete = function (param) {
     this.changeLogFileSave(param.programId, param.version, changeLogs);
 }
 
+
+exports.changeLogRelease = function (param) {
+    let changeLogs = this.changeLogLoad({
+        programId: param.programId,
+        version: param.version
+    });
+    changeLogs.releaseDate = param.releaseDate;    
+    this.changeLogFileSave(param.programId, param.version, changeLogs);
+}
+
 exports.changeLogFileSave = function (programId, version, changeLogs) {
     let config = configDao.mainConfigLoad();
-    let program = configHelpers.getProgramById(config, programId);
-    console.log("changeLogSave programId", programId);
+    let program = configHelpers.getProgramById(config, programId);    
     fs.writeJsonSync(program.path + "/" + "changelog." + version + ".json", changeLogs, {spaces: "\t"});
 }
 
 exports.newVersion = function (programId, version) {
-    let changeLogs = {changes: []};
+    let changeLogs = {
+        version: version,
+        changes: []};
     this.changeLogFileSave(programId, version, changeLogs);
 }
 

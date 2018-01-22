@@ -101,10 +101,10 @@ export class TopNavbarComponent implements OnInit, OnChanges {
       return "";
   }
 
-  public getLastVersion(program: IProgram): string {
+  public getLastVersionNumber(program: IProgram): string {
     if (program.versions && (program.versions.length > 0)) {
       program.versions.sort(StringHelpers.sortDesc);
-      return program.versions[0];
+      return program.versions[0].version;
     }
     else {
       return "last";

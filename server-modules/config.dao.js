@@ -2,8 +2,7 @@ var fs = require('fs-extra');
 var configHelper = require('./config-helpers');
 var changeLogDao = require('./change-log.dao');
 
-exports.mainConfigLoad = function() {
-    console.log("Config reading");
+exports.mainConfigLoad = function() {    
     //Reading the common settings, (program name and language)
     let configCommon = fs.readJsonSync('change-log-editor-common.config.json');        
     //Reading the personal part: (program path)

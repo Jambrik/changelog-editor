@@ -34,14 +34,11 @@ exports.convertFromOldFormat = function (oldChangeLogList){
 }
 
 exports.convertAll = () => {
-    let config = configDao.mainConfigLoad();
-    console.log("convertAll: config loaded");
+    let config = configDao.mainConfigLoad();    
     config.programs.forEach((program) => {
-        let configPartsPaths = fs.readdirSync(program.path);                            
-        console.log("convertAll: configPartsPaths loaded:", configPartsPaths);
+        let configPartsPaths = fs.readdirSync(program.path);                                    
         for (var i = 0; i < configPartsPaths.length; i++) {
-            let path = program.path + configPartsPaths[i];
-            console.log("change-logs-path: ", path);
+            let path = program.path + configPartsPaths[i];            
             let oldChangeLog = fs.readJsonSync(path);            
             let newChangeLog = this.convertFromOldFormat(oldChangeLog);  
             fs.writeJson(path+"2.json", newChangeLog, {spaces: "\t"});

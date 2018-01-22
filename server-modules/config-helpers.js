@@ -1,5 +1,4 @@
-exports.getProgramById = (config, programId) => {
-    console.log("getProgramById", programId);
+exports.getProgramById = (config, programId) => {    
     for(var i =0; i< config.programs.length; i++ ){
         if(config.programs[i].id == programId){
             return config.programs[i];

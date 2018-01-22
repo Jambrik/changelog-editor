@@ -1,6 +1,8 @@
 {
     "ADD": "Add",
     "ARE_YOU_SURE_DELETE_THIS_CHANGE_LOG_ITEM": "Are you sure to want to delete this change log item?",
+    "ARE_YOU_SURE_DELETE_RELEASED_CHANGE_LOG_ITEM": "Are you sure to want to delete this released change log item?",
+    "ARE_YOU_SURE_ADDING_MOD_TO_RELEASED_CHANGE_LOG": "Are you sure to want to adding or modify released change log?",
     "bugfix": "Bugfix",
     "CANCEL": "Cancel",
     "CATEGORY": "Category",
@@ -30,11 +32,13 @@
     "NO_VERSION_YET": "No any version yet",
     "normal": "Normal",
     "NOT_EDITABLE": "Not editable",
+    "OK": "Ok",
     "OPEN": "Open",
     "PATH": "Path",
     "PROGRAM": "Program",
     "PROGRAMS": "Programs",
     "PROGRAMS_DETAILS": "Programs details",
+    "RELEASE_DATE": "Release date",
     "SETTINGS": "Settings",
     "SEARCH": "Search",
     "SHOWN_LANGS": "Shown languages",
@@ -45,5 +49,6 @@
     "TRANSLATION": "Translation",
     "TYPE": "Type",
     "USER": "User",
-    "VERSION": "Version"
+    "VERSION": "Version",
+    "YES": "Yes"
 }

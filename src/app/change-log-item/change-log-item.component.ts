@@ -14,6 +14,7 @@ import * as _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from '../constants/constants';
 import { User } from '../models/IUser';
+import { IVersionMetaData } from '../models/IVersionMetaData';
 
 @Component({
   selector: 'app-change-log-item',
@@ -40,14 +41,14 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   public types: ILabelValue[];
 
   public importances: ILabelValue[];
-
+  public showReleasedVersionWarning: boolean = false;
 
 
   public selectedType: any;
   constructor(
     private navbarService: NavbarService,
     private changeLogService: ChangeLogService,
-    private router: Router,    
+    private router: Router,
     private googleTranslateService: GoogleTranslateService,
     private translateService: TranslateService
   ) { }
@@ -63,33 +64,40 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
         if (t.feature) {
           this.types.push({ value: Constants.FEATURE, label: t.feature })
-        }        
+        }
 
       });
 
     this.importances = [];
     this.translateService.get([Constants.LOW, Constants.NORMAL, Constants.HIGH])
-    .subscribe((t) => {
-      if(t.low){
-        this.importances.push({value: Constants.LOW, label: t.low});
-      }
+      .subscribe((t) => {
+        if (t.low) {
+          this.importances.push({ value: Constants.LOW, label: t.low });
+        }
 
-      if(t.normal){
-        this.importances.push({value: Constants.NORMAL, label: t.normal});
-      }
+        if (t.normal) {
+          this.importances.push({ value: Constants.NORMAL, label: t.normal });
+        }
 
-      if(t.high){
-        this.importances.push({value: Constants.HIGH, label: t.high});
+        if (t.high) {
+          this.importances.push({ value: Constants.HIGH, label: t.high });
+        }
+      });
+      if(this.action == "new"){
+        if(this.version.releaseDate && (this.version.releaseDate != null)){
+          this.showReleasedVersionWarning = true;
+        }
       }
-    });
 
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {    
     if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
       if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
         console.log("ngOnChanges");
         this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
+      } else {
+
       }
     }
 
@@ -107,15 +115,25 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     return this.action == 'read';
   }
 
-  public clickMod() {
-    this.action = "mod";
+  public clickMod(event: Event) {
+    event.preventDefault();
+    if (this.version.releaseDate && (this.version.releaseDate != null)) {
+      this.showReleasedVersionWarning = true;
+    } else {
+      this.goEdit();      
+    }
+
+  }
+
+  public goEdit(){
+    this.router.navigate(["/change-list", this.program.id, this.version.version, 'mod', this.changeLogItem.id], { queryParams: { lang: this.getActualLang() } });
   }
 
   public get program(): IProgram {
     return this.navbarService.actualProgram;
   }
 
-  public get version(): string {
+  public get version(): IVersionMetaData {
     return this.navbarService.actualVersion;
   }
 
@@ -124,26 +142,26 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     let user: User;
     user = this.navbarService.actualUser;
     if (this.changeLogItem.id == null) {
-      if(user){
+      if (user) {
         this.changeLogItem.cru = user.code;
       } else {
         this.changeLogItem.cru = "ANONYMOUS";
       }
       this.changeLogItem.crd = new Date();
     } else {
-      if(user){
+      if (user) {
         this.changeLogItem.lmu = user.code;
       } else {
         this.changeLogItem.lmu = "ANONYMOUS";
       }
       this.changeLogItem.lmd = new Date();
     }
-    this.changeLogService.changeLogWrite(this.program.id, this.version, this.changeLogItem)
+    this.changeLogService.changeLogWrite(this.program.id, this.version.version, this.changeLogItem)
       .subscribe((x) => {
         if (this.changeLogItem.id == null) {
           this.onDeleteOrAddingNew.emit();
         }
-        this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
+        this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
       },
       (error) => {
         this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
@@ -153,12 +171,16 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
     this.changeLogItem = _.cloneDeep(this.changeLogItemOri);
-    if(this.action == "mod"){
+    if (this.action == "mod") {
       this.descriptions = this.getDescriptions();
     }
     console.log("after _.clone(this.changeLogItemOri);", this.changeLogItem);
-    this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
+    this.goToBack();
   }
+
+  public goToBack(){
+    this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
+}
 
   public deleteMessageShow(event: Event) {
     event.preventDefault();
@@ -176,7 +198,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public delete(event: Event) {
     event.preventDefault();
-    this.changeLogService.changeLogDelete(this.program.id, this.version, this.changeLogItem.id)
+    this.changeLogService.changeLogDelete(this.program.id, this.version.version, this.changeLogItem.id)
       .subscribe((x) => {
         this.onDeleteOrAddingNew.emit();
       },
@@ -268,5 +290,23 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       }
     });
     return descriptions;
+  }
+
+  public inssertModReleaseChangeLogOk(event: Event) {
+    event.preventDefault();
+    this.showReleasedVersionWarning = false;
+    if(this.action == "mod"){
+      this.goEdit();
+    }    
+  }
+
+  public inssertModReleaseChangeLogCancel(event: Event) {
+    event.preventDefault();
+    this.showReleasedVersionWarning = false;
+    if(this.action == "new"){
+      this.goToBack();
+    }
+      
+    
   }
 }

@@ -18,7 +18,7 @@
           PROGRAM
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a *ngFor="let program of programs" class="dropdown-item" href="#" [routerLink]="['change-list', program.id, getLastVersion(program), 'read', 'none']"
+          <a *ngFor="let program of programs" class="dropdown-item" href="#" [routerLink]="['change-list', program.id, getLastVersionNumber(program), 'read', 'none']"
             [queryParams]="{lang: getActualLang()}">
             {{program.name}}
           </a>

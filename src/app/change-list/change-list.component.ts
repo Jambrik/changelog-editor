@@ -3,7 +3,7 @@ import { StringHelpers } from '../helpers/string-helpers';
 import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, transition } from '@angular/core';
 import { ChangeLogService } from '../services/change-log.service';
-import { IChaneLogList } from '../models/IChangeLogList';
+import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { NavbarService } from '../services/navbar.service';
 import { ConfigService } from '../services/config.service';
 import { IProgram } from '../models/IProgram';
@@ -15,6 +15,7 @@ import * as _ from 'lodash';
 import { Constants } from '../constants/constants';
 import { Subscription } from 'rxjs/Subscription';
 import { Message } from 'primeng/components/common/message';
+import { IVersionMetaData } from '../models/IVersionMetaData';
 
 
 @Component({
@@ -25,9 +26,9 @@ import { Message } from 'primeng/components/common/message';
 export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
   public program: IProgram;
-  public version: string;
-  public changeList: IChaneLogList;
-  public oriChangeList: IChaneLogList;
+  public version: IVersionMetaData = {version: ""};
+  public changeList: IVersionChangeLog;
+  public oriChangeList: IVersionChangeLog;
   public action: "read" | "mod" | "new";
   public id: string;
   public newChangeItem: IChangeLogItem;
@@ -43,6 +44,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   private importanceSubscribe: Subscription;
   msgs: Message[] = [];
   private noVersionYetCaption: string;
+  public showReleasedVersionWarning: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,7 +64,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     //Because we load always the same component, the init run only once. So we subscribe the router params changes:
     this.route.params.subscribe(params => {
       let programId = params['program-id'];
-      let version = params['version'];
+      let versionNumber: string = params['version'];
       let lang = params["lang"];
       console.log("Lang:", lang);
       let id = params["id"];
@@ -72,7 +74,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         this.action = "read";
       };
 
-      console.log("programId, version, action, id", programId, version, this.action, id);
+      console.log("programId, version, action, id", programId, versionNumber, this.action, id);
       let programIdInt = parseInt(programId);
       if (id == "null") {
         this.id = null;
@@ -103,22 +105,24 @@ export class ChangeListComponent implements OnInit, OnChanges {
             this.changeLogService.getVersionsForProgramId(programId)
               .subscribe((versions) => {
                 console.log("here are versions", versions);
-                versions.sort(StringHelpers.sortDesc);
+                versions.sort(ConfigHelper.versionSorter);
                 this.navbarService.actualVersions = versions;
                 //If version is the latest we have to find that
-                if ((version == "last") && (versions.length > 0)) {
+                if ((versionNumber == "last") && (versions.length > 0)) {
                   this.version = versions[0];
                 } else {
-                  this.version = version;
+                  this.version = ConfigHelper.getVersion(versions,versionNumber);
                 }
+                this.navbarService.actualVersion = this.version;
                 this.getChanges();
                 if (this.action == "new") {
                   this.newItemCreate();
                 }
               });
           });
-      } else if (version != this.version) {
-        this.version = version;
+      } else if (versionNumber != this.version.version) {
+        this.version = ConfigHelper.getVersion(this.navbarService.actualVersions, versionNumber);
+        this.navbarService.actualVersion = this.version;
         this.getChanges();
         if (this.action == "new") {
           this.newItemCreate();
@@ -127,8 +131,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         if (this.action == "new") {
           this.newItemCreate();
         }
-      }
-      this.navbarService.actualVersion = version;
+      }      
 
     });
 
@@ -200,7 +203,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   }
 
-  private filter(inputChangeList: IChaneLogList): IChaneLogList {
+  private filter(inputChangeList: IVersionChangeLog): IVersionChangeLog {
     let changeList = {
       releaseDate: inputChangeList.releaseDate,
       version: inputChangeList.version,
@@ -249,12 +252,12 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   private getChanges() {
-    if (this.version != "none") {
+    if (this.version.version != "none") {
       this.loading = true;
       if (this.changeList) {
         this.changeList.changes = [];
       }
-      this.changeLogService.getChangeLogs(this.programId, this.version)
+      this.changeLogService.getChangeLogs(this.programId, this.version.version)
         .subscribe(changeList => {
 
           changeList.changes.forEach(change => {
@@ -346,13 +349,56 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.changeList = this.filter(this.oriChangeList);
   }
 
-  public printVersion(){
-    if(this.version == "none" ) {
-      return this.noVersionYetCaption;
+  public printVersion(){    
+    if(this.version && (this.version != null) && (this.version.version != "none")){
+      return this.version.version;
     } else {
-      return this.version;
+      return this.noVersionYetCaption;
     }
   }
+
+  public get versionNumber() {
+    if(this.version && (this.version != null)){
+      return this.version.version;
+    } else {
+      return "";
+    }
+
+  }
+
+
+  public saveReleaseDate(event: Event) {
+    event.preventDefault();
+    this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
+      .subscribe((x) => {
+        this.getChanges();
+      },
+      (error) => {
+        this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+      });
+  }
+
+  public inssertModReleaseChangeLogOk(event: Event) {
+    event.preventDefault();
+    this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
+      .subscribe((x) => {
+        this.getChanges();
+      },
+      (error) => {
+        this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+      });
+  }  
+
+  public inssertModReleaseChangeLogCancel(event: Event) {
+    event.preventDefault();
+    this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
+      .subscribe((x) => {
+        this.getChanges();
+      },
+      (error) => {
+        this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+      });
+  }  
 }
 
 

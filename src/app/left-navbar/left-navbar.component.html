@@ -18,15 +18,15 @@
     </li>
     <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>    
     <li class="nav-item" *ngFor="let version of versions">
-      <a class="nav-link" href="/" [routerLink]="['/change-list', actualProgramId, version, 'read', 'none']" routerLinkActive="active"
+      <a class="nav-link" href="/" [routerLink]="['/change-list', actualProgramId, version.version, 'read', 'none']" routerLinkActive="active"
       [queryParams]="{lang: getActualLang()}">
-        {{version}}
+      {{version.version}} {{version.releaseDate ? '('+(version.releaseDate | date : "yyyy.MM.dd")+')' : ""}}       
       </a>
     </li>
   </ul>
   <ul *ngIf="!isReading()" class="nav nav-pills flex-column">      
       <li class="nav-link active" [class.active]="isActual(version)" *ngFor="let version of versions">        
-          {{version}}        
+          {{version.version}} {{version.releaseDate ? '('+(version.releaseDate | date : "yyyy.MM.dd")+')' : ""}}       
       </li>
     </ul>
 

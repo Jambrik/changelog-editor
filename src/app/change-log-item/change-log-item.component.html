@@ -8,7 +8,7 @@
             TICKETNUMBER
           </span>:
         </b>
-        <span *ngIf="!isEditing()" [innerHTML]="changeLogItem.ticketNumber | safeHtml">          
+        <span *ngIf="!isEditing()" [innerHTML]="changeLogItem.ticketNumber | safeHtml">
         </span>
         <input *ngIf="isEditing()" type="text" name="" id="" [(ngModel)]="changeLogItem.ticketNumber">
       </div>
@@ -27,25 +27,24 @@
         </a>
       </div>
       <div class="col-6">
-        <div class="pull-right" >
-            <span style="font-weight: bold" translate>TYPE</span>:
+        <div class="pull-right">
+          <span style="font-weight: bold" translate>TYPE</span>:
           <span [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
             <span *ngIf="!isEditing()">
               {{changeLogItem.type | translate}}
             </span>
             <p-dropdown [options]="types" [(ngModel)]="changeLogItem.type" *ngIf="isEditing()"></p-dropdown>
-          </span>  
+          </span>
         </div>
-        <div class="pull-right pr-4">  
+        <div class="pull-right pr-4">
           <span style="font-weight: bold" translate>IMPORTANCE</span>:
-            <span [class.text-primary]="changeLogItem.importance == 'high'" 
-            [class.text-secondary]="changeLogItem.importance == 'low'"             
+          <span [class.text-primary]="changeLogItem.importance == 'high'" [class.text-secondary]="changeLogItem.importance == 'low'"
             *ngIf="!isEditing()">
-              {{changeLogItem.importance | translate}}
-            </span>
-  
-            <p-dropdown [options]="importances" [(ngModel)]="changeLogItem.importance" *ngIf="isEditing()"></p-dropdown>
-          </div>
+            {{changeLogItem.importance | translate}}
+          </span>
+
+          <p-dropdown [options]="importances" [(ngModel)]="changeLogItem.importance" *ngIf="isEditing()"></p-dropdown>
+        </div>
       </div>
     </div>
   </div>
@@ -147,9 +146,7 @@
     <a href="/" class="btn btn-danger pull-right" (click)="deleteMessageShow($event)" *ngIf="canBeModified()">
       <span class="fa fa-trash"></span>
     </a>
-    <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', program.id, version, 'mod', changeLogItem.id]"
-    [queryParams]="{lang: getActualLang()}"
-      *ngIf="canBeModified()">
+    <a href="/" class="btn btn-primary pull-right" (click)="clickMod($event)" *ngIf="canBeModified()">
       <span class="fa fa-edit"></span>
     </a>
     <a href="/" class="btn btn-secondary pull-right" (click)="cancelMod($event)" *ngIf="isEditing()">
@@ -157,7 +154,7 @@
     </a>
     <a href="/" class="btn btn-success pull-right" (click)="save($event)" *ngIf="isEditing()">
       <span class="fa fa-save"></span>
-    </a>    
+    </a>
   </div>
 </div>
 
@@ -165,9 +162,12 @@
   <p-header translate>
     CONFIRMATION
   </p-header>
-  <span translate>
-    ARE_YOU_SURE_DELETE_THIS_CHANGE_LOG_ITEM    
+  <span *ngIf="!version.releaseDate || (version.releaseDate == null)" translate>    
+    ARE_YOU_SURE_DELETE_THIS_CHANGE_LOG_ITEM
   </span>
+  <span *ngIf="version.releaseDate && (version.releaseDate != null)" translate>    
+      ARE_YOU_SURE_DELETE_RELEASED_CHANGE_LOG_ITEM
+    </span>
   <div class="p-2">
     <a href="/" class="btn btn-secondary pull-right" (click)="cancelDelete($event)">
       <span class="fa fa-close" translate>CANCEL</span>
@@ -203,6 +203,24 @@
     </a>
     <a href="/" class="btn btn-primary pull-right" (click)="translate($event)">
       <span class="fa fa-language" translate>TRANSLATE</span>
+    </a>
+  </div>
+
+</p-dialog>
+
+<p-dialog [(visible)]="showReleasedVersionWarning" modal="true">
+  <p-header translate>
+    CONFIRMATION
+  </p-header>
+  <span translate>
+    ARE_YOU_SURE_ADDING_MOD_TO_RELEASED_CHANGE_LOG
+  </span>
+  <div class="p-2">
+    <a href="/" class="btn btn-secondary pull-right" (click)="inssertModReleaseChangeLogCancel($event)">
+      <span class="fa fa-close" translate>CANCEL</span>
+    </a>
+    <a href="/" class="btn btn-success pull-right" (click)="inssertModReleaseChangeLogOk($event)">
+      <span class="fa fa-edit" translate>YES</span>
     </a>
   </div>
 

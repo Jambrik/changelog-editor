@@ -2,30 +2,41 @@
     <div class="row">
         <app-left-navbar></app-left-navbar>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-            <h1 translate>
-                {{'VERSION' | translate}}: {{printVersion()}}
-            </h1>
-            <p-messages [(value)]="msgs"></p-messages>
+            <div class="pb-4">
+                <div class="pl-2 pull-left" style="font-size: 32pt">
+                    {{'VERSION' | translate}}: {{printVersion()}}
+                </div>
+                <div class="pl-4 pt-2 pull-right">
+                    <span translate>RELEASE_DATE</span>:
+                    <p-calendar [(ngModel)]="version.releaseDate" dateFormat="yy.mm.dd"></p-calendar>
+                    <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)">
+                        <span class="fa fa-save"></span>
+                    </a>
+                </div>
+
+            </div>
+            <div class="clearfix">
+                <p-messages [(value)]="msgs"></p-messages>
+            </div>
             <div class="row">
-                <div class="pl-4">                    
+                <div class="pl-4">
                     <span translate>SHOWN_LANGS</span>:
                     <p-selectButton [options]="langs" [(ngModel)]="selectedLangs" [multiple]="true"></p-selectButton>
-                </div>                
-                <div class="pl-4">
-                    <span translate>IMPORTANCE</span>:
-                    <p-selectButton [options]="importances" [ngModel]="selectedImportances" 
-                    (ngModelChange)="selectedImportancesChange($event)" [multiple]="true"></p-selectButton>
                 </div>
                 <div class="pl-4">
-                    <span translate>TYPE</span>:                    
-                    <p-selectButton [options]="types" [ngModel]="selectedTypes" 
-                    (ngModelChange)="selectedTypesChange($event)" [multiple]="true"></p-selectButton>
+                    <span translate>IMPORTANCE</span>:
+                    <p-selectButton [options]="importances" [ngModel]="selectedImportances" (ngModelChange)="selectedImportancesChange($event)"
+                        [multiple]="true"></p-selectButton>
+                </div>
+                <div class="pl-4">
+                    <span translate>TYPE</span>:
+                    <p-selectButton [options]="types" [ngModel]="selectedTypes" (ngModelChange)="selectedTypesChange($event)" [multiple]="true"></p-selectButton>
                 </div>
             </div>
 
 
             <div class="clearfix">
-                <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', programId, version, 'new', 'null']" [queryParams]="{lang: getActualLang()}"
+                <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', programId, versionNumber, 'new', 'null']" [queryParams]="{lang: getActualLang()}"
                     *ngIf="isReading()">
                     <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
                 </a>
