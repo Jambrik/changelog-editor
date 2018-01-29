@@ -332,6 +332,30 @@
 			"crd": "2018-01-22T19:23:09.743Z",
 			"lmu": "RJAMBRIK",
 			"lmd": "2018-01-22T21:21:02.555Z"
+		},
+		{
+			"id": "58fdf1a0-04fb-11e8-abf2-a3eaa930b54c",
+			"type": "feature",
+			"importance": "normal",
+			"category": null,
+			"subCategory": null,
+			"ticketNumber": null,
+			"date": "2018-01-29T13:49:42.542Z",
+			"keywords": [],
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Új verzió létrehozásánál hiba jelentkezett, ami csak a böngésző logban látszott, és a verzió mentés meghiúsult.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>There was an error creating a new version, which appeared only in the browser log and version save failed. </p>"
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2018-01-29T13:50:21.060Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }

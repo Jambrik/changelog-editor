@@ -16,8 +16,8 @@ import { IVersionMetaData } from '../models/IVersionMetaData';
 })
 export class NewVersionCreatationComponent implements OnInit {
   public programId: number;
-  public version: IVersionMetaData;
-  public smaller: boolean = false;
+  public versionNumber: string;
+  public smaller: Boolean = false;
   constructor(
     private navbarService: NavbarService,
     private route: ActivatedRoute,
@@ -29,56 +29,64 @@ export class NewVersionCreatationComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      let programId = params['program-id'];
-      console.log("program-id", programId);
-      let programIdInt = parseInt(programId);
-      if (this.programId != programIdInt) {
+      const programId = params['program-id'];
+      console.log('program-id', programId);
+      const programIdInt = parseInt(programId, 10);
+      if (this.programId !== programIdInt) {
         this.configService.getConfig()
           .subscribe((config) => {
-            this.programId = programIdInt;    
-            this.navbarService.actualProgram = ConfigHelper.getProgramById(config.programs, this.programId);          
+            this.programId = programIdInt;
+            this.navbarService.actualProgram = ConfigHelper.getProgramById(config.programs, this.programId);
             this.navbarService.actualProgram.versions.sort(ConfigHelper.versionSorter);
             this.navbarService.actualVersions = this.navbarService.actualProgram.versions;
           });
-        }
+      }
     });
   }
 
-  public get program(): IProgram{
+  public get program(): IProgram {
     return this.navbarService.actualProgram;
   }
 
-  public save(event: Event){
+  public save(event: Event) {
     event.preventDefault();
-    if(this.valid()){
-      console.log("Valid");
-      this.changeLogService.createNewVersion(this.programId, this.version)
-      .subscribe((response) => {
-        console.log("new version created");
-        this.router.navigate(["/change-list", this.program.id, this.version, 'read', 'none'], {queryParams: {lang: this.getActualLang()}});    
-      })
+    if (this.valid()) {
+      console.log('Valid');
+      this.changeLogService.createNewVersion(this.programId, this.versionNumber)
+        .subscribe((response) => {
+          console.log('new version created');
+          this.router.navigate(['/change-list', this.program.id, this.versionNumber, 'read', 'none'],
+            { queryParams: { lang: this.getActualLang() } });
+        });
     }
   }
 
   private valid(): boolean {
-    let lastVersion: IVersionMetaData = this.getLastVersion();
-    this.smaller = this.version.version <= lastVersion.version;
+    const lastVersion: IVersionMetaData = this.getLastVersion();
+    if (lastVersion != null) {
+      this.smaller = this.versionNumber <= lastVersion.version;
+    } else {
+      this.smaller = false;
+    }
+
     return !this.smaller;
   }
 
   public cancel(event: Event) {
     event.preventDefault();
-    let lastVersion: IVersionMetaData = this.getLastVersion();
-    if(lastVersion != null){
-      this.router.navigate(["/change-list", this.program.id, lastVersion, 'read', 'none'], {queryParams: {lang: this.getActualLang()}});    
+    const lastVersion: IVersionMetaData = this.getLastVersion();
+    if (lastVersion != null) {
+      this.router.navigate(['/change-list', this.program.id, lastVersion, 'read', 'none'],
+        { queryParams: { lang: this.getActualLang() } });
     }
   }
 
   private getLastVersion(): IVersionMetaData {
-    if(this.navbarService.actualProgram.versions.length > 0) {
+    if (this.navbarService.actualProgram.versions.length > 0) {
       return this.navbarService.actualProgram.versions[0];
-    } else 
+    } else {
       return null;
+    }
   }
 
   public getActualLang(): string {
