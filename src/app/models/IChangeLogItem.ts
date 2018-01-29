@@ -1,4 +1,5 @@
 import { I18n } from "./I18N";
+import { ITag } from "./ITag";
 
 export interface IChangeLogItem {
     id: string;
@@ -7,9 +8,7 @@ export interface IChangeLogItem {
     type: "bugfix" | "feature";
     importance: "low" | "normal" | "high"
     descriptions: I18n[];
-    category?: string;
-    subCategory?: string;
-    keywords: string[];
+    tags: ITag[]
     cru?: string;
     crd?: Date;
     lmu?: string;

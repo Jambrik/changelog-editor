@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarService } from '../services/navbar.service';
+import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
 import { TranslateService } from '@ngx-translate/core';
 import { IVersionMetaData } from '../models/IVersionMetaData';
@@ -12,7 +12,7 @@ import { IVersionMetaData } from '../models/IVersionMetaData';
 export class LeftNavbarComponent implements OnInit {
 
   constructor(
-    private navbarService: NavbarService,
+    private actualService: ActualService,
     private translateService: TranslateService
   
   ) { }
@@ -21,29 +21,29 @@ export class LeftNavbarComponent implements OnInit {
   }
 
   public get actualProgramName(): string{
-    if(this.navbarService.actualProgram)
-      return this.navbarService.actualProgram.name
+    if(this.actualService.actualProgram)
+      return this.actualService.actualProgram.name
     else  
       return undefined;
   }
 
   public get actualProgramId(): number{
-    if(this.navbarService.actualProgram)
-      return this.navbarService.actualProgram.id
+    if(this.actualService.actualProgram)
+      return this.actualService.actualProgram.id
     else  
       return undefined;
   }
 
   public get versions(): IVersionMetaData[] {
-    return this.navbarService.actualVersions;
+    return this.actualService.actualVersions;
   }
 
   public isReading(): boolean {
-    return this.navbarService.actualAction == "read";
+    return this.actualService.actualAction == "read";
   }
 
   public isActual(version: IVersionMetaData): boolean {
-    return this.navbarService.actualVersion == version;
+    return this.actualService.actualVersion == version;
   }
 
   public getActualLang(): string {

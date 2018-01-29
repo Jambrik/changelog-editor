@@ -1,13 +1,12 @@
-import { ICategory } from "./ICategory";
-import { IKeyword } from "./IKeyword";
 import { IVersionMetaData } from "./IVersionMetaData";
+import { ITagInfo } from "./ITagInfo";
 
 export interface IProgram {
     id: number;
     name: string;
     path: string;
     langs: string[];
+    tagInfos: ITagInfo[];
     versions: IVersionMetaData[];
-    categories: ICategory[];
-    keywords: IKeyword[];    
+    
 }

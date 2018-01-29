@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { NavbarService } from '../services/navbar.service';
+import { ActualService } from '../services/actual.service';
 import { IProgram } from '../models/IProgram';
 import { ConfigService } from '../services/config.service';
 import { ConfigHelper } from '../helpers/config-helper';
@@ -19,7 +19,7 @@ export class NewVersionCreatationComponent implements OnInit {
   public version: IVersionMetaData;
   public smaller: boolean = false;
   constructor(
-    private navbarService: NavbarService,
+    private actualService: ActualService,
     private route: ActivatedRoute,
     private configService: ConfigService,
     private router: Router,
@@ -36,16 +36,16 @@ export class NewVersionCreatationComponent implements OnInit {
         this.configService.getConfig()
           .subscribe((config) => {
             this.programId = programIdInt;    
-            this.navbarService.actualProgram = ConfigHelper.getProgramById(config.programs, this.programId);          
-            this.navbarService.actualProgram.versions.sort(ConfigHelper.versionSorter);
-            this.navbarService.actualVersions = this.navbarService.actualProgram.versions;
+            this.actualService.actualProgram = ConfigHelper.getProgramById(config.programs, this.programId);          
+            this.actualService.actualProgram.versions.sort(ConfigHelper.versionSorter);
+            this.actualService.actualVersions = this.actualService.actualProgram.versions;
           });
         }
     });
   }
 
   public get program(): IProgram{
-    return this.navbarService.actualProgram;
+    return this.actualService.actualProgram;
   }
 
   public save(event: Event){
@@ -75,8 +75,8 @@ export class NewVersionCreatationComponent implements OnInit {
   }
 
   private getLastVersion(): IVersionMetaData {
-    if(this.navbarService.actualProgram.versions.length > 0) {
-      return this.navbarService.actualProgram.versions[0];
+    if(this.actualService.actualProgram.versions.length > 0) {
+      return this.actualService.actualProgram.versions[0];
     } else 
       return null;
   }

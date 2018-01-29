@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { IChangeLogItem } from '../models/IChangeLogItem';
-import { NavbarService } from '../services/navbar.service';
+import { ActualService } from '../services/actual.service';
 import { IProgram } from '../models/IProgram';
 import { ChangeLogService } from '../services/change-log.service';
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Constants } from '../constants/constants';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { ChangeLogAction } from '../types/types';
 
 @Component({
   selector: 'app-change-log-item',
@@ -24,7 +25,7 @@ import { IVersionMetaData } from '../models/IVersionMetaData';
 export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   @Input("item") changeLogItem: IChangeLogItem;
-  @Input() action: "read" | "mod" | "new";
+  @Input() action: ChangeLogAction;
   @Input() modId: string;
   @Input() selectedLangs: string[];
   @Output() onDeleteOrAddingNew: EventEmitter<void> = new EventEmitter();
@@ -46,7 +47,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public selectedType: any;
   constructor(
-    private navbarService: NavbarService,
+    private actualService: ActualService,
     private changeLogService: ChangeLogService,
     private router: Router,
     private googleTranslateService: GoogleTranslateService,
@@ -130,17 +131,17 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   public get program(): IProgram {
-    return this.navbarService.actualProgram;
+    return this.actualService.actualProgram;
   }
 
   public get version(): IVersionMetaData {
-    return this.navbarService.actualVersion;
+    return this.actualService.actualVersion;
   }
 
   public save(event: Event) {
     event.preventDefault();
     let user: User;
-    user = this.navbarService.actualUser;
+    user = this.actualService.actualUser;
     if (this.changeLogItem.id == null) {
       if (user) {
         this.changeLogItem.cru = user.code;

@@ -2,7 +2,7 @@ import { StringHelpers } from '../helpers/string-helpers';
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 import { IProgram } from '../models/IProgram';
-import { NavbarService } from '../services/navbar.service';
+import { ActualService } from '../services/actual.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigHelper } from '../helpers/config-helper';
 
@@ -14,14 +14,14 @@ import { ConfigHelper } from '../helpers/config-helper';
 export class ProgramListComponent implements OnInit {
   public programs: IProgram[];
   constructor(private configService: ConfigService,
-    private navbarService: NavbarService,
+    private actualService: ActualService,
     private translateService: TranslateService
   ) { }
 
   ngOnInit() {
-    this.navbarService.actualProgram = null;
-    this.navbarService.actualVersion = {version: ""};
-    this.navbarService.actualVersions = [];
+    this.actualService.actualProgram = null;
+    this.actualService.actualVersion = {version: ""};
+    this.actualService.actualVersions = [];
     this.configService.getConfig().subscribe(
       (data) => {
         console.log("program list", data);

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, transition } from '@angular/core';
 import { ChangeLogService } from '../services/change-log.service';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
-import { NavbarService } from '../services/navbar.service';
+import { ActualService } from '../services/actual.service';
 import { ConfigService } from '../services/config.service';
 import { IProgram } from '../models/IProgram';
 import { ConfigHelper } from '../helpers/config-helper';
@@ -16,6 +16,7 @@ import { Constants } from '../constants/constants';
 import { Subscription } from 'rxjs/Subscription';
 import { Message } from 'primeng/components/common/message';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { ChangeLogAction } from '../types/types';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public version: IVersionMetaData = {version: ""};
   public changeList: IVersionChangeLog;
   public oriChangeList: IVersionChangeLog;
-  public action: "read" | "mod" | "new";
+  public action: ChangeLogAction;
   public id: string;
   public newChangeItem: IChangeLogItem;
   public langs: ILabelValue[] = [];
@@ -49,7 +50,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   constructor(
     private route: ActivatedRoute,
     private changeLogService: ChangeLogService,
-    private navbarService: NavbarService,
+    private actualService: ActualService,
     private configService: ConfigService,
     private translateService: TranslateService) { }
 
@@ -69,7 +70,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
       console.log("Lang:", lang);
       let id = params["id"];
       this.action = params["action"];
-      this.navbarService.actualAction = this.action;
+      this.actualService.actualAction = this.action;
       if (!this.action) {
         this.action = "read";
       };
@@ -99,21 +100,21 @@ export class ChangeListComponent implements OnInit, OnChanges {
               this.selectedLangs.push(lang);
             });
 
-            this.navbarService.actualProgram = this.program;
+            this.actualService.actualProgram = this.program;
             console.log("New program id", programId);
             //First of all we have get the versions
             this.changeLogService.getVersionsForProgramId(programId)
               .subscribe((versions) => {
                 console.log("here are versions", versions);
                 versions.sort(ConfigHelper.versionSorter);
-                this.navbarService.actualVersions = versions;
+                this.actualService.actualVersions = versions;
                 //If version is the latest we have to find that
                 if ((versionNumber == "last") && (versions.length > 0)) {
                   this.version = versions[0];
                 } else {
                   this.version = ConfigHelper.getVersion(versions,versionNumber);
                 }
-                this.navbarService.actualVersion = this.version;
+                this.actualService.actualVersion = this.version;
                 this.getChanges();
                 if (this.action == "new") {
                   this.newItemCreate();
@@ -121,8 +122,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
               });
           });
       } else if (versionNumber != this.version.version) {
-        this.version = ConfigHelper.getVersion(this.navbarService.actualVersions, versionNumber);
-        this.navbarService.actualVersion = this.version;
+        this.version = ConfigHelper.getVersion(this.actualService.actualVersions, versionNumber);
+        this.actualService.actualVersion = this.version;
         this.getChanges();
         if (this.action == "new") {
           this.newItemCreate();
@@ -318,12 +319,9 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.newChangeItem = {
       id: null,
       type: "feature",
-      importance: "normal",
-      category: null,
-      subCategory: null,
+      importance: "normal",            
       ticketNumber: null,
-      date: new Date(),
-      keywords: [],
+      date: new Date(),      
       descriptions: this.getNewDescriptions(),
       cru: null,
       crd: null,

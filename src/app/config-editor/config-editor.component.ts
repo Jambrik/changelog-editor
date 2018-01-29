@@ -38,8 +38,7 @@ export class ConfigEditorComponent implements OnInit {
           p.path,
           p.langs,
           p.versions,
-          p.categories,
-          p.keywords
+          p.tagInfos          
         );
         programs.push(program);
       });
@@ -53,7 +52,6 @@ export class ConfigEditorComponent implements OnInit {
     this.program = new Program(null,
        "",
        "",
-       [],
        [],
        [],
        []);

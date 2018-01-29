@@ -63,9 +63,9 @@
                   </div>
                   <div class="col-lg-11 col-md-9 col-sm-6">
 
-                    <div *ngIf="!isEditing()" style="width: 100%; min-height: 100px;  " [innerHTML]="description.text | safeHtml"></div>
-                    <p-editor *ngIf="isEditing()&&isEditor" [(ngModel)]="description.text" [style]="{'height':'100px'}"></p-editor>
-                    <textarea *ngIf="isEditing()&&!isEditor" cols="30" rows="10" style="width: 100%; height: 100px" [(ngModel)]="description.text"></textarea>
+                    <div *ngIf="!isEditing()" style="width: 100%; min-height: 80px;  " [innerHTML]="description.text | safeHtml"></div>
+                    <p-editor *ngIf="isEditing()&&isEditor" [(ngModel)]="description.text" [style]="{'height':'80px'}"></p-editor>
+                    <textarea *ngIf="isEditing()&&!isEditor" cols="30" rows="10" style="width: 100%; height: 80px" [(ngModel)]="description.text"></textarea>
 
                   </div>
                 </div>
@@ -86,30 +86,8 @@
             <input *ngIf="false" type="text" name="" id="" [(ngModel)]="changeLogItem.category" style="width: 95%">
             <div *ngIf="isEditing()" translate>NOT_EDITABLE</div>
           </dd>
-          <dt class="col-lg-6" translate>
-            SUBCATEGORY
-          </dt>
-          <dd class="col-lg-6">
-            <span *ngIf="!isEditing()">
-              {{(changeLogItem.subCategory) ? changeLogItem.subCategory: 'N.A.'}}
-            </span>
-            <input *ngIf="false" type="text" name="" id="" [(ngModel)]="changeLogItem.subCategory" style="width: 95%">
-            <div *ngIf="isEditing()" translate>NOT_EDITABLE</div>
-          </dd>
-          <dt class="col-lg-6" translate>
-            KEYWORDS
-          </dt>
-          <dd class="col-lg-6">
-            <div *ngIf="!isEditing() && changeLogItem.keywords && (changeLogItem.keywords.length > 0)">
-              <div *ngFor="let keyword of changeLogItem.keywords">
-                {{keyword}}
-              </div>
-            </div>
-            <div *ngIf="!isEditing() && (!changeLogItem.keywords || changeLogItem.keywords.length == 0)">
-              N.A.
-            </div>
-            <div *ngIf="isEditing()" translate>NOT_EDITABLE</div>
-          </dd>
+        </dl>
+        <dl class="row">
           <dt class="col-lg-6" translate>
             CREATOR
           </dt>
@@ -162,12 +140,12 @@
   <p-header translate>
     CONFIRMATION
   </p-header>
-  <span *ngIf="!version.releaseDate || (version.releaseDate == null)" translate>    
+  <span *ngIf="!version.releaseDate || (version.releaseDate == null)" translate>
     ARE_YOU_SURE_DELETE_THIS_CHANGE_LOG_ITEM
   </span>
-  <span *ngIf="version.releaseDate && (version.releaseDate != null)" translate>    
-      ARE_YOU_SURE_DELETE_RELEASED_CHANGE_LOG_ITEM
-    </span>
+  <span *ngIf="version.releaseDate && (version.releaseDate != null)" translate>
+    ARE_YOU_SURE_DELETE_RELEASED_CHANGE_LOG_ITEM
+  </span>
   <div class="p-2">
     <a href="/" class="btn btn-secondary pull-right" (click)="cancelDelete($event)">
       <span class="fa fa-close" translate>CANCEL</span>

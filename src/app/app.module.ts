@@ -14,7 +14,7 @@ import { ProgramListComponent } from './program-list/program-list.component';
 import { ConfigEditorComponent } from './config-editor/config-editor.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ConfigService } from './services/config.service';
-import { NavbarService } from './services/navbar.service';
+import { ActualService } from './services/actual.service';
 import { ChangeLogService } from './services/change-log.service';
 import { ChangeLogItemComponent } from './change-log-item/change-log-item.component';
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -23,6 +23,8 @@ import { GoogleTranslateService } from './services/google-translate.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
+import { TagsComponent } from './tags/tags.component';
+import { TagComponent } from './tag/tag.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -38,7 +40,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfigEditorComponent,
     ChangeLogItemComponent,
     SafeHtmlPipe,
-    NewVersionCreatationComponent
+    NewVersionCreatationComponent,
+    TagsComponent,
+    TagComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ConfigService, NavbarService, ChangeLogService, MessageService, GoogleTranslateService],
+  providers: [ConfigService, ActualService, ChangeLogService, MessageService, GoogleTranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

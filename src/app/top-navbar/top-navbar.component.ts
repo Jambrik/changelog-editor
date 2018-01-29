@@ -3,7 +3,7 @@ import { StringHelpers } from '../helpers/string-helpers';
 import { IProgram } from '../models/IProgram';
 import { ConfigService } from '../services/config.service';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { NavbarService } from '../services/navbar.service';
+import { ActualService } from '../services/actual.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +23,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   public searchTerm$ = new Subject<string>();
   constructor(
     private configService: ConfigService,
-    public navbarService: NavbarService,
+    public actualService: ActualService,
     private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router
@@ -90,13 +90,13 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   }
 
   public openProgram(program: IProgram) {
-    this.navbarService.actualProgram = program;
+    this.actualService.actualProgram = program;
 
   }
 
   public get actualProgram(): string {
-    if (this.navbarService.actualProgram)
-      return this.navbarService.actualProgram.name
+    if (this.actualService.actualProgram)
+      return this.actualService.actualProgram.name
     else
       return "";
   }
@@ -131,7 +131,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   }
 
   public get action(): string {
-    return this.navbarService.actualAction;
+    return this.actualService.actualAction;
   }
 
   public apply(event: Event) {
@@ -146,14 +146,14 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   }
 
   public getUserName(): string {
-    if(this.navbarService.actualUser){
-      return this.navbarService.actualUser.name;
+    if(this.actualService.actualUser){
+      return this.actualService.actualUser.name;
     } 
   }
 
   public getUserCode(): string {
-    if(this.navbarService.actualUser){
-      return this.navbarService.actualUser.code;
+    if(this.actualService.actualUser){
+      return this.actualService.actualUser.code;
     }
   }
 

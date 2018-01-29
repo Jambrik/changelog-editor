@@ -7,7 +7,7 @@ import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 
 @Injectable()
-export class NavbarService {
+export class ActualService {
   private _actualProgram: IProgram;
   private _actualVersions: IVersionMetaData[];
   private _actualVersion: IVersionMetaData;
@@ -58,5 +58,5 @@ export class NavbarService {
   set actualUser(value: User) {    
     this._actualUser = value;    
   }
-  
+
 }

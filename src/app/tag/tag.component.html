@@ -1,0 +1,12 @@
+<dl class="row">
+    <dt class="col-lg-6" translate>
+      CATEGORY
+    </dt>
+    <dd class="col-lg-6">
+      <span *ngIf="!isEditing()">
+        {{(changeLogItem.category) ? changeLogItem.category: 'N.A.'}}
+      </span>
+      <input *ngIf="false" type="text" name="" id="" [(ngModel)]="changeLogItem.category" style="width: 95%">
+      <div *ngIf="isEditing()" translate>NOT_EDITABLE</div>
+    </dd>
+  </dl>
