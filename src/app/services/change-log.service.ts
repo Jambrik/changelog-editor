@@ -58,7 +58,7 @@ export class ChangeLogService {
     );
   }  
 
-  public createNewVersion(programId: number, version: IVersionMetaData) {
+  public createNewVersion(programId: number, version: string) {
     return this.http.get<IVersionChangeLog>(environment.backEndUrl + "api/new-version/" + programId + "/" + version);
   }
   
