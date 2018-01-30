@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ITag } from '../models/ITag';
 import { ITagInfo } from '../models/ITagInfo';
+import { TagInfo } from '../models/TagInfo';
 
 @Component({
   selector: 'app-tag',
@@ -9,7 +10,7 @@ import { ITagInfo } from '../models/ITagInfo';
 })
 export class TagComponent implements OnInit {
   @Input() tags: ITag[];  
-  @Input() tagInfo: ITagInfo;
+  @Input() tagInfo: TagInfo;
   constructor() { }
 
   ngOnInit() {

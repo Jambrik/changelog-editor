@@ -35,10 +35,8 @@ exports.getVersionsByProgram = function (program) {
         let path = program.path;        
         var files = fs.readdirSync(path);        
         let versions = [];
-        files.forEach(file => {
-            console.log("file: ", file);
-            let v = fs.readJsonSync(path + file);
-            console.log("v: ", v);
+        files.forEach(file => {            
+            let v = fs.readJsonSync(path + file);            
             versions.push({
                 version: v.version,
                 releaseDate: v.releaseDate,
@@ -103,6 +101,7 @@ exports.changeLogRelease = function (param) {
         programId: param.programId,
         version: param.version
     });
+    console.log("param.releaseDate", param.releaseDate);
     changeLogs.releaseDate = param.releaseDate;    
     this.changeLogFileSave(param.programId, param.version, changeLogs);
 }

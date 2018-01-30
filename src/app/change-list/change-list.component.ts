@@ -27,7 +27,7 @@ import { ChangeLogAction } from '../types/types';
 export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
   public program: IProgram;
-  public version: IVersionMetaData = {version: ""};
+  public version: IVersionMetaData = { version: "" };
   public changeList: IVersionChangeLog;
   public oriChangeList: IVersionChangeLog;
   public action: ChangeLogAction;
@@ -112,16 +112,26 @@ export class ChangeListComponent implements OnInit, OnChanges {
                 if ((versionNumber == "last") && (versions.length > 0)) {
                   this.version = versions[0];
                 } else {
-                  this.version = ConfigHelper.getVersion(versions,versionNumber);
+                  this.version = ConfigHelper.getVersion(versions, versionNumber);
                 }
                 this.actualService.actualVersion = this.version;
-                this.getChanges();
-                if (this.action == "new") {
-                  this.newItemCreate();
+                if (this.version != null) {
+                  this.getChanges();
+                  if (this.action == "new") {
+                    this.newItemCreate();
+                  }
+                } else {
+                  this.oriChangeList = {
+                    version: null,
+                    type: null,
+                    releaseDate: null,
+                    changes: []
+                  };
+                  this.changeList = this.oriChangeList;
                 }
               });
           });
-      } else if (versionNumber != this.version.version) {
+      } else if ((this.version != null) && (versionNumber != this.version.version)) {
         this.version = ConfigHelper.getVersion(this.actualService.actualVersions, versionNumber);
         this.actualService.actualVersion = this.version;
         this.getChanges();
@@ -132,7 +142,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         if (this.action == "new") {
           this.newItemCreate();
         }
-      }      
+      }
 
     });
 
@@ -153,7 +163,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   private loadCaptionTranslations() {
-    setTimeout(() => {    
+    setTimeout(() => {
       this.translateService.get("NO_VERSION_YET")
         .subscribe((translation) => {
           this.noVersionYetCaption = translation;
@@ -260,7 +270,9 @@ export class ChangeListComponent implements OnInit, OnChanges {
       }
       this.changeLogService.getChangeLogs(this.programId, this.version.version)
         .subscribe(changeList => {
-
+          if (changeList.releaseDate) {
+            changeList.releaseDate = new Date(changeList.releaseDate);
+          }
           changeList.changes.forEach(change => {
             change.date = new Date(change.date);
           });
@@ -284,13 +296,13 @@ export class ChangeListComponent implements OnInit, OnChanges {
           this.loading = false;
         });
     } else {
-        this.oriChangeList = {
-          releaseDate: null,
-          version: null,
-          changes: []
-        };
-        this.changeList = _.cloneDeep(this.oriChangeList);
-      
+      this.oriChangeList = {
+        releaseDate: null,
+        version: null,
+        changes: []
+      };
+      this.changeList = _.cloneDeep(this.oriChangeList);
+
     }
 
   }
@@ -319,10 +331,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.newChangeItem = {
       id: null,
       type: "feature",
-      importance: "normal",            
+      importance: "normal",
       ticketNumber: null,
-      date: new Date(),      
+      date: new Date(),
       descriptions: this.getNewDescriptions(),
+      tags: [],
       cru: null,
       crd: null,
       lmu: null,
@@ -347,8 +360,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.changeList = this.filter(this.oriChangeList);
   }
 
-  public printVersion(){    
-    if(this.version && (this.version != null) && (this.version.version != "none")){
+  public printVersion() {
+    if (this.version && (this.version != null) && (this.version.version != "none")) {
       return this.version.version;
     } else {
       return this.noVersionYetCaption;
@@ -356,7 +369,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   public get versionNumber() {
-    if(this.version && (this.version != null)){
+    if (this.version && (this.version != null)) {
       return this.version.version;
     } else {
       return "";
@@ -367,6 +380,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   public saveReleaseDate(event: Event) {
     event.preventDefault();
+    console.log("this.changeList.releaseDate", this.changeList.releaseDate);
     this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
       .subscribe((x) => {
         this.getChanges();
@@ -375,28 +389,6 @@ export class ChangeListComponent implements OnInit, OnChanges {
         this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
       });
   }
-
-  public inssertModReleaseChangeLogOk(event: Event) {
-    event.preventDefault();
-    this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
-      .subscribe((x) => {
-        this.getChanges();
-      },
-      (error) => {
-        this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-      });
-  }  
-
-  public inssertModReleaseChangeLogCancel(event: Event) {
-    event.preventDefault();
-    this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
-      .subscribe((x) => {
-        this.getChanges();
-      },
-      (error) => {
-        this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-      });
-  }  
 }
 
 

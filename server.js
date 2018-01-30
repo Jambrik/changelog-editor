@@ -64,7 +64,7 @@ router.route('/change-log-load/:program_id/:version')
     var param = {
       programId: req.body.programId,
       version: req.body.version,
-      releaseDate: req.releaseDate
+      releaseDate: req.body.releaseDate
     }
     changeLogDao.changeLogRelease(param);    
     res.json({done: true});

@@ -8,7 +8,9 @@
                 </div>
                 <div class="pl-4 pt-2 pull-right">
                     <span translate>RELEASE_DATE</span>:
-                    <p-calendar [(ngModel)]="version.releaseDate" dateFormat="yy.mm.dd"></p-calendar>
+                    <span *ngIf="changeList && (changeList != null)">
+                        <p-calendar [(ngModel)]="changeList.releaseDate" dateFormat="yy.mm.dd"></p-calendar>                        
+                    </span>
                     <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)">
                         <span class="fa fa-save"></span>
                     </a>

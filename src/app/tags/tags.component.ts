@@ -4,6 +4,7 @@ import { ITag } from '../models/ITag';
 import { ActualService } from '../services/actual.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ChangeLogAction } from '../types/types';
+import { TagInfo } from '../models/TagInfo';
 
 
 
@@ -13,25 +14,38 @@ import { ChangeLogAction } from '../types/types';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
-  @Input() tags: ITag[];  
+  @Input() tags: ITag[];
   @Input() action: ChangeLogAction;
   constructor(
     private actualService: ActualService,
     private translateService: TranslateService
-  ) { 
+  ) {
 
   }
 
   ngOnInit() {
   }
 
-  getTagInfos() {
+  public getTagInfos(): TagInfo[] {
+    let resultList: TagInfo[] = [];
     let program: IProgram = this.actualService.actualProgram;
-    let actualLang: string =  this.translateService.currentLang;
+    let actualLang: string = this.translateService.currentLang;
     let tagInfos = program.tagInfos;
-    for(let tagInfo of tagInfos){
-      tagInfo.
+    if (tagInfos) {
+      for (let tagInfo of tagInfos) {
+        let tio = new TagInfo(
+          tagInfo.code,
+          tagInfo.captions,
+          tagInfo.fix,
+          tagInfo.moreOptionsAllowed,
+          tagInfo.mandatory,
+          tagInfo.setOfValues,
+          this.translateService
+        );
+        resultList.push(tio);
+      }
     }
+    return resultList;
   }
 
 }

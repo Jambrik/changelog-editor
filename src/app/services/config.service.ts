@@ -17,6 +17,13 @@ export class ConfigService {
     .map((response: IChangeLogEditorConfig) => {
       console.log("User", response.user);
       this.actualService.actualUser = response.user;
+      response.programs.forEach(program => {
+        program.versions.forEach(cl => {
+          cl.releaseDate = new Date(cl.releaseDate);
+          
+        });
+        
+      });
       return response;
     });
   }

@@ -331,7 +331,6 @@
 			"cru": "RJAMBRIK",
 			"crd": "2018-01-22T19:23:09.743Z",
 			"lmu": "RJAMBRIK",
-
 			"lmd": "2018-01-26T05:59:54.921Z"
 		},
 		{
@@ -355,6 +354,72 @@
 			],
 			"cru": "RJAMBRIK",
 			"crd": "2018-01-29T13:50:21.060Z",
+			"lmu": null,
+			"lmd": null
+		},
+		{
+			"id": "32d4c560-058e-11e8-9829-93472d3253ca",
+			"type": "bugfix",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2018-01-30T07:20:56.291Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>A kiadás dátuma nem volt elmenthető. Javítva.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Release date could not be saved. Fixed. </p>"
+				}
+			],
+			"tags": [],
+			"cru": "RJAMBRIK",
+			"crd": "2018-01-30T07:21:33.070Z",
+			"lmu": "RJAMBRIK",
+			"lmd": "2018-01-30T07:21:42.519Z"
+		},
+		{
+			"id": "5d9daeb0-058e-11e8-9829-93472d3253ca",
+			"type": "bugfix",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2018-01-30T07:21:59.563Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Már kiadott verzióhoz nem lehetett hozzáadni módosítást. Javítva.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>No changes could be added to the version already released. Fixed.</p>"
+				}
+			],
+			"tags": [],
+			"cru": "RJAMBRIK",
+			"crd": "2018-01-30T07:22:44.862Z",
+			"lmu": "RJAMBRIK",
+			"lmd": "2018-01-30T07:24:25.297Z"
+		},
+		{
+			"id": "90be84e0-058e-11e8-9829-93472d3253ca",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2018-01-30T07:22:55.124Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Testre szabható jellemzők tovább fejlesztése. Most már meg jeleníthető a jobb oldali információs ablakban a kiválasztott nyelven a neve.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Further develop customizable features. You can now show it in the right information window in the selected language. </p>"
+				}
+			],
+			"tags": [],
+			"cru": "RJAMBRIK",
+			"crd": "2018-01-30T07:24:10.642Z",
 			"lmu": null,
 			"lmd": null
 		}

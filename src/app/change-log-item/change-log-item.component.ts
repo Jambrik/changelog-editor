@@ -127,6 +127,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   public goEdit(){
+    console.log("It is go edit. Action: mod")
     this.router.navigate(["/change-list", this.program.id, this.version.version, 'mod', this.changeLogItem.id], { queryParams: { lang: this.getActualLang() } });
   }
 
@@ -295,8 +296,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public inssertModReleaseChangeLogOk(event: Event) {
     event.preventDefault();
+    console.log("inssertModReleaseChangeLogOk. Action: ", this.action);
     this.showReleasedVersionWarning = false;
-    if(this.action == "mod"){
+    if(this.action == "read"){
       this.goEdit();
     }    
   }

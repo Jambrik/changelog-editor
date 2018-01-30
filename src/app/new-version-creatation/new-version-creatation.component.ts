@@ -49,7 +49,7 @@ export class NewVersionCreatationComponent implements OnInit {
 
 
   public get program(): IProgram {
-    return this.navbarService.actualProgram;
+    return this.actualService.actualProgram;
 
   }
 
