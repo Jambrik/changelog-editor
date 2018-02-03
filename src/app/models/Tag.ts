@@ -8,7 +8,8 @@ export class Tag implements ITag {
     public code: string;
     constructor(
         public tagInfo: TagInfo,
-        public values: string[]
+        public values?: string[],
+        public value?: boolean | string | number
     ) {
         this.code = tagInfo.code;
 

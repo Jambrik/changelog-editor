@@ -1,4 +1,4 @@
-[
+[    
     {
         "code": "PAGE",
         "captions": [
@@ -56,5 +56,37 @@
                 ]
             }
         ]
+    },
+    {
+        "code": "TECHNICAL_CHANGE",
+        "captions": [
+            {
+                "lang": "hu",
+                "text": "Technikai változás"
+            },
+            {
+                "lang": "en",
+                "text": "Technical change"
+            }
+        ],        
+        "mandatory": true,
+        "dataType": "boolean",
+        "moreOptionsAllowed": false
+    },
+    {
+        "code": "WORK_HOURS",
+        "captions": [
+            {
+                "lang": "hu",
+                "text": "Munkaóra"
+            },
+            {
+                "lang": "en",
+                "text": "Work hours"
+            }
+        ],        
+        "mandatory": true,
+        "dataType": "number",
+        "moreOptionsAllowed": false
     }
 ]

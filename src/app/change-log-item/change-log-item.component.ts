@@ -89,22 +89,39 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         this.showReleasedVersionWarning = true;
       }
     }
-    
+
   }
 
   private createCompactTags() {
-    let compactTags: Tag[] = [];    
+    let compactTags: Tag[] = [];
     for (let tagInfo of this.actualService.actualTagInfos) {
       let compactTag: Tag;
       if (this.changeLogItem.tags) {
         for (let tag of this.changeLogItem.tags) {
           if (tag.code == tagInfo.code) {
-            compactTag = new Tag(tagInfo, tag.values);
+            compactTag = new Tag(tagInfo, tag.values, tag.value);
           }
         }
       }
       if (!compactTag) {
-        compactTag = new Tag(tagInfo, []);
+        let value: number | boolean | string;
+        if (!tagInfo.moreOptionsAllowed) {
+          if (tagInfo.dataType == "boolean") {
+            if (tagInfo.mandatory) {
+              value = false;
+            }
+          } else if (tagInfo.dataType == "string") {
+            if (tagInfo.mandatory) {
+              value = "";
+            }
+          } else if (tagInfo.dataType == "number") {
+            if (tagInfo.mandatory) {
+            //  value = 0;
+            }
+          }
+        }
+
+        compactTag = new Tag(tagInfo, [], value);
       }
       compactTags.push(compactTag);
     }
@@ -112,12 +129,14 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     this.compactTags = compactTags;
   }
 
-  private converCompactTagsIntoSimple(){
+  private converCompactTagsIntoSimple() {
     let tags: ITag[] = [];
-    for(let ctag of this.compactTags) {      
+    for (let ctag of this.compactTags) {
+
       let tag: ITag = {
         code: ctag.code,
-        values: ctag.values
+        values: ctag.values,
+        value: ctag.value
       };
       tags.push(tag);
     }
@@ -195,7 +214,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
     //Adding tags:
     this.converCompactTagsIntoSimple();
-    if(this.valid()){
+    if (this.valid()) {
       //Save:
       this.changeLogService.changeLogWrite(this.program.id, this.version.version, this.changeLogItem)
         .subscribe((x) => {
@@ -214,23 +233,35 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     //Check mandatory tag is added:
     let actualTagInfos = this.actualService.actualTagInfos;
     let ok: boolean = true;
-    for(let tagInfo of actualTagInfos) {
-      if(tagInfo.mandatory) {
-        ok = false;
-        for(let tag of this.changeLogItem.tags) {
-          if((tag.code == tagInfo.code) && (tag.values.length > 0)) {
-            ok = true;
+    for (let tagInfo of actualTagInfos) {
+      if (tagInfo.mandatory) {
+        if (tagInfo.moreOptionsAllowed) {
+          ok = false;
+          for (let tag of this.changeLogItem.tags) {
+            if ((tag.code == tagInfo.code) && (tag.values.length > 0)) {
+              ok = true;
+            }
+          }
+        } else {
+          ok = false;
+          for (let tag of this.changeLogItem.tags) {
+            if ((tag.code == tagInfo.code) && (tag.value != undefined) && (tag.value != null)) {
+              ok = true;
+            }
           }
         }
-        if(!ok) {
+        if (!ok) {
           this.translateService.get(Constants.MANDATORY_TAG)
-          .subscribe((translation) => {
-            this.msgs.push({ severity: 'error', summary: 'Hiba', detail: translation + ": " + tagInfo.caption + "!" })  
-          })
-          
+            .subscribe((translation) => {
+              this.msgs.push({ severity: 'error', summary: 'Hiba', detail: translation + ": " + tagInfo.caption + "!" })
+            })
+
           break;
         }
       }
+    }
+    if (ok) {
+      this.msgs.length = 0;
     }
     return ok;
   }

@@ -1,21 +1,65 @@
 <dl class="row">
   <dt class="col-lg-6">
-    {{tag.tagInfo.caption}}
+    {{tag.tagInfo.caption}}    
   </dt>
   <dd class="col-lg-6">
-    <span *ngIf="!editing ">
-      <span *ngIf="values.length == 0">
-        N.A.
+    <div *ngIf="!editing" [ngSwitch]="tag.tagInfo.dataType">        
+      <span *ngSwitchCase="'boolean'">                              
+        <span [ngSwitch]="tag.value">            
+          <span *ngSwitchCase="true" translate>
+            YES
+          </span>
+          <span *ngSwitchCase="false" translate>
+            NO
+          </span>
+          <span *ngSwitchDefault>N. A.</span>
+        </span>
       </span>
-      <span *ngFor="let value of values">
-        {{value.caption}}<br/>
+      <span *ngSwitchCase="'string'">
+        <span [ngSwitch]="tag.tagInfo.moreOptionsAllowed">
+          <span *ngSwitchCase="true">
+            <span *ngIf="values.length == 0">
+              N.A.
+            </span>
+            <span *ngFor="let value of values">
+              {{value.caption}}
+              <br/>
+            </span>
+          </span>
+          <span *ngSwitchDefault>
+            {{tag.value}}
+          </span>
+        </span>
       </span>
-    </span>    
-    <div *ngIf="editing" translate>
-        <p-autoComplete [(ngModel)]="values" [suggestions]="allCompactValues"  [multiple]="true"
-        field="caption" [inputStyleClass]="'width100'" (completeMethod)="search($event)"
-        autoHighlight="true" dataKey="code" minLength="0"></p-autoComplete>
-    </div>  
+      <span *ngSwitchCase="'number'">{{tag.value}}</span>
+      <span *ngSwitchDefault>Nem meghatározható adattípus</span>
+    </div>
+    <div *ngIf="editing" [ngSwitch]="tag.tagInfo.dataType">
+      <span *ngSwitchCase="'boolean'">
+        <div *ngIf="tag.tagInfo.mandatory; then thenBlock; else elseBlock">this is ignored</div>
+        <ng-template #thenBlock>
+          <p-checkbox [(ngModel)]="tag.value" binary="true" label="{{tag.tagInfo.caption}}"></p-checkbox>
+        </ng-template>
+        <ng-template #elseBlock>
+          <p-triStateCheckbox [(ngModel)]="tag.value" label="{{tag.tagInfo.caption}}"></p-triStateCheckbox>
+        </ng-template>
+      </span>
+      <span *ngSwitchCase="'string'">
+          <span [ngSwitch]="tag.tagInfo.moreOptionsAllowed">
+              <span *ngSwitchCase="true">
+                  <p-autoComplete [(ngModel)]="values" [suggestions]="allCompactValues" [multiple]="true" field="caption" [inputStyleClass]="'width100'"
+                  (completeMethod)="search($event)" autoHighlight="true" dataKey="code" minLength="0"></p-autoComplete>
+              </span>
+              <span *ngSwitchDefault>
+                <input type="text" [(ngModel)]="tag.value">
+              </span>
+            </span>        
+      </span>
+      <span *ngSwitchCase="'number'">
+          <input type="number" [(ngModel)]="tag.value">
+      </span>
+      <span *ngSwitchDefault>Nem meghatározható adattípus</span>
+    </div>
 
   </dd>
 </dl>

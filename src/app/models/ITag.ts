@@ -1,4 +1,5 @@
 export interface ITag {
     code: string;
-    values: string[];
+    value?: boolean | string | number;
+    values?: string[];
 }
