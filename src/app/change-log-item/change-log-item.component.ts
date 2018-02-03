@@ -195,17 +195,44 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
     //Adding tags:
     this.converCompactTagsIntoSimple();
-    //Save:
-    this.changeLogService.changeLogWrite(this.program.id, this.version.version, this.changeLogItem)
-      .subscribe((x) => {
-        if (this.changeLogItem.id == null) {
-          this.onDeleteOrAddingNew.emit();
+    if(this.valid()){
+      //Save:
+      this.changeLogService.changeLogWrite(this.program.id, this.version.version, this.changeLogItem)
+        .subscribe((x) => {
+          if (this.changeLogItem.id == null) {
+            this.onDeleteOrAddingNew.emit();
+          }
+          this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
+        },
+        (error) => {
+          this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+        });
+    }
+  }
+
+  private valid(): boolean {
+    //Check mandatory tag is added:
+    let actualTagInfos = this.actualService.actualTagInfos;
+    let ok: boolean = true;
+    for(let tagInfo of actualTagInfos) {
+      if(tagInfo.mandatory) {
+        ok = false;
+        for(let tag of this.changeLogItem.tags) {
+          if((tag.code == tagInfo.code) && (tag.values.length > 0)) {
+            ok = true;
+          }
         }
-        this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
-      },
-      (error) => {
-        this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-      });
+        if(!ok) {
+          this.translateService.get(Constants.MANDATORY_TAG)
+          .subscribe((translation) => {
+            this.msgs.push({ severity: 'error', summary: 'Hiba', detail: translation + ": " + tagInfo.caption + "!" })  
+          })
+          
+          break;
+        }
+      }
+    }
+    return ok;
   }
   public cancelMod(event: Event) {
     event.preventDefault();

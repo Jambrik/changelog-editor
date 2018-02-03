@@ -4,4 +4,5 @@ export class Constants {
     public static LOW: string = "low";
     public static NORMAL: string = "normal";
     public static HIGH: string = "high";
+    public static MANDATORY_TAG: string = "MANDATORY_TAG";
 }

@@ -448,7 +448,7 @@
 			"cru": "RJAMBRIK",
 			"crd": "2018-02-03T14:49:33.524Z",
 			"lmu": "RJAMBRIK",
-			"lmd": "2018-02-03T15:26:55.951Z"
+			"lmd": "2018-02-03T15:59:56.784Z"
 		},
 		{
 			"id": "6a3c4fa0-08f4-11e8-983d-8bd48d918d63",
@@ -505,6 +505,35 @@
 			],
 			"cru": "RJAMBRIK",
 			"crd": "2018-02-03T15:17:21.197Z",
+			"lmu": null,
+			"lmd": null
+		},
+		{
+			"id": "80d471a0-08fb-11e8-9ba3-69ebdeb75594",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2018-02-03T16:00:41.086Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Egy jellemzőről megmondható, hogy kötelezően megadandó vagy sem.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>A tag can be said to be mandatory or not. </p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"changeloglist"
+					]
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2018-02-03T16:01:32.551Z",
 			"lmu": null,
 			"lmd": null
 		}

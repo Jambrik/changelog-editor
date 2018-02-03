@@ -12,6 +12,8 @@
             }
         ],
         "fix": true,
+        "mandatory": false,
+        "dataType": "string",
         "moreOptionsAllowed": true,
         "setOfValues": [
             {

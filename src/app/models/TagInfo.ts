@@ -13,6 +13,7 @@ export class TagInfo implements ITagInfo{
         public fix: boolean,
         public moreOptionsAllowed: boolean,
         public mandatory: boolean,
+        public dataType: "string" | "number" | "boolean",
         public setOfValues: ICodeCaptions[],
         public translateService: TranslateService
     ){

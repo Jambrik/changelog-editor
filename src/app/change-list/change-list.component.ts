@@ -404,6 +404,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
           tagInfo.fix,
           tagInfo.moreOptionsAllowed,
           tagInfo.mandatory,
+          tagInfo.dataType,
           tagInfo.setOfValues,
           this.translateService
         );
