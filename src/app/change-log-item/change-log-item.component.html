@@ -52,7 +52,7 @@
   <div class="card-block">
     <p-messages [(value)]="msgs"></p-messages>
     <div class="row">
-      <div class="col-lg-9 col-sm-6">
+      <div class="col-lg-8 col-sm-6">
         <div class="card-text" *ngFor="let description of descriptions">
           <div class="cardcard-primary p-1">
             <blockquote class="card-blockquote">
@@ -74,8 +74,10 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-sm-6 border border-primary bg bg-light">
-        <app-tags [tags]="changeLogItem.tags" [action]="action"></app-tags>
+      <div class="col-lg-4 col-sm-6 border border-primary bg bg-light">        
+        <div *ngIf="compactTags">
+          <app-tags [tags]="compactTags" [editing]="isEditing()"></app-tags>
+        </div>
         <dl class="row">
           <dt class="col-lg-6" translate>
             CREATOR

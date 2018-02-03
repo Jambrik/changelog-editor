@@ -30,18 +30,28 @@ exports.changeLogVersions = function (param, res) {
 
 };
 
+exports.getTaginfos = function (program){
+    let path = program.path;
+    let fileName = path + "tag-infos.json";
+    if(fs.existsSync(fileName)) {
+        return fs.readJsonSync(fileName);
+    }
+}
+
 exports.getVersionsByProgram = function (program) {    
     if (program) {
-        let path = program.path;        
+        let path = program.path;
         var files = fs.readdirSync(path);        
         let versions = [];
         files.forEach(file => {            
-            let v = fs.readJsonSync(path + file);            
-            versions.push({
-                version: v.version,
-                releaseDate: v.releaseDate,
-                type: v.type
-            });
+            if(file != "tag-infos.json"){
+                let v = fs.readJsonSync(path + file);            
+                versions.push({
+                    version: v.version,
+                    releaseDate: v.releaseDate,
+                    type: v.type
+                });
+            }
 
         });
         
@@ -64,10 +74,9 @@ exports.changeLogSave = function (param) {
                 item.date = param.item.date;
                 item.ticketNumber = param.item.ticketNumber;
                 item.type = param.item.type;
+                item.importance = param.item.importance;
                 item.descriptions = param.item.descriptions;
-                item.category = param.item.category;
-                item.subCategory = param.item.subCategory;
-                item.keywords = param.item.keywords;
+                item.tags = param.item.tags;                                
                 item.lmu = param.item.lmu;
                 item.lmd = param.item.lmd;
             }
@@ -100,8 +109,7 @@ exports.changeLogRelease = function (param) {
     let changeLogs = this.changeLogLoad({
         programId: param.programId,
         version: param.version
-    });
-    console.log("param.releaseDate", param.releaseDate);
+    });    
     changeLogs.releaseDate = param.releaseDate;    
     this.changeLogFileSave(param.programId, param.version, changeLogs);
 }

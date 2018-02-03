@@ -1,3 +1,3 @@
-<div *ngFor="let tagInfo of getTagInfos()">
-    <app-tag [tagInfo]="tagInfo" [tags]="tags" ></app-tag>
+<div *ngFor="let tag of tags">
+    <app-tag [tag]="tag" [editing]="editing" ></app-tag>
 </div>

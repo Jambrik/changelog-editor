@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Message } from 'primeng/components/common/message';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 import { ChangeLogAction } from '../types/types';
+import { TagInfo } from '../models/TagInfo';
 
 
 @Component({
@@ -90,6 +91,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
           .subscribe((config) => {
             this.programId = programIdInt;
             this.program = ConfigHelper.getProgramById(config.programs, this.programId);
+            this.actualService.actualProgram = this.program;
+            console.log("New program id", programId);
             this.langs = [];
             this.selectedLangs = [];
             this.program.langs.forEach(lang => {
@@ -99,9 +102,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
               });
               this.selectedLangs.push(lang);
             });
-
-            this.actualService.actualProgram = this.program;
-            console.log("New program id", programId);
+            this.setActualTaginfos();
             //First of all we have get the versions
             this.changeLogService.getVersionsForProgramId(programId)
               .subscribe((versions) => {
@@ -388,6 +389,28 @@ export class ChangeListComponent implements OnInit, OnChanges {
       (error) => {
         this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
       });
+  }
+
+  private setActualTaginfos () {
+    let resultList: TagInfo[] = [];
+    let program: IProgram = this.actualService.actualProgram;
+    let actualLang: string = this.translateService.currentLang;
+    let tagInfos = program.tagInfos;
+    if (tagInfos) {
+      for (let tagInfo of tagInfos) {
+        let tio = new TagInfo(
+          tagInfo.code,
+          tagInfo.captions,
+          tagInfo.fix,
+          tagInfo.moreOptionsAllowed,
+          tagInfo.mandatory,
+          tagInfo.setOfValues,
+          this.translateService
+        );
+        resultList.push(tio);
+      }
+    }
+    this.actualService.actualTagInfos = resultList;
   }
 }
 

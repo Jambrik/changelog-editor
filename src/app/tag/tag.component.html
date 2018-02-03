@@ -1,14 +1,21 @@
 <dl class="row">
-    <dt class="col-lg-6">
-      {{tagInfo.caption}}
-    </dt>
-    <dd class="col-lg-6">
-      N.A.
-     <!-- <span *ngIf="!isEditing()">
-        {{(changeLogItem.category) ? changeLogItem.category: 'N.A.'}}
+  <dt class="col-lg-6">
+    {{tag.tagInfo.caption}}
+  </dt>
+  <dd class="col-lg-6">
+    <span *ngIf="!editing ">
+      <span *ngIf="values.length == 0">
+        N.A.
       </span>
-      <input *ngIf="false" type="text" name="" id="" [(ngModel)]="changeLogItem.category" style="width: 95%">
-      <div *ngIf="isEditing()" translate>NOT_EDITABLE</div>
-    -->
-    </dd>
-  </dl>
+      <span *ngFor="let value of values">
+        {{value.caption}}<br/>
+      </span>
+    </span>    
+    <div *ngIf="editing" translate>
+        <p-autoComplete [(ngModel)]="values" [suggestions]="allCompactValues"  [multiple]="true"
+        field="caption" [inputStyleClass]="'width100'" (completeMethod)="search($event)"
+        autoHighlight="true" dataKey="code" minLength="0"></p-autoComplete>
+    </div>  
+
+  </dd>
+</dl>

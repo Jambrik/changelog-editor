@@ -24,7 +24,7 @@ export class TagInfo implements ITagInfo{
     }
 
     public get valuesCompact(): ICodeCaption[] {
-        let result: ICodeCaption[];
+        let result: ICodeCaption[] = [];
         for(let v of this.setOfValues){
             let r: ICodeCaption = {
                 code: v.code,

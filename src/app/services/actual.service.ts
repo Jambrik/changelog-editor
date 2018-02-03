@@ -5,6 +5,7 @@ import { version } from 'punycode';
 import { StringHelpers } from '../helpers/string-helpers';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { TagInfo } from '../models/TagInfo';
 
 @Injectable()
 export class ActualService {
@@ -13,6 +14,7 @@ export class ActualService {
   private _actualVersion: IVersionMetaData;
   private _actualAction: string;
   private _actualUser: User;
+  private _actualTagInfos: TagInfo[];
 
 
   constructor(private changeLogService: ChangeLogService) { 
@@ -57,6 +59,14 @@ export class ActualService {
 
   set actualUser(value: User) {    
     this._actualUser = value;    
+  }
+
+  get actualTagInfos(): TagInfo[] {
+    return this._actualTagInfos;
+  }
+
+  set actualTagInfos(value: TagInfo[]) {    
+    this._actualTagInfos = value;    
   }
 
 }

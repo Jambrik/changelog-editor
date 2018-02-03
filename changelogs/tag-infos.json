@@ -1,0 +1,58 @@
+[
+    {
+        "code": "PAGE",
+        "captions": [
+            {
+                "lang": "hu",
+                "text": "Érintett oldal(ak)"
+            },
+            {
+                "lang": "en",
+                "text": "Related pages"
+            }
+        ],
+        "fix": true,
+        "moreOptionsAllowed": true,
+        "setOfValues": [
+            {
+                "code": "programs",
+                "captions": [
+                    {
+                        "lang": "hu",
+                        "text": "Programok"
+                    },
+                    {
+                        "lang": "en",
+                        "text": "Programs"
+                    }
+                ]
+            },
+            {
+                "code": "changeloglist",
+                "captions": [
+                    {
+                        "lang": "hu",
+                        "text": "Verziós változások"
+                    },
+                    {
+                        "lang": "en",
+                        "text": "Changelog list"
+                    }
+                ]
+            },
+            {
+                "code": "configeditor",
+                "captions": [
+                    {
+                        "lang": "hu",
+                        "text": "Beállások"
+                    },
+                    {
+                        "lang": "en",
+                        "text": "Settings"
+                    }
+                ]
+            }
+        ]
+    }
+]

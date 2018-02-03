@@ -16,6 +16,8 @@ import { Constants } from '../constants/constants';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 import { ChangeLogAction } from '../types/types';
+import { Tag } from '../models/Tag';
+import { ITag } from '../models/ITag';
 
 @Component({
   selector: 'app-change-log-item',
@@ -43,9 +45,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public importances: ILabelValue[];
   public showReleasedVersionWarning: boolean = false;
-
-
-  public selectedType: any;
+  public compactTags: Tag[]
   constructor(
     private actualService: ActualService,
     private changeLogService: ChangeLogService,
@@ -84,26 +84,60 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
           this.importances.push({ value: Constants.HIGH, label: t.high });
         }
       });
-      if(this.action == "new"){
-        if(this.version.releaseDate && (this.version.releaseDate != null)){
-          this.showReleasedVersionWarning = true;
-        }
+    if (this.action == "new") {
+      if (this.version.releaseDate && (this.version.releaseDate != null)) {
+        this.showReleasedVersionWarning = true;
       }
-
+    }
+    
   }
 
-  ngOnChanges(changes: SimpleChanges): void {    
+  private createCompactTags() {
+    let compactTags: Tag[] = [];    
+    for (let tagInfo of this.actualService.actualTagInfos) {
+      let compactTag: Tag;
+      if (this.changeLogItem.tags) {
+        for (let tag of this.changeLogItem.tags) {
+          if (tag.code == tagInfo.code) {
+            compactTag = new Tag(tagInfo, tag.values);
+          }
+        }
+      }
+      if (!compactTag) {
+        compactTag = new Tag(tagInfo, []);
+      }
+      compactTags.push(compactTag);
+    }
+    console.log("compactTags", compactTags);
+    this.compactTags = compactTags;
+  }
+
+  private converCompactTagsIntoSimple(){
+    let tags: ITag[] = [];
+    for(let ctag of this.compactTags) {      
+      let tag: ITag = {
+        code: ctag.code,
+        values: ctag.values
+      };
+      tags.push(tag);
+    }
+    this.changeLogItem.tags = tags;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
       if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
         console.log("ngOnChanges");
         this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
-      } else {
-
       }
     }
 
     if (changes.selectedLangs && (changes.selectedLangs.currentValue != changes.selectedLangs.previousValue)) {
       this.descriptions = this.getDescriptions();
+    }
+
+    if (changes.changeLogItem && (changes.changeLogItem.currentValue != changes.changeLogItem.previousValue)) {
+      this.createCompactTags();
     }
 
   }
@@ -121,12 +155,12 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     if (this.version.releaseDate && (this.version.releaseDate != null)) {
       this.showReleasedVersionWarning = true;
     } else {
-      this.goEdit();      
+      this.goEdit();
     }
 
   }
 
-  public goEdit(){
+  public goEdit() {
     console.log("It is go edit. Action: mod")
     this.router.navigate(["/change-list", this.program.id, this.version.version, 'mod', this.changeLogItem.id], { queryParams: { lang: this.getActualLang() } });
   }
@@ -158,6 +192,10 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       }
       this.changeLogItem.lmd = new Date();
     }
+
+    //Adding tags:
+    this.converCompactTagsIntoSimple();
+    //Save:
     this.changeLogService.changeLogWrite(this.program.id, this.version.version, this.changeLogItem)
       .subscribe((x) => {
         if (this.changeLogItem.id == null) {
@@ -180,9 +218,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     this.goToBack();
   }
 
-  public goToBack(){
+  public goToBack() {
     this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
-}
+  }
 
   public deleteMessageShow(event: Event) {
     event.preventDefault();
@@ -298,18 +336,18 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     console.log("inssertModReleaseChangeLogOk. Action: ", this.action);
     this.showReleasedVersionWarning = false;
-    if(this.action == "read"){
+    if (this.action == "read") {
       this.goEdit();
-    }    
+    }
   }
 
   public inssertModReleaseChangeLogCancel(event: Event) {
     event.preventDefault();
     this.showReleasedVersionWarning = false;
-    if(this.action == "new"){
+    if (this.action == "new") {
       this.goToBack();
     }
-      
-    
+
+
   }
 }

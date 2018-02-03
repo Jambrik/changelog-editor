@@ -422,6 +422,91 @@
 			"crd": "2018-01-30T07:24:10.642Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "727b1690-08f1-11e8-8381-8de30cea74a5",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2018-02-03T14:49:07.100Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>A change-log-editor-personal.config.json konfigurációs állományban tudunk felhasználót rögzíteni. Ha ez meg van adva, akkor új bejegyzés esetén ez kerül a Létrehozó felhasználó mezőbe, míg bejegyzés módosításakor az utoljára módosító felhasználó mezőbe.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>We can record users in the configuration-file change-log-editor-personal.config.json. If this is specified, this will be added to the Create User box for a new entry, while modifying the entry in the last modified user box.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2018-02-03T14:49:33.524Z",
+			"lmu": "RJAMBRIK",
+			"lmd": "2018-02-03T15:26:55.951Z"
+		},
+		{
+			"id": "6a3c4fa0-08f4-11e8-983d-8bd48d918d63",
+			"type": "feature",
+			"importance": "high",
+			"ticketNumber": null,
+			"date": "2018-02-03T15:05:37.812Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Testre szabható jellemzők definiálhatóak. Egyelőre a rendszer a fix értékhalmazzal rendelkező, több érték választását is lehetővé tevő jellemzőket támogatja. Megadható, elmentődik, betöltődik. A választható jellemzők a változásokat tartalmazó mappában tag-infos.json fájlban definiálható</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Customizable features can be defined. For the time being, the system supports features with a fixed value set that allow multiple values ​​to be selected. Can be specified, saved, loaded. Optional features can be defined in the change-over folder in tag-infos.json.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"changeloglist"
+					]
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2018-02-03T15:10:48.172Z",
+			"lmu": "RJAMBRIK",
+			"lmd": "2018-02-03T15:16:13.440Z"
+		},
+		{
+			"id": "54814d90-08f5-11e8-9ba3-69ebdeb75594",
+			"type": "bugfix",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2018-02-03T15:16:26.645Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>A változás fontossága (jelentősége) eleddig nem lett elmentve. Javítva.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Importance of change has not been saved yet. Fixed. </p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"changeloglist"
+					]
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2018-02-03T15:17:21.197Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }
