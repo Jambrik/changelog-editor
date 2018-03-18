@@ -37,6 +37,45 @@
 			"crd": "2018-03-18T18:33:38.422Z",
 			"lmu": "RJAMBRIK",
 			"lmd": "2018-03-18T21:09:53.852Z"
+		},
+		{
+			"id": "c343b740-2af1-11e8-9881-d9c3731d50f9",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2018-03-18T21:15:56.750Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Verzió kiadási dátum töltésekor a bal oldali navigációs sávon nem frissült be a verzió szám mellett a dátum. Javítva.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>In case of filling version release date, in the left navigation bar has not been updated the date nex to the version number. Fixed.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"changeloglist"
+					]
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 0.25
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2018-03-18T21:17:28.604Z",
+			"lmu": "RJAMBRIK",
+			"lmd": "2018-03-18T21:19:41.638Z"
 		}
 	]
 }

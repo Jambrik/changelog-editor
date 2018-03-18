@@ -439,7 +439,12 @@ export class ChangeListComponent implements OnInit, OnChanges {
     console.log("this.changeList.releaseDate", this.changeList.releaseDate);
     this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
       .subscribe((x) => {
-        this.getChanges();
+        this.changeLogService.getVersionsForProgramId(this.programId)
+              .subscribe((versions) => {                
+                versions.sort(ConfigHelper.versionSorter);
+                this.actualService.actualVersions = versions;
+                this.getChanges();
+              });        
       },
         (error) => {
           this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
