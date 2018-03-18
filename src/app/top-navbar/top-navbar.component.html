@@ -31,7 +31,7 @@
     </ul>
     <form class="form-inline mt-2 mt-md-0" (ngSubmit)="apply($event)">
       <input class="form-control mr-sm-2" type="text" placeholder="{{'SEARCH' | translate}}" aria-label="Search" (keyup)="searchTerm$.next($event.target.value)"
-        name="filter" [disabled]="action!='read'" />
+        name="filter" [disabled]="action!='read'" [value] = "filterText" />
     </form>
 
     <a class="nav-link" [class.border]="isSelected('hu')" href="/" (click)="changeLang($event, 'hu')">

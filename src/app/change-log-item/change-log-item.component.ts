@@ -116,7 +116,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
             }
           } else if (tagInfo.dataType == "number") {
             if (tagInfo.mandatory) {
-            //  value = 0;
+              //  value = 0;
             }
           }
         }
@@ -146,9 +146,10 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
       if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
-        console.log("ngOnChanges");
+        console.log("ngOnChanges");        
         this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
       }
+      this.descriptions = this.getDescriptions();
     }
 
     if (changes.selectedLangs && (changes.selectedLangs.currentValue != changes.selectedLangs.previousValue)) {
@@ -181,7 +182,14 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public goEdit() {
     console.log("It is go edit. Action: mod")
-    this.router.navigate(["/change-list", this.program.id, this.version.version, 'mod', this.changeLogItem.id], { queryParams: { lang: this.getActualLang() } });
+    this.router.navigate(["/change-list", this.program.id, this.version.version, 'mod', this.changeLogItem.id],
+      {
+        queryParams:
+          {
+            lang: this.getActualLang(),
+            filter: this.actualService.actualFilter
+          }
+      });
   }
 
   public get program(): IProgram {
@@ -221,11 +229,18 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
           if (this.changeLogItem.id == null) {
             this.onDeleteOrAddingNew.emit();
           }
-          this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
+          this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'],
+            {
+              queryParams:
+                {
+                  lang: this.getActualLang(),
+                  filter: this.actualService.actualFilter
+                }
+            });
         },
-        (error) => {
-          this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-        });
+          (error) => {
+            this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+          });
     }
   }
 
@@ -268,7 +283,18 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   public cancelMod(event: Event) {
     event.preventDefault();
     console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
-    this.changeLogItem = _.cloneDeep(this.changeLogItemOri);
+    this.changeLogItem.crd = this.changeLogItemOri.crd;
+    this.changeLogItem.cru = this.changeLogItemOri.cru;
+    this.changeLogItem.date = this.changeLogItemOri.date;
+    this.changeLogItem.id = this.changeLogItemOri.id;
+    this.changeLogItem.importance = this.changeLogItemOri.importance;
+    this.changeLogItem.lmd = this.changeLogItemOri.lmd;
+    this.changeLogItem.lmu = this.changeLogItemOri.lmu;
+    this.changeLogItem.ticketNumber = this.changeLogItemOri.ticketNumber;
+    this.changeLogItem.type = this.changeLogItemOri.type;
+    this.changeLogItem.descriptions = _.cloneDeep(this.changeLogItemOri.descriptions);
+    this.changeLogItem.tags = _.cloneDeep(this.changeLogItemOri.tags);
+    
     if (this.action == "mod") {
       this.descriptions = this.getDescriptions();
     }
@@ -277,7 +303,13 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   public goToBack() {
-    this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'], { queryParams: { lang: this.getActualLang() } });
+    this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'],
+      {
+        queryParams: {
+          lang: this.getActualLang(),
+          filter: this.actualService.actualFilter
+        }
+      });
   }
 
   public deleteMessageShow(event: Event) {
@@ -300,9 +332,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       .subscribe((x) => {
         this.onDeleteOrAddingNew.emit();
       },
-      (error) => {
-        this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-      });
+        (error) => {
+          this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+        });
   }
 
   public translate(event: Event) {
@@ -317,9 +349,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
               d.text = translateData.translate;
               this.translatePanelShown = false;
             },
-            (error) => {
-              this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-            });
+              (error) => {
+                this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+              });
         }
       });
     }
@@ -382,6 +414,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public getDescriptions() {
     let descriptions: I18n[] = [];
+
     this.changeLogItem.descriptions.forEach(description => {
       if (this.selectedLangs.indexOf(description.lang) > -1) {
         descriptions.push(description);

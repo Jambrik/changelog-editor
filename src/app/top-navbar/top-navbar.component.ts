@@ -39,10 +39,14 @@ export class TopNavbarComponent implements OnInit, OnChanges {
       this.translate.use(lang);
       let filter = queryParams["filter"];
       if (filter) {
-        this.filterText = filter;
+        if((this.filterText == "")){  
+          this.filterText = filter;
+        }
+
       } else {
         this.filterText = "";
       }
+      this.actualService.actualFilter = filter;
     });
     this.configService.getConfig().subscribe(
       (data) => {
@@ -66,28 +70,16 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   search(terms: Observable<string>) {
     return terms.debounceTime(300)
       .distinctUntilChanged()
-      .switchMap(term => {
-        this.filterText = term;
-        console.log("filter text: " + this.filterText);
+      .switchMap(term => {        
         return this.router.navigate(this.route.snapshot.url, {
           queryParams: {
             lang: this.getActualLang(),
-            filter: this.filterText
+            filter: term
           }
         });
       });
   }
 
-  filterTextChange(event: string) {
-    console.log("filterText changed event", event);
-    this.filterText = event;
-    this.router.navigate(this.route.snapshot.url, {
-      queryParams: {
-        lang: this.getActualLang(),
-        filter: this.filterText
-      }
-    });
-  }
 
   public openProgram(program: IProgram) {
     this.actualService.actualProgram = program;

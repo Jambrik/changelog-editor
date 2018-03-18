@@ -6,6 +6,7 @@ import { StringHelpers } from '../helpers/string-helpers';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 import { TagInfo } from '../models/TagInfo';
+import { IVersionChangeLog } from '../models/IVersionChangeLog';
 
 @Injectable()
 export class ActualService {
@@ -15,6 +16,8 @@ export class ActualService {
   private _actualAction: string;
   private _actualUser: User;
   private _actualTagInfos: TagInfo[];
+  private _actualFilter: string;
+  private _oriChangeList: IVersionChangeLog;
 
 
   constructor(private changeLogService: ChangeLogService) { 
@@ -69,4 +72,19 @@ export class ActualService {
     this._actualTagInfos = value;    
   }
 
+  get actualFilter(): string {
+    return this._actualFilter;
+  }
+
+  set actualFilter(value: string) {
+    this._actualFilter = value;
+  }
+
+  get oriChangeList(): IVersionChangeLog {
+    return this._oriChangeList;
+  }
+
+  set oriChangeList(value: IVersionChangeLog) {
+    this._oriChangeList = value;
+  }
 }

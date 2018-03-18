@@ -30,9 +30,9 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public program: IProgram;
   public version: IVersionMetaData = { version: "" };
   public changeList: IVersionChangeLog;
-  public oriChangeList: IVersionChangeLog;
   public action: ChangeLogAction;
   public id: string;
+  public oldId: string;
   public newChangeItem: IChangeLogItem;
   public langs: ILabelValue[] = [];
   public selectedLangs: string[] = [];
@@ -70,7 +70,12 @@ export class ChangeListComponent implements OnInit, OnChanges {
       let lang = params["lang"];
       console.log("Lang:", lang);
       let id = params["id"];
-      this.action = params["action"];
+      let action = params["action"];
+      let wasActionChange: boolean = false;
+      if (action != this.action) {
+        this.action = action;
+        wasActionChange = true;
+      }
       this.actualService.actualAction = this.action;
       if (!this.action) {
         this.action = "read";
@@ -78,6 +83,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
       console.log("programId, version, action, id", programId, versionNumber, this.action, id);
       let programIdInt = parseInt(programId);
+      this.oldId = this.id;
       if (id == "null") {
         this.id = null;
       } else {
@@ -122,13 +128,13 @@ export class ChangeListComponent implements OnInit, OnChanges {
                     this.newItemCreate();
                   }
                 } else {
-                  this.oriChangeList = {
+                  this.actualService.oriChangeList = {
                     version: null,
                     type: null,
                     releaseDate: null,
                     changes: []
                   };
-                  this.changeList = this.oriChangeList;
+                  this.changeList = this.actualService.oriChangeList;
                 }
               });
           });
@@ -139,9 +145,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
         if (this.action == "new") {
           this.newItemCreate();
         }
-      } else {
+      } else if (wasActionChange) {
         if (this.action == "new") {
           this.newItemCreate();
+        } else {
+          this.refilter();
         }
       }
 
@@ -152,8 +160,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
       this.loadTypes();
       this.loadCaptionTranslations();
       this.filterText = queryParams["filter"];
-      if (this.oriChangeList) {
-        this.changeList = this.filter(this.oriChangeList);
+      if (this.actualService.oriChangeList) {
+        this.changeList = this.filter(this.actualService.oriChangeList);
       }
     })
   }
@@ -232,7 +240,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         }
         if ((this.filterText) && (this.filterText != null) && (this.filterText != "")) {
           if (newChange.ticketNumber && (newChange.ticketNumber != null) && (newChange.ticketNumber != "")) {
-            let bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText);
+            let bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText, true);
             found = bs.bool;
 
             if (found) {
@@ -240,15 +248,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
             }
           }
           if (!found) {
-            newChange.descriptions.forEach(description => {
-              if (!found) {
-                let bs = StringHelpers.findAndGreen(description.text, this.filterText);
-                found = bs.bool;
-                if (found) {
-                  description.text = bs.str;
-                }
-              }
-            });
+            found = this.filterDescription(newChange);
           }
         } else {
           found = true;
@@ -261,6 +261,61 @@ export class ChangeListComponent implements OnInit, OnChanges {
     });
 
     return changeList;
+  }
+
+  refilter() {
+    console.log("refilter before filter description", this.changeList.changes[0].descriptions[0].text);
+    if (this.action == "mod") {
+      this.changeList.changes.forEach(change => {
+        if (change.id == this.id) {
+          this.actualService.oriChangeList.changes.forEach(oriChange => {
+            if (oriChange.id == this.id) {
+              let descriptions = [];
+              oriChange.descriptions.forEach(description => {
+                descriptions.push(
+                  {
+                    lang: description.lang,
+                    text: description.text
+                  }
+                );
+              })
+              change.descriptions = descriptions;
+            }
+          });
+          this.filterDescription(change);
+        }
+      });
+    } else if (this.action == "read") {
+      
+
+      this.changeList.changes.forEach(change => {
+        if (change.id == this.oldId) {         
+          this.filterDescription(change);
+        }
+      });      
+
+      
+    }
+    console.log("refilter after filter description", this.changeList.changes[0].descriptions[0].text);
+  }
+
+  filterDescription(change: IChangeLogItem): boolean {
+    let found = false;
+    if(this.filterText){
+      change.descriptions.forEach(description => {
+        if (!found) {
+          let bs = StringHelpers.findAndGreen(description.text, this.filterText, this.action == "read");
+          found = bs.bool;
+          if (found) {
+            description.text = bs.str;
+          }
+        }
+      });
+    } else {
+      found = true;
+    }
+    
+    return found;
   }
 
   private getChanges() {
@@ -286,23 +341,23 @@ export class ChangeListComponent implements OnInit, OnChanges {
               return 0;
           });
 
-          this.oriChangeList = changeList;
+          this.actualService.oriChangeList = changeList;
 
-          this.changeList = this.filter(this.oriChangeList);
+          this.changeList = this.filter(this.actualService.oriChangeList);
           this.loading = false;
         },
-        (error) => {
-          console.log("getChanges", error);
-          this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-          this.loading = false;
-        });
+          (error) => {
+            console.log("getChanges", error);
+            this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+            this.loading = false;
+          });
     } else {
-      this.oriChangeList = {
+      this.actualService.oriChangeList = {
         releaseDate: null,
         version: null,
         changes: []
       };
-      this.changeList = _.cloneDeep(this.oriChangeList);
+      this.changeList = _.cloneDeep(this.actualService.oriChangeList);
 
     }
 
@@ -352,13 +407,13 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public selectedTypesChange(event: string[]) {
     console.log("selectedTypesChange", event);
     this.selectedTypes = event;
-    this.changeList = this.filter(this.oriChangeList);
+    this.changeList = this.filter(this.actualService.oriChangeList);
   }
 
   public selectedImportancesChange(event: string[]) {
     console.log("selectedImportancesChange", event);
     this.selectedImportances = event;
-    this.changeList = this.filter(this.oriChangeList);
+    this.changeList = this.filter(this.actualService.oriChangeList);
   }
 
   public printVersion() {
@@ -386,12 +441,12 @@ export class ChangeListComponent implements OnInit, OnChanges {
       .subscribe((x) => {
         this.getChanges();
       },
-      (error) => {
-        this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-      });
+        (error) => {
+          this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+        });
   }
 
-  private setActualTaginfos () {
+  private setActualTaginfos() {
     let resultList: TagInfo[] = [];
     let program: IProgram = this.actualService.actualProgram;
     let actualLang: string = this.translateService.currentLang;

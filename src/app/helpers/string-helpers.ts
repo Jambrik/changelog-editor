@@ -21,9 +21,9 @@ export class StringHelpers {
         }
     }
 
-    public static findAndGreen(text: string, part: string): IBoolString {
+    public static findAndGreen(text: string, part: string, green: boolean): IBoolString {
         let index = text.toUpperCase().indexOf(part.toUpperCase());        
-        if (index > -1) {
+        if (green && (index > -1)) {
             text = text.replace(text.substring(index, index + part.length),
                 "<span style='background-color: chartreuse; font-weight: 600;'>" + text.substring(index, index + part.length) + "</span>");
         }
