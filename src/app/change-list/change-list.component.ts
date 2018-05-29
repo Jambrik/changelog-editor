@@ -263,8 +263,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     return changeList;
   }
 
-  refilter() {
-    console.log("refilter before filter description", this.changeList.changes[0].descriptions[0].text);
+  refilter() {    
     if (this.action == "mod") {
       this.changeList.changes.forEach(change => {
         if (change.id == this.id) {
@@ -296,7 +295,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
       
     }
-    console.log("refilter after filter description", this.changeList.changes[0].descriptions[0].text);
+    
   }
 
   filterDescription(change: IChangeLogItem): boolean {
