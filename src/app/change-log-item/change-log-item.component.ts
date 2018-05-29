@@ -282,20 +282,20 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
   public cancelMod(event: Event) {
     event.preventDefault();
-    console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
-    this.changeLogItem.crd = this.changeLogItemOri.crd;
-    this.changeLogItem.cru = this.changeLogItemOri.cru;
-    this.changeLogItem.date = this.changeLogItemOri.date;
-    this.changeLogItem.id = this.changeLogItemOri.id;
-    this.changeLogItem.importance = this.changeLogItemOri.importance;
-    this.changeLogItem.lmd = this.changeLogItemOri.lmd;
-    this.changeLogItem.lmu = this.changeLogItemOri.lmu;
-    this.changeLogItem.ticketNumber = this.changeLogItemOri.ticketNumber;
-    this.changeLogItem.type = this.changeLogItemOri.type;
-    this.changeLogItem.descriptions = _.cloneDeep(this.changeLogItemOri.descriptions);
-    this.changeLogItem.tags = _.cloneDeep(this.changeLogItemOri.tags);
     
     if (this.action == "mod") {
+      console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
+      this.changeLogItem.crd = this.changeLogItemOri.crd;
+      this.changeLogItem.cru = this.changeLogItemOri.cru;
+      this.changeLogItem.date = this.changeLogItemOri.date;
+      this.changeLogItem.id = this.changeLogItemOri.id;
+      this.changeLogItem.importance = this.changeLogItemOri.importance;
+      this.changeLogItem.lmd = this.changeLogItemOri.lmd;
+      this.changeLogItem.lmu = this.changeLogItemOri.lmu;
+      this.changeLogItem.ticketNumber = this.changeLogItemOri.ticketNumber;
+      this.changeLogItem.type = this.changeLogItemOri.type;
+      this.changeLogItem.descriptions = _.cloneDeep(this.changeLogItemOri.descriptions);
+      this.changeLogItem.tags = _.cloneDeep(this.changeLogItemOri.tags);
       this.descriptions = this.getDescriptions();
     }
     console.log("after _.clone(this.changeLogItemOri);", this.changeLogItem);
