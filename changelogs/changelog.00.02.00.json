@@ -76,6 +76,45 @@
 			"crd": "2018-03-18T21:17:28.604Z",
 			"lmu": "RJAMBRIK",
 			"lmd": "2018-03-18T21:19:41.638Z"
+		},
+		{
+			"id": "3da34290-d118-11e8-b420-512b3f7d4d73",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "201806200060144",
+			"date": "2018-10-16T07:50:30.844Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Compact nézet gomb megnyomásával egy új felület jön fel, ahol le lehet kérni dátum határok szűrésével azt, hogy milyen fejlesztések történtek az adott időszakban.</p><p>Vágólapra másol gomb segítségével a megjelenített változásokat ki lehet másolni.</p><p>Normál nézet gomb és verzió változások gomb fejlesztése.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Pressing Compact View button opens a new interface where you can request filtering of date limits by what improvements have been made during a given period.</p><p>Copy to Clipboard allows you to copy the displayed changes.</p><p>Changing the Normal View Button and Version Changes button.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"changeloglist"
+					]
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": true
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 1
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-10-16T07:51:07.800Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }
