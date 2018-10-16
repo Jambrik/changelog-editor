@@ -18,6 +18,7 @@ export class ActualService {
   private _actualTagInfos: TagInfo[];
   private _actualFilter: string;
   private _oriChangeList: IVersionChangeLog;
+  private _actualChangeList: IVersionChangeLog; 
 
 
   constructor(private changeLogService: ChangeLogService) { 
@@ -87,4 +88,14 @@ export class ActualService {
   set oriChangeList(value: IVersionChangeLog) {
     this._oriChangeList = value;
   }
+
+  get actualChangeList(): IVersionChangeLog {
+    return this._actualChangeList;
+  }
+
+  set actualChangeList(value: IVersionChangeLog) {
+    this._actualChangeList = value;
+  }
+
+
 }

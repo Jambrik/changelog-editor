@@ -52,5 +52,12 @@
     "TYPE": "Type",
     "USER": "User",
     "VERSION": "Version",
-    "YES": "Yes"
+    "YES": "Yes",
+    "STARTING DATE": "Starting date",
+    "END DATE": "End date",
+    "FILTRATION":"Filtration",
+    "COPY TO CLIPBOARD":"Copy to clipboard",
+    "NORMAL VIEW": "Normal view",
+    "VERSION CHANGES": "Version changes",
+    "COMPACT_VIEW": "Compact view"
 }

@@ -3,12 +3,14 @@ import { Routes } from '@angular/router';
 import { ChangeListComponent } from './change-list/change-list.component';
 import { ProgramListComponent } from './program-list/program-list.component';
 import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
+import { CompactComponent } from './compact/compact.component';
 
 
 export const ROUTES: Routes = [
   { path: '',      component: ProgramListComponent },
   { path: 'program-list',      component: ProgramListComponent },  
   { path: 'change-list/:program-id/:version/:action/:id',  component: ChangeListComponent },  
+  { path: 'compact/:program-id/:version',  component: CompactComponent }, 
   { path: 'config-editor',  component: ConfigEditorComponent},
    {path: 'new-version/:program-id', component: NewVersionCreatationComponent}
   /*{ path: 'about', component: AboutComponent },

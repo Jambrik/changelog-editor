@@ -10,6 +10,7 @@ import {
   TriStateCheckboxModule, CheckboxModule
 } from 'primeng/primeng';
 import { ChangeListComponent } from './change-list/change-list.component';
+import { CompactComponent } from './compact/compact.component';
 import { AppComponent } from './app.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
 import { LeftNavbarComponent } from './left-navbar/left-navbar.component';
@@ -37,6 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     ChangeListComponent,
+    CompactComponent,
     TopNavbarComponent,
     LeftNavbarComponent,
     ProgramListComponent,

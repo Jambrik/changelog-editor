@@ -11,6 +11,7 @@
     "CREATE": "Létrehoz",
     "CREATOR": "Létrehozó",
     "CREATED": "Létrehozva",
+    "COMPACT_VIEW": "Compact nézet",
     "DELETE": "Töröl",
     "feature": "Új funkció",
     "FILE_PATH": "Fájl elérési útvonal",
@@ -23,7 +24,7 @@
     "LANG_LIST": "Nyelvek",
     "LAST_MODIFIER": "Utolsó módosító",
     "LAST_MODIFIED": "Utoljára módosítva",
-    "low": "Alacsony",
+    "low": "Alacsony",    
     "MANDATORY_TAG": "Kötelező jellemző",
     "NAME": "Név",
     "NEW_CHANGE_LOG": "Új bejegyzés",
@@ -49,8 +50,17 @@
     "TICKETNUMBER": "Jegyszám",
     "TRANSLATE": "Fordít",
     "TRANSLATION": "Fordítás",
+    "TO_DATE": "Ig dátum",
+    "FROM_DATE": "Kezdő dátum",
     "TYPE": "Típus",
     "USER": "Felhasználó",
     "VERSION": "Verzió",
-    "YES": "Igen"
+    "YES": "Igen",
+    "STARTING DATE": "Kezdő dátum",
+    "END DATE": "Záró dátum",
+    "FILTRATION": "Szűrés",
+    "COPY TO CLIPBOARD": "Vágólapra másol",
+    "NORMAL VIEW": "Normál nézet",
+    "VERSION CHANGES": "Verziós változások"
+
 }

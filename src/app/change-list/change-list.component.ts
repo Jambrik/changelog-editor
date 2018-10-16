@@ -1,6 +1,6 @@
 import { I18n } from '../models/I18N';
 import { StringHelpers } from '../helpers/string-helpers';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, transition } from '@angular/core';
 import { ChangeLogService } from '../services/change-log.service';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
@@ -53,7 +53,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
     private changeLogService: ChangeLogService,
     private actualService: ActualService,
     private configService: ConfigService,
-    private translateService: TranslateService) { }
+    private translateService: TranslateService,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -196,6 +197,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
             this.types.push({ value: Constants.FEATURE, label: t.feature })
           }
           console.log("types", this.types);
+
+          if (t.COMPACT_VIEW) {
+            this.types.push({ value: Constants.COMPACT_VIEW, label: t.COMPACT_VIEW })
+          }
+
         });
     }, 100);
 
@@ -263,7 +269,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     return changeList;
   }
 
-  refilter() {    
+  refilter() {
     if (this.action == "mod") {
       this.changeList.changes.forEach(change => {
         if (change.id == this.id) {
@@ -285,22 +291,22 @@ export class ChangeListComponent implements OnInit, OnChanges {
         }
       });
     } else if (this.action == "read") {
-      
+
 
       this.changeList.changes.forEach(change => {
-        if (change.id == this.oldId) {         
+        if (change.id == this.oldId) {
           this.filterDescription(change);
         }
-      });      
+      });
 
-      
+
     }
-    
+
   }
 
   filterDescription(change: IChangeLogItem): boolean {
     let found = false;
-    if(this.filterText){
+    if (this.filterText) {
       change.descriptions.forEach(description => {
         if (!found) {
           let bs = StringHelpers.findAndGreen(description.text, this.filterText, this.action == "read");
@@ -313,7 +319,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     } else {
       found = true;
     }
-    
+
     return found;
   }
 
@@ -439,11 +445,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
       .subscribe((x) => {
         this.changeLogService.getVersionsForProgramId(this.programId)
-              .subscribe((versions) => {                
-                versions.sort(ConfigHelper.versionSorter);
-                this.actualService.actualVersions = versions;
-                this.getChanges();
-              });        
+          .subscribe((versions) => {
+            versions.sort(ConfigHelper.versionSorter);
+            this.actualService.actualVersions = versions;
+            this.getChanges();
+          });
       },
         (error) => {
           this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
@@ -471,6 +477,18 @@ export class ChangeListComponent implements OnInit, OnChanges {
       }
     }
     this.actualService.actualTagInfos = resultList;
+  }
+
+  public goCompactView(e: Event) {
+    event.preventDefault();
+    this.actualService.actualChangeList = this.changeList;
+    this.router.navigate(["/compact", this.programId, this.versionNumber],
+      {
+        queryParams: {
+          lang: this.getActualLang(),
+          filter: this.filterText
+        }
+      });
   }
 }
 

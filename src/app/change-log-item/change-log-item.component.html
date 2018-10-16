@@ -112,12 +112,7 @@
       {{changeLogItem.date | date: 'yyyy.MM.dd.'}}
     </span>
     <p-calendar *ngIf="isEditing()" [(ngModel)]="changeLogItem.date" dateFormat="yy.mm.dd"></p-calendar>
-    <a href="/" class="btn btn-danger pull-right" (click)="deleteMessageShow($event)" *ngIf="canBeModified()">
-      <span class="fa fa-trash"></span>
-    </a>
-    <a href="/" class="btn btn-primary pull-right" (click)="clickMod($event)" *ngIf="canBeModified()">
-      <span class="fa fa-edit"></span>
-    </a>
+
     <a href="/" class="btn btn-secondary pull-right" (click)="cancelMod($event)" *ngIf="isEditing()">
       <span class="fa fa-close"></span>
     </a>

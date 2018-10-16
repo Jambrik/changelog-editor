@@ -36,11 +36,15 @@
                 </div>
             </div>
 
-
             <div class="clearfix">
                 <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', programId, versionNumber, 'new', 'null']" [queryParams]="{lang: getActualLang()}"
                     *ngIf="isReading()">
                     <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
+                </a>
+                <a  href="/" class="btn btn-success pull-right" 
+                (click)="goCompactView($event)"                
+                *ngIf="isReading()">
+                    <span class="fa" translate>COMPACT_VIEW</span>
                 </a>
                 <div *ngIf="isNewEditing()">
                     <app-change-log-item [item]="newChangeItem" [action]="'new'" [modId]="'null'" [selectedLangs]="selectedLangs" (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
@@ -58,5 +62,6 @@
                 </div>
             </div>
         </main>
+
     </div>
 </div>

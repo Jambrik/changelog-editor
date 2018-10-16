@@ -22,6 +22,10 @@ export class ChangeLogService {
     return this.http.get<IVersionMetaData[]>(environment.backEndUrl + "api/versions/" + programId);
   }
 
+  public getCompactLog(programId: number): Observable<IVersionMetaData[]> {
+    return this.http.get<IVersionMetaData[]>(environment.backEndUrl + "api/versions/" + programId);
+  }
+
 
   public getChangeLogs(programId: number, versionNumber: string): Observable<IVersionChangeLog> {
     return this.http.get<IVersionChangeLog>(environment.backEndUrl + "api/change-log-load/" + programId + "/" + versionNumber);
