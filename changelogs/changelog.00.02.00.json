@@ -152,6 +152,43 @@
 			"crd": "2018-10-25T14:17:35.071Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "0db30850-d86a-11e8-93a1-dd7c553a0924",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "201806200060144",
+			"date": "2018-10-25T15:21:58.358Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Angular frissítése az alábbi nagyszerű paranccsal:</p><p>ng update @angular/cli --migrate-only --from=1.7.4</p><p>Változások: angular-cli.json helyett angular.json van, stb.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Update angular with the following great command:</p><p>ng update @ angular / cli --migrate-only --from = 1.7.4</p><p>Changes: instead of angular-cli.json angular.json is, etc.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": true
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 0.5
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2018-10-25T15:24:24.242Z",
+			"lmu": "RJAMBRIK",
+			"lmd": "2018-10-25T15:24:28.305Z"
 		}
 	]
 }
