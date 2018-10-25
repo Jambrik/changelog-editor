@@ -115,6 +115,43 @@
 			"crd": "2018-10-16T07:51:07.800Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "b80deae0-d860-11e8-9862-1fbd11aa19d8",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "201806200060144 ",
+			"date": "2018-10-25T14:09:08.214Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Angol vagy magyar szöveget jelenítsen meg a program, attól függően, hogy melyikre szűrünk.</p><p>Megadott szűrésre nem hozta le az adatokat, mert nem voltak töltve a dátumok. Ez programban most le lett kezelve.</p><p>Dátumonként lettek a szövegek csoportosítva.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>English or Hungarian text is displayed, depending on which one you are filtering.</p><p>Data was not downloaded for filtered filtering because dates were not filled. This program is now handled.</p><p>The texts are grouped every date.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 4
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-10-25T14:17:35.071Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }

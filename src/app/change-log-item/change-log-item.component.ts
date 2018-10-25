@@ -55,7 +55,6 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    console.log("ngOnInit");
     this.types = [];
     this.translateService.get([Constants.BUGFIX, Constants.FEATURE])
       .subscribe((t) => {
@@ -125,7 +124,6 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       }
       compactTags.push(compactTag);
     }
-    console.log("compactTags", compactTags);
     this.compactTags = compactTags;
   }
 
@@ -145,8 +143,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
-      if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
-        console.log("ngOnChanges");        
+      if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {   
         this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
       }
       this.descriptions = this.getDescriptions();

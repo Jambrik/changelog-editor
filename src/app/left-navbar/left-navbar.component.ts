@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
 import { TranslateService } from '@ngx-translate/core';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { version } from 'punycode';
 
 @Component({
   selector: 'app-left-navbar',
@@ -10,7 +11,7 @@ import { IVersionMetaData } from '../models/IVersionMetaData';
   styleUrls: ['./left-navbar.component.scss']
 })
 export class LeftNavbarComponent implements OnInit {
-
+  @Input() viewMode: "NORMAL" | "COMPACT";
   constructor(
     private actualService: ActualService,
     private translateService: TranslateService
@@ -50,5 +51,12 @@ export class LeftNavbarComponent implements OnInit {
     return this.translateService.currentLang;
   }
 
+  public openVersionChanges(versionNumber: string) {
+    if(this.viewMode == "NORMAL"){
+      return ['/change-list', this.actualProgramId, versionNumber, 'read', 'none'];
+    } else {
+      return ['/compact', this.actualProgramId, versionNumber];
+    }
+  }
 
 }

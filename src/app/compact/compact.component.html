@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <app-left-navbar></app-left-navbar>
+        <app-left-navbar [viewMode]="'COMPACT'"></app-left-navbar>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
             <div class="pb-5">
                 <div class="pl-5 pt-4 pull-right">
@@ -23,7 +23,7 @@
                </div>
 
                <div class="pb-2 pt-4 ml-sm-auto pl-1 col-md-3">
-                <button type="button" class="btn btn-success btn-sm" (click)="selectedTypesChange($event)" translate>
+                <button type="button" class="btn btn-success btn-sm" (click)="buildCompactChangesText($event)" translate>
                   FILTRATION               
                 </button>
                </div>
@@ -42,10 +42,10 @@
                       COPY TO CLIPBOARD
                     </button> 
 
-                    <a href="#" class="btn btn-primary pull-right" href="/" [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
-                      NORMAL VIEW
-                    </a>
-
+                  
+                    <a href="#" class="btn btn-primary pull-right" *ngIf="program" href="/" [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
+                        NORMAL VIEW
+                      </a>
                    
 
                     

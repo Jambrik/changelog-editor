@@ -63,13 +63,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
     console.log("CurrentLang", this.translateService.currentLang);
     this.loadTypes();
     this.loadImportance();
-    console.log("change-list init");
     //Because we load always the same component, the init run only once. So we subscribe the router params changes:
     this.route.params.subscribe(params => {
       let programId = params['program-id'];
       let versionNumber: string = params['version'];
       let lang = params["lang"];
-      console.log("Lang:", lang);
       let id = params["id"];
       let action = params["action"];
       let wasActionChange: boolean = false;
@@ -91,8 +89,6 @@ export class ChangeListComponent implements OnInit, OnChanges {
         this.id = id;
       }
 
-      console.log("id", id);
-      console.log("this.id", this.id);
       if (this.programId != programIdInt) {
         this.configService.getConfig()
           .subscribe((config) => {
@@ -113,7 +109,6 @@ export class ChangeListComponent implements OnInit, OnChanges {
             //First of all we have get the versions
             this.changeLogService.getVersionsForProgramId(programId)
               .subscribe((versions) => {
-                console.log("here are versions", versions);
                 versions.sort(ConfigHelper.versionSorter);
                 this.actualService.actualVersions = versions;
                 //If version is the latest we have to find that

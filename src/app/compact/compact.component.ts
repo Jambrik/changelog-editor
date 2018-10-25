@@ -24,6 +24,7 @@ import { Tag } from '../models/Tag';
 import { ITag } from '../models/ITag';
 import { GoogleTranslateService } from '../services/google-translate.service';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -33,14 +34,9 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 })
   export class CompactComponent implements OnInit, OnChanges {
   
-  @Input() modId: string;
-  @Input("item") changeLogItem: IChangeLogItem;
-  @Input() action: ChangeLogAction;
-  @Input() selectedLangs: string[];
-  @Output() onDeleteOrAddingNew: EventEmitter<void> = new EventEmitter();
   public text: string ;
   isEditor: boolean = true;
-  public programId: number;
+  public programId: number;  
   public changeList: IVersionChangeLog;
   public version: IVersionMetaData = { version: "" };
   public id: string;
@@ -71,7 +67,9 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
     private router: Router,
     private googleTranslateService: GoogleTranslateService,
     private translateService: TranslateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private configService: ConfigService,
+    private datePipe: DatePipe
   ) { }
    
   ngOnInit() {
@@ -93,42 +91,131 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
       });
     
       this.route.params.subscribe(params => {
-        const programId = params['program-id'];        
-        console.log('program-id', programId);
+        const programId = params['program-id'];   
+        const versionNumber = params['version'];  
         const programIdInt = parseInt(programId, 10);
         this.programId = programIdInt;
-        let lang = this.translateService.currentLang;
-        let text = "";
-        let szoveg = "";
+        this.actualService.actualAction = "read";
+        
+        
+   
+           this.configService.getConfig()
+              .subscribe((config) => {
+                this.actualService.actualProgram = ConfigHelper.getProgramById(config.programs, this.programId);          
+              });
+        
+       
+        
 
-        for(let item of this.actualService.actualChangeList.changes) {
-          for(let description of item.descriptions) {
-            if(description.lang == lang)
-
-            this.types = []; 
-                this.translateService.get([item.type, item.type])
-                  .subscribe((t) => {
-                    if (t.bugfix) {
-                      szoveg =t.bugfix ;
-                    }
+        this.changeLogService.getVersionsForProgramId(programId)
+        .subscribe((versions) => {
+          versions.sort(ConfigHelper.versionSorter);
+          this.actualService.actualVersions = versions;       
             
-                    if (t.feature) {
-                      szoveg =t.feature ;
-                    }
-            
-                    console.log(szoveg); 
-                  });
-           
-               text =text + item.ticketNumber + ' (' + szoveg + ')' + "\n" + description.text + "\n" + "\r"  ;
+                    
+          if ((versionNumber == "last") && (versions.length > 0)) {
+            this.version = versions[0];
+          } else {
+            this.version = ConfigHelper.getVersion(versions, versionNumber);
           }
-        }
+            
+            
+          this.changeLogService.getChangeLogs(this.programId, this.version.version)
+              .subscribe(changeList => {
+                if (changeList.releaseDate) {
+                  changeList.releaseDate = new Date(changeList.releaseDate);
+                }
+                changeList.changes.forEach(change => {
+                  change.date = new Date(change.date);
+                });
+                changeList.changes.sort((a, b) => {
+                  if (a.date > b.date)
+                    return -1;
+                  else if (a.date < b.date)
+                    return 1;
+                  else
+                    return 0;
+                });
+      
+                      
+                this.actualService.actualChangeList = changeList;
+                this.buildCompactChangesText(null);
+              },
 
-         this.text = text.replace(/<[^>]*>/g,'');
+              
+                (error) => {
+                  console.log("getChanges", error);
+                  this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+                
+                });
+          
+        });       
       });
 
   }
-  
 
+  ngOnChanges(changes: SimpleChanges): void {
+   
+  }
+
+  private buildCompactChangesText(event: string) : void {
+    let lang = this.translateService.currentLang;
+    let text = "";
+    let szoveg = "";
+    let elso_date = "";
+    let utolso_date = "";
+
+    for(let item of this.actualService.actualChangeList.changes) {
+      for(let description of item.descriptions) {
+        if(description.lang == lang) {
+
+          if (item.crd == undefined)
+          {
+            item.crd=new Date('1990.01.01');
+          };
+
+        elso_date=this.datePipe.transform(item.crd, 'yyyy.MM.dd');
+
+        if (this.startDate == null) 
+        {
+           this.startDate = new Date('1990.01.01');
+        }
+  
+        if (this.vegeDate == null) 
+        {
+           this.vegeDate = new Date('2990.01.01');
+        }
+        
+        if  ((new Date(item.crd) >= new Date(this.startDate)) && (new Date(item.crd) <= new Date(this.vegeDate)))   {
+
+        this.types = []; 
+            this.translateService.get([item.type, item.type])
+              .subscribe((t) => {
+                if (t.bugfix) {
+                  szoveg =t.bugfix ;
+                }
+        
+                if (t.feature) {
+                  szoveg =t.feature ;
+                }
+        
+              });
+
+           if(elso_date==utolso_date)  { 
+           text =text + item.ticketNumber + ' (' + szoveg + ')' + "\n" + description.text + "\n" + "\r"  ;
+           }
+           else{
+            text =text + '----------- ' + this.datePipe.transform(item.crd, 'yyyy.MM.dd') + ' -----------' +  "\r" + item.ticketNumber + ' (' + szoveg + ')' + "\n" + description.text + "\n" + "\r"  ;
+           }
+
+           utolso_date=this.datePipe.transform(item.crd, 'yyyy.MM.dd');
+            }
+          }
+     }
+    }
+    this.text = text.replace(/<[^>]*>/g,'');
+  }
+  
   public getLastVersion(program: IProgram): string {
     if (program.versions && (program.versions.length > 0)) {
       program.versions.sort(ConfigHelper.versionSorter);
@@ -144,80 +231,9 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
   public get program(): IProgram {
     return this.actualService.actualProgram;
   }
+ 
 
-
-  public getDescriptions() {
-    let descriptions: I18n[] = [];
-
-    this.changeLogItem.descriptions.forEach(description => {
-      if (this.selectedLangs.indexOf(description.lang) > -1) {
-        descriptions.push(description);
-      }
-    });
-    return descriptions;
-  }
-
-
-  private createCompactTags() {
-    let compactTags: Tag[] = [];
-    for (let tagInfo of this.actualService.actualTagInfos) {
-      let compactTag: Tag;
-      if (this.changeLogItem.tags) {
-        for (let tag of this.changeLogItem.tags) {
-          if (tag.code == tagInfo.code) {
-            compactTag = new Tag(tagInfo, tag.values, tag.value);
-          }
-        }
-      }
-      if (!compactTag) {
-        let value: number | boolean | string;
-        if (!tagInfo.moreOptionsAllowed) {
-          if (tagInfo.dataType == "boolean") {
-            if (tagInfo.mandatory) {
-              value = false;
-            }
-          } else if (tagInfo.dataType == "string") {
-            if (tagInfo.mandatory) {
-              value = "";
-            }
-          } else if (tagInfo.dataType == "number") {
-            if (tagInfo.mandatory) {
-              //  value = 0;
-            }
-          }
-        }
-
-        compactTag = new Tag(tagInfo, [], value);
-      }
-      compactTags.push(compactTag);
-    }
-
-    this.compactTags = compactTags;
-  }
-
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
-      if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {
-        this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
-      }
-      this.descriptions = this.getDescriptions();
-    }
-
-    if (changes.selectedLangs && (changes.selectedLangs.currentValue != changes.selectedLangs.previousValue)) {
-      this.descriptions = this.getDescriptions();
-    }
-
-    if (changes.changeLogItem && (changes.changeLogItem.currentValue != changes.changeLogItem.previousValue)) {
-      this.createCompactTags();
-    }
-
-  }
-
-  
-
-  copyMessage(val: string){  
-    console.log('copy');
+  private copyMessage(val: string){  
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -231,59 +247,4 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
     document.body.removeChild(selBox);
   }
 
-  public selectedTypesChange(event: string) {
-    this.selectedTypes = [Constants.BUGFIX, Constants.FEATURE];
-
-    this.route.params.subscribe(params => {
-      const programId = params['program-id'];        
-      const programIdInt = parseInt(programId, 10);
-      this.programId = programIdInt;
-      let lang = this.translateService.currentLang;
-      let text = "";
-      this.text = "";
-      let szoveg : string;
-
-      if (this.startDate == null) 
-      {
-         this.startDate = new Date('1990.01.01');
-      }
-
-      if (this.vegeDate == null) 
-      {
-         this.vegeDate = new Date('2990.01.01');
-      }
-
-
-      for(let item of this.actualService.actualChangeList.changes) {
-        for(let description of item.descriptions) {
-          if (description.lang == lang)
-          
-           if ( (new Date(item.crd) >= new Date(this.startDate)) && (new Date(item.crd) <= new Date(this.vegeDate)) )  {
-
-                this.types = []; //type átalakítás
-                this.translateService.get([item.type, item.type])
-                  .subscribe((t) => {
-                    if (t.bugfix) {
-                      szoveg =t.bugfix ;
-                    }
-            
-                    if (t.feature) {
-                      szoveg =t.feature ;
-                    }
-
-                  });
-
-           text =text + item.ticketNumber + ' (' + szoveg + ')' + "\n" + description.text + "\n" + "\r"  ;
-            }
-        }
-      }
-
-      this.text = text.replace(/<[^>]*>/g,'');
-    })
-    
-  }
-
-    public isNewEditing(): boolean {
-      return (this.action == "new") && (this.newChangeItem != undefined);
-    }
   }
