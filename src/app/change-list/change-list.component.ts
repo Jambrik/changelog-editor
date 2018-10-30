@@ -475,7 +475,6 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   public goCompactView(e: Event) {
-    event.preventDefault();
     this.actualService.actualChangeList = this.changeList;
     this.router.navigate(["/compact", this.programId, this.versionNumber],
       {

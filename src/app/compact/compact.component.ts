@@ -171,19 +171,19 @@ import { DatePipe } from '@angular/common';
 
           if (item.crd == undefined)
           {
-            item.crd=new Date('1990.01.01');
+            item.crd=new Date('1990-01-01T00:00:00');
           };
 
         elso_date=this.datePipe.transform(item.crd, 'yyyy.MM.dd');
 
         if (this.startDate == null) 
         {
-           this.startDate = new Date('1990.01.01');
+           this.startDate = new Date('1990-01-01T00:00:00');
         }
   
         if (this.vegeDate == null) 
         {
-           this.vegeDate = new Date('2990.01.01');
+           this.vegeDate = new Date('2990-12-31T00:00:00');
         }
         
         if  ((new Date(item.crd) >= new Date(this.startDate)) && (new Date(item.crd) <= new Date(this.vegeDate)))   {

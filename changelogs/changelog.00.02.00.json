@@ -189,6 +189,43 @@
 			"crd": "2018-10-25T15:24:24.242Z",
 			"lmu": "RJAMBRIK",
 			"lmd": "2018-10-25T15:24:28.305Z"
+		},
+		{
+			"id": "a8e84cc0-dc54-11e8-ae23-3fedaaffa426",
+			"type": "bugfix",
+			"importance": "normal",
+			"ticketNumber": "201806200060144",
+			"date": "2018-10-30T14:56:40.244Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Firefox alatt nem működött a compact nézet és az event.preventDefault() sem. </p><p>Dátum megadása, ha a crd nincs töltve.</p><p><br></p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p><span style=\"color: rgb(34, 34, 34);\">The compact view and event.preventDefault () did not work under Firefox.</span></p><p><span style=\"color: rgb(34, 34, 34);\">Specify a date if crd is not loaded.</span></p><p><br></p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 4
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-10-30T15:01:20.339Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }
