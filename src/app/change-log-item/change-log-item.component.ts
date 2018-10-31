@@ -438,4 +438,30 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
 
   }
+
+  public copyMessageUnique(val: string,ticket: string){  
+
+    if (ticket == null) 
+      {
+        val =val.replace(/<[^>]*>/g,'');
+      }
+    else
+      {
+        val = ticket + "\n" + val.replace(/<[^>]*>/g,'');
+      }  
+
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
+
+  
 }

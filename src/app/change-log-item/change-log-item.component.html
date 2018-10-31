@@ -57,9 +57,27 @@
           <div class="cardcard-primary p-1">
             <blockquote class="card-blockquote">
               <div>
-                <div class="row bortder border border-bottom-0 border-right-0 border-info">
+                <div class="row bortder border border-bottom-0 border-right-0 border-info" >
                   <div class="col-lg-1 col-md-3 col-sm-6 border border-info bg-info text-light rounded">
                     {{description.lang}}
+                    <div class="p-1 row">
+                     <a class=" btn btn-primary pl-0 pr-0 " (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)" *ngIf="description.lang=='hu' " style="background-color:black">
+                      <span class="row border-bottom-0 border-right-0 border-info"> 
+                       <div class="col-lg-1" style="color:white" >
+                         Másol 
+                       </div>
+                      </span>
+                     </a>
+                    </div>
+                    <div class="p-1 row">
+                     <a class="btn btn-primary pl-0 pr-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)" *ngIf="description.lang=='en' " style="background-color:black">
+                      <span class="row border-bottom-0 border-right-0 border-info"> 
+                       <div class="col-lg-1" style="color:white" >
+                           Copy 
+                       </div>
+                      </span>
+                     </a>
+                    </div>
                   </div>
                   <div class="col-lg-11 col-md-9 col-sm-6">
 

@@ -263,6 +263,43 @@
 			"crd": "2018-10-31T08:33:05.461Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "8f5323e0-dcfc-11e8-ae23-3fedaaffa426",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "201806200060144",
+			"date": "2018-10-31T10:59:43.731Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Normál nézetben a nyelvek alatt megjelenik a másol gomb, amellyel az adott szöveget és a hozzá tartozó jegyszámát lehet vágólapra tenni.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>In normal view, the copy button is displayed under the languages, which allows you to insert a specific text and the corresponding entry number into a clipboard.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 3
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-10-31T11:03:12.898Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }
