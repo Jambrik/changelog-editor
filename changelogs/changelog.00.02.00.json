@@ -226,6 +226,43 @@
 			"crd": "2018-10-30T15:01:20.339Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "96795410-dce7-11e8-ae23-3fedaaffa426",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "201806200060144",
+			"date": "2018-10-31T08:29:57.453Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Compact nézet gomb elhelyezése.</p><p>Ha a jegyszám nincs kitöltve, akkor a null-t nem kell megjeleníteni.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Place a Compact View button.</p><p>If the ticket number is not filled, null does not have to be displayed.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 1
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-10-31T08:33:05.461Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }

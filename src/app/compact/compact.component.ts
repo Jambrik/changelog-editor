@@ -162,6 +162,7 @@ import { DatePipe } from '@angular/common';
     let lang = this.translateService.currentLang;
     let text = "";
     let szoveg = "";
+    let szoveg_ossze = "";
     let elso_date = "";
     let utolso_date = "";
 
@@ -200,12 +201,24 @@ import { DatePipe } from '@angular/common';
                 }
         
               });
+              
+            if (item.ticketNumber==null)
+            {
+              item.ticketNumber='';
+              szoveg_ossze ='(' + szoveg + ')';
+            }
+            else
+            {
+              szoveg_ossze =' (' + szoveg + ')';
+            }
 
-           if(elso_date==utolso_date)  { 
-           text =text + item.ticketNumber + ' (' + szoveg + ')' + "\n" + description.text + "\n" + "\r"  ;
+           if(elso_date==utolso_date)  
+           { 
+            text =text + item.ticketNumber + szoveg_ossze + "\n" + description.text + "\n" + "\r"  ;
            }
-           else{
-            text =text + '----------- ' + this.datePipe.transform(item.crd, 'yyyy.MM.dd') + ' -----------' +  "\r" + item.ticketNumber + ' (' + szoveg + ')' + "\n" + description.text + "\n" + "\r"  ;
+           else
+           {
+            text =text + '----------- ' + this.datePipe.transform(item.crd, 'yyyy.MM.dd') + ' -----------' +  "\r" + item.ticketNumber + szoveg_ossze + "\n" + description.text + "\n" + "\r"  ;
            }
 
            utolso_date=this.datePipe.transform(item.crd, 'yyyy.MM.dd');
