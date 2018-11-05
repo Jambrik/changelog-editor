@@ -300,6 +300,43 @@
 			"crd": "2018-10-31T11:03:12.898Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "49bacaa0-e0de-11e8-ae23-3fedaaffa426",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "201806200060144",
+			"date": "2018-11-05T09:34:42.191Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Másol szöveg lecserélése ikonra.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Replace Text Copy icon.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 1
+				}
+			],
+			"cru": "ANONYMOUS",
+			"crd": "2018-11-05T09:36:35.870Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }
