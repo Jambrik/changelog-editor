@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
-import { IProgram } from '../models/IProgram';
 import * as _ from 'lodash';
 import { Program } from '../models/Program';
 

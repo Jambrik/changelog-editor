@@ -1,0 +1,42 @@
+{
+	"version": "00.03.00",
+	"changes": [
+		{
+			"id": "cc416830-8c7d-11e9-99ab-6bb62cdca28b",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2019-06-11T19:18:19.593Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "Frissítés angular 8.0-ra."
+				},
+				{
+					"lang": "en",
+					"text": "Upgrading to angular 8.0."
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 1
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2019-06-11T19:19:13.681Z",
+			"lmu": null,
+			"lmd": null
+		}
+	]
+}

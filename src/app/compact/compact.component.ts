@@ -1,11 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 import * as _ from 'lodash';
-import { Program } from '../models/Program';
 import { I18n } from '../models/I18N';
-import { StringHelpers } from '../helpers/string-helpers';
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
 import { ChangeLogService } from '../services/change-log.service';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { ActualService } from '../services/actual.service';
@@ -15,15 +12,9 @@ import { IChangeLogItem } from '../models/IChangeLogItem';
 import { TranslateService } from '@ngx-translate/core';
 import { ILabelValue } from '../models/ILableValue';
 import { Constants } from '../constants/constants';
-import { Subscription } from 'rxjs/Subscription';
 import { Message } from 'primeng/components/common/message';
 import { IVersionMetaData } from '../models/IVersionMetaData';
-import { ChangeLogAction } from '../types/types';
-import { TagInfo } from '../models/TagInfo';
 import { Tag } from '../models/Tag';
-import { ITag } from '../models/ITag';
-import { GoogleTranslateService } from '../services/google-translate.service';
-import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DatePipe } from '@angular/common';
 
 

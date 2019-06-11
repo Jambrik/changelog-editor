@@ -1,7 +1,7 @@
 import { I18n } from '../models/I18N';
 import { StringHelpers } from '../helpers/string-helpers';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, Input, OnChanges, OnInit, SimpleChanges, transition } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChangeLogService } from '../services/change-log.service';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { ActualService } from '../services/actual.service';
@@ -13,7 +13,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { ILabelValue } from '../models/ILableValue';
 import * as _ from 'lodash';
 import { Constants } from '../constants/constants';
-import { Subscription } from 'rxjs/Subscription';
 import { Message } from 'primeng/components/common/message';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 import { ChangeLogAction } from '../types/types';

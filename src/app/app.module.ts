@@ -5,10 +5,11 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import {
-  InputTextModule, ButtonModule, DataTableModule, DialogModule, DropdownModule, MessageModule, MessagesModule,
+  InputTextModule, ButtonModule, DialogModule, DropdownModule, MessageModule, MessagesModule,
   CalendarModule, EditorModule, InputSwitchModule, SelectButtonModule, ProgressSpinnerModule, AutoCompleteModule,
   TriStateCheckboxModule, CheckboxModule
 } from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
 import { ChangeListComponent } from './change-list/change-list.component';
 import { CompactComponent } from './compact/compact.component';
 import { AppComponent } from './app.component';
@@ -54,7 +55,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    DataTableModule,
     MessageModule,
     MessagesModule,
     CalendarModule,
@@ -64,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     InputTextModule,
     ProgressSpinnerModule,
+    TableModule,
     DialogModule,
     ButtonModule,
     DropdownModule,
