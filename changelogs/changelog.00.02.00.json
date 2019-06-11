@@ -337,6 +337,43 @@
 			"crd": "2018-11-05T09:36:35.870Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "627a46f0-8c6f-11e9-9293-5910786f6d79",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2019-06-11T17:34:31.841Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>tslint igényei szerint kódkarbantartás. Sima aposztróf használat stringekre, típusos ellenőrzések, stb.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>code maintenance according to the needs of tslint. Smooth apostrophe for strings, typical checks, etc.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": true
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 1
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2019-06-11T17:36:03.263Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }

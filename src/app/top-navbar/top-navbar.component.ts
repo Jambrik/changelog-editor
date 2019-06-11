@@ -28,39 +28,39 @@ export class TopNavbarComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    translate.setDefaultLang("hu");
-    translate.use("hu");
+    translate.setDefaultLang('hu');
+    translate.use('hu');
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(queryParams => {
-      let lang = queryParams["lang"];
-      console.log("languae from top navbar:", lang);
+      const lang = queryParams['lang'];
+      console.log('languae from top navbar:', lang);
       this.translate.use(lang);
-      let filter = queryParams["filter"];
+      const filter = queryParams['filter'];
       if (filter) {
-        if((this.filterText == "")){  
+        if ((this.filterText === '')) {
           this.filterText = filter;
         }
 
       } else {
-        this.filterText = "";
+        this.filterText = '';
       }
       this.actualService.actualFilter = filter;
     });
     this.configService.getConfig().subscribe(
       (data) => {
-        console.log("program list", data);
+        console.log('program list', data);
         this.programs = data.programs;
 
       },
       (error) => {
-        console.log("error", error);
+        console.log('error', error);
       }
-    )
+    );
 
     this.search(this.searchTerm$)
-    .subscribe();
+      .subscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -70,7 +70,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   search(terms: Observable<string>) {
     return terms.debounceTime(300)
       .distinctUntilChanged()
-      .switchMap(term => {        
+      .switchMap(term => {
         return this.router.navigate(this.route.snapshot.url, {
           queryParams: {
             lang: this.getActualLang(),
@@ -87,25 +87,25 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   }
 
   public get actualProgram(): string {
-    if (this.actualService.actualProgram)
-      return this.actualService.actualProgram.name
-    else
-      return "";
+    if (this.actualService.actualProgram) {
+      return this.actualService.actualProgram.name;
+    } else {
+      return '';
+    }
   }
 
   public getLastVersionNumber(program: IProgram): string {
     if (program.versions && (program.versions.length > 0)) {
       program.versions.sort(StringHelpers.sortDesc);
       return program.versions[0].version;
-    }
-    else {
-      return "last";
+    } else {
+      return 'last';
     }
 
   }
 
   public isSelected(lang: string): boolean {
-    return this.translate.currentLang == lang;
+    return this.translate.currentLang === lang;
   }
 
   public changeLang(event: Event, lang: string) {
@@ -128,7 +128,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
 
   public apply(event: Event) {
     event.preventDefault();
-    console.log("apply");
+    console.log('apply');
     this.router.navigate(this.route.snapshot.url, {
       queryParams: {
         lang: this.getActualLang(),
@@ -138,13 +138,13 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   }
 
   public getUserName(): string {
-    if(this.actualService.actualUser){
+    if (this.actualService.actualUser) {
       return this.actualService.actualUser.name;
-    } 
+    }
   }
 
   public getUserCode(): string {
-    if(this.actualService.actualUser){
+    if (this.actualService.actualUser) {
       return this.actualService.actualUser.code;
     }
   }

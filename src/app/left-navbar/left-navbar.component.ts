@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActualService } from '../services/actual.service';
-import { ChangeLogService } from '../services/change-log.service';
 import { TranslateService } from '@ngx-translate/core';
 import { IVersionMetaData } from '../models/IVersionMetaData';
-import { version } from 'punycode';
 
 @Component({
   selector: 'app-left-navbar',
@@ -11,28 +9,30 @@ import { version } from 'punycode';
   styleUrls: ['./left-navbar.component.scss']
 })
 export class LeftNavbarComponent implements OnInit {
-  @Input() viewMode: "NORMAL" | "COMPACT";
+  @Input() viewMode: 'NORMAL' | 'COMPACT';
   constructor(
     private actualService: ActualService,
     private translateService: TranslateService
-  
+
   ) { }
 
   ngOnInit() {
   }
 
-  public get actualProgramName(): string{
-    if(this.actualService.actualProgram)
-      return this.actualService.actualProgram.name
-    else  
+  public get actualProgramName(): string {
+    if (this.actualService.actualProgram) {
+      return this.actualService.actualProgram.name;
+    } else {
       return undefined;
+    }
   }
 
-  public get actualProgramId(): number{
-    if(this.actualService.actualProgram)
-      return this.actualService.actualProgram.id
-    else  
+  public get actualProgramId(): number {
+    if (this.actualService.actualProgram) {
+      return this.actualService.actualProgram.id;
+    } else {
       return undefined;
+    }
   }
 
   public get versions(): IVersionMetaData[] {
@@ -40,11 +40,11 @@ export class LeftNavbarComponent implements OnInit {
   }
 
   public isReading(): boolean {
-    return this.actualService.actualAction == "read";
+    return this.actualService.actualAction === 'read';
   }
 
   public isActual(version: IVersionMetaData): boolean {
-    return this.actualService.actualVersion == version;
+    return this.actualService.actualVersion === version;
   }
 
   public getActualLang(): string {
@@ -52,7 +52,7 @@ export class LeftNavbarComponent implements OnInit {
   }
 
   public openVersionChanges(versionNumber: string) {
-    if(this.viewMode == "NORMAL"){
+    if (this.viewMode === 'NORMAL') {
       return ['/change-list', this.actualProgramId, versionNumber, 'read', 'none'];
     } else {
       return ['/compact', this.actualProgramId, versionNumber];

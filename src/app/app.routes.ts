@@ -7,12 +7,12 @@ import { CompactComponent } from './compact/compact.component';
 
 
 export const ROUTES: Routes = [
-  { path: '',      component: ProgramListComponent },
-  { path: 'program-list',      component: ProgramListComponent },  
-  { path: 'change-list/:program-id/:version/:action/:id',  component: ChangeListComponent },  
-  { path: 'compact/:program-id/:version',  component: CompactComponent }, 
-  { path: 'config-editor',  component: ConfigEditorComponent},
-   {path: 'new-version/:program-id', component: NewVersionCreatationComponent}
+  { path: '', component: ProgramListComponent },
+  { path: 'program-list', component: ProgramListComponent },
+  { path: 'change-list/:program-id/:version/:action/:id', component: ChangeListComponent },
+  { path: 'compact/:program-id/:version', component: CompactComponent },
+  { path: 'config-editor', component: ConfigEditorComponent },
+  { path: 'new-version/:program-id', component: NewVersionCreatationComponent }
   /*{ path: 'about', component: AboutComponent },
   { path: 'detail', loadChildren: './+detail#DetailModule'},
   { path: 'barrel', loadChildren: './+barrel#BarrelModule'},

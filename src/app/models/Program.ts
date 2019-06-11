@@ -1,6 +1,6 @@
-import { IProgram } from "./IProgram";
-import { IVersionMetaData } from "./IVersionMetaData";
-import { ITagInfo } from "./ITagInfo";
+import { IProgram } from './IProgram';
+import { IVersionMetaData } from './IVersionMetaData';
+import { ITagInfo } from './ITagInfo';
 
 export class Program implements IProgram {
     constructor(
@@ -9,15 +9,15 @@ export class Program implements IProgram {
         public path: string,
         public langs: string[],
         public versions: IVersionMetaData[],
-        public tagInfos: ITagInfo []) {
+        public tagInfos: ITagInfo[]) {
     }
 
     get langList(): string {
-        let langList = "";
+        let langList = '';
         this.langs.forEach(lang => {
-            langList = langList + lang + ", ";
+            langList = langList + lang + ', ';
         });
-        if (langList != "") {
+        if (langList !== '') {
             langList = langList.substring(0, langList.length - 2);
         }
         return langList;

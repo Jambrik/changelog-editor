@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { IChangeLogEditorConfig } from '../models/IChangeLogEditorConfig';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
@@ -13,21 +13,21 @@ export class ConfigService {
     private actualService: ActualService) { }
 
   public getConfig(): Observable<IChangeLogEditorConfig> {
-    return this.http.get<IChangeLogEditorConfig>(environment.backEndUrl +"api/config")
-    .map((response: IChangeLogEditorConfig) => {
-      console.log("User", response.user);
-      this.actualService.actualUser = response.user;
-      response.programs.forEach(program => {
-        program.versions.forEach(cl => {
-          cl.releaseDate = new Date(cl.releaseDate);
-          
+    return this.http.get<IChangeLogEditorConfig>(environment.backEndUrl + 'api/config')
+      .map((response: IChangeLogEditorConfig) => {
+        console.log('User', response.user);
+        this.actualService.actualUser = response.user;
+        response.programs.forEach(program => {
+          program.versions.forEach(cl => {
+            cl.releaseDate = new Date(cl.releaseDate);
+
+          });
+
         });
-        
+        return response;
       });
-      return response;
-    });
   }
 
-  
+
 
 }

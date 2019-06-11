@@ -1,5 +1,5 @@
-import { IVersionMetaData } from "./IVersionMetaData";
-import { ITagInfo } from "./ITagInfo";
+import { IVersionMetaData } from './IVersionMetaData';
+import { ITagInfo } from './ITagInfo';
 
 export interface IProgram {
     id: number;
@@ -8,5 +8,4 @@ export interface IProgram {
     langs: string[];
     tagInfos: ITagInfo[];
     versions: IVersionMetaData[];
-    
 }

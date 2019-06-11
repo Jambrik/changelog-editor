@@ -1,1 +1,1 @@
-export type ChangeLogAction = "read" | "new" | "mod";
+export type ChangeLogAction = 'read' | 'new' | 'mod';

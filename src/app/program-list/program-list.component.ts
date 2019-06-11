@@ -1,4 +1,3 @@
-import { StringHelpers } from '../helpers/string-helpers';
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 import { IProgram } from '../models/IProgram';
@@ -20,27 +19,26 @@ export class ProgramListComponent implements OnInit {
 
   ngOnInit() {
     this.actualService.actualProgram = null;
-    this.actualService.actualVersion = {version: ""};
+    this.actualService.actualVersion = { version: '' };
     this.actualService.actualVersions = [];
     this.configService.getConfig().subscribe(
       (data) => {
-        console.log("program list", data);
+        console.log('program list', data);
         this.programs = data.programs;
 
       },
       (error) => {
-        console.log("error", error);
+        console.log('error', error);
       }
-    )
+    );
   }
 
   public getLastVersion(program: IProgram): string {
     if (program.versions && (program.versions.length > 0)) {
       program.versions.sort(ConfigHelper.versionSorter);
       return program.versions[0].version;
-    }
-    else {
-      return "none";
+    } else {
+      return 'none';
     }
 
   }

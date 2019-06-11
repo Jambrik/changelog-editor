@@ -9,7 +9,7 @@
                 <div class="pl-4 pt-2 pull-right">
                     <span translate>RELEASE_DATE</span>:
                     <span *ngIf="changeList && (changeList != null)">
-                        <p-calendar [(ngModel)]="changeList.releaseDate" dateFormat="yy.mm.dd"></p-calendar>                        
+                        <p-calendar [(ngModel)]="changeList.releaseDate" dateFormat="yy.mm.dd"></p-calendar>
                     </span>
                     <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)">
                         <span class="fa fa-save"></span>
@@ -27,27 +27,31 @@
                 </div>
                 <div class="pl-4">
                     <span translate>IMPORTANCE</span>:
-                    <p-selectButton [options]="importances" [ngModel]="selectedImportances" (ngModelChange)="selectedImportancesChange($event)"
-                        [multiple]="true"></p-selectButton>
+                    <p-selectButton [options]="importances" [ngModel]="selectedImportances"
+                        (ngModelChange)="selectedImportancesChange($event)" [multiple]="true"></p-selectButton>
                 </div>
                 <div class="pl-4">
                     <span translate>TYPE</span>:
-                    <p-selectButton [options]="types" [ngModel]="selectedTypes" (ngModelChange)="selectedTypesChange($event)" [multiple]="true"></p-selectButton>
+                    <p-selectButton [options]="types" [ngModel]="selectedTypes"
+                        (ngModelChange)="selectedTypesChange($event)" [multiple]="true"></p-selectButton>
                 </div>
             </div>
 
             <div class="clearfix">
-                <a href="/" class="btn btn-primary pull-right" [routerLink]="['/change-list', programId, versionNumber, 'new', 'null']" [queryParams]="{lang: getActualLang()}"
-                    *ngIf="isReading()">
+                <a href="/" class="btn btn-primary pull-right"
+                    [routerLink]="['/change-list', programId, versionNumber, 'new', 'null']"
+                    [queryParams]="{lang: getActualLang()}" *ngIf="isReading()">
                     <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
                 </a>
                 <div class="pl-2">
-                 <a class="btn btn-success pull-left"  style="color:white" (click)="goCompactView($event)" *ngIf="isReading()">
-                    <span class="fa" translate>COMPACT_VIEW</span>
-                 </a>
+                    <a class="btn btn-success pull-left" style="color:white" (click)="goCompactView($event)"
+                        *ngIf="isReading()">
+                        <span class="fa" translate>COMPACT_VIEW</span>
+                    </a>
                 </div>
                 <div *ngIf="isNewEditing()">
-                    <app-change-log-item [item]="newChangeItem" [action]="'new'" [modId]="'null'" [selectedLangs]="selectedLangs" (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
+                    <app-change-log-item [changeLogItem]="newChangeItem" [action]="'new'" [modId]="'null'"
+                        [selectedLangs]="selectedLangs" (deleteOrAddingNew)="getChanges()"></app-change-log-item>
                 </div>
             </div>
 
@@ -58,7 +62,8 @@
             </div>
             <div *ngIf="changeList">
                 <div *ngFor="let change of changeList.changes">
-                    <app-change-log-item [item]="change" [action]="action" [modId]="id" [selectedLangs]="selectedLangs" (onDeleteOrAddingNew)="getChanges()"></app-change-log-item>
+                    <app-change-log-item [changeLogItem]="change" [action]="action" [modId]="id"
+                        [selectedLangs]="selectedLangs" (deleteOrAddingNew)="getChanges()"></app-change-log-item>
                 </div>
             </div>
         </main>

@@ -4,7 +4,6 @@ import { ActualService } from '../services/actual.service';
 import { IProgram } from '../models/IProgram';
 import { ConfigService } from '../services/config.service';
 import { ConfigHelper } from '../helpers/config-helper';
-import { StringHelpers } from '../helpers/string-helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { ChangeLogService } from '../services/change-log.service';
 import { IVersionMetaData } from '../models/IVersionMetaData';
@@ -36,12 +35,12 @@ export class NewVersionCreatationComponent implements OnInit {
         this.configService.getConfig()
           .subscribe((config) => {
 
-            this.programId = programIdInt;    
-            this.actualService.actualProgram = ConfigHelper.getProgramById(config.programs, this.programId);          
+            this.programId = programIdInt;
+            this.actualService.actualProgram = ConfigHelper.getProgramById(config.programs, this.programId);
             this.actualService.actualProgram.versions.sort(ConfigHelper.versionSorter);
             this.actualService.actualVersions = this.actualService.actualProgram.versions;
 
-            
+
           });
       }
     });
@@ -87,7 +86,7 @@ export class NewVersionCreatationComponent implements OnInit {
   }
 
   private getLastVersion(): IVersionMetaData {
-    if(this.actualService.actualProgram.versions.length > 0) {
+    if (this.actualService.actualProgram.versions.length > 0) {
       return this.actualService.actualProgram.versions[0];
     } else {
 

@@ -35,37 +35,32 @@ import { DatePipe } from '@angular/common';
 export class CompactComponent implements OnInit, OnChanges {
 
   public text: string;
-  isEditor: boolean = true;
+  isEditor = true;
   public programId: number;
   public changeList: IVersionChangeLog;
-  public version: IVersionMetaData = { version: "" };
+  public version: IVersionMetaData = { version: '' };
   public id: string;
   public oldId: string;
   public newChangeItem: IChangeLogItem;
   public langs: ILabelValue[] = [];
-  public filterText: string = "";
-  public loading: boolean = false;
+  public filterText = '';
+  public loading = false;
   public types: ILabelValue[] = [];
   public selectedTypes: string[] = [];
   public importances: ILabelValue[] = [];
   public selectedImportances: string[] = [];
-  private typesSubscribe: Subscription;;
-  private importanceSubscribe: Subscription;
   public compactTags: Tag[];
   public startDate: Date;
   public vegeDate: Date;
   descriptions: I18n[] = [];
   msgs: Message[] = [];
-  private noVersionYetCaption: string;
-  public showReleasedVersionWarning: boolean = false;
+  public showReleasedVersionWarning = false;
   changeLogItemOri: IChangeLogItem;
 
 
   constructor(
     private actualService: ActualService,
     private changeLogService: ChangeLogService,
-    private router: Router,
-    private googleTranslateService: GoogleTranslateService,
     private translateService: TranslateService,
     private route: ActivatedRoute,
     private configService: ConfigService,
@@ -95,7 +90,7 @@ export class CompactComponent implements OnInit, OnChanges {
       const versionNumber = params['version'];
       const programIdInt = parseInt(programId, 10);
       this.programId = programIdInt;
-      this.actualService.actualAction = "read";
+      this.actualService.actualAction = 'read';
 
 
 
@@ -113,7 +108,7 @@ export class CompactComponent implements OnInit, OnChanges {
           this.actualService.actualVersions = versions;
 
 
-          if ((versionNumber == "last") && (versions.length > 0)) {
+          if ((versionNumber === 'last') && (versions.length > 0)) {
             this.version = versions[0];
           } else {
             this.version = ConfigHelper.getVersion(versions, versionNumber);
@@ -129,12 +124,13 @@ export class CompactComponent implements OnInit, OnChanges {
                 change.date = new Date(change.date);
               });
               changeList.changes.sort((a, b) => {
-                if (a.date > b.date)
+                if (a.date > b.date) {
                   return -1;
-                else if (a.date < b.date)
+                } else if (a.date < b.date) {
                   return 1;
-                else
+                } else {
                   return 0;
+                }
               });
 
 
@@ -144,7 +140,6 @@ export class CompactComponent implements OnInit, OnChanges {
 
 
               (error) => {
-                console.log("getChanges", error);
                 this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
 
               });
@@ -159,20 +154,20 @@ export class CompactComponent implements OnInit, OnChanges {
   }
 
   public buildCompactChangesText(event: string): void {
-    let lang = this.translateService.currentLang;
-    let text = "";
-    let szoveg = "";
-    let szoveg_ossze = "";
-    let elso_date = "";
-    let utolso_date = "";
+    const lang = this.translateService.currentLang;
+    let text = '';
+    let szoveg = '';
+    let szoveg_ossze = '';
+    let elso_date = '';
+    let utolso_date = '';
 
-    for (let item of this.actualService.actualChangeList.changes) {
-      for (let description of item.descriptions) {
-        if (description.lang == lang) {
+    for (const item of this.actualService.actualChangeList.changes) {
+      for (const description of item.descriptions) {
+        if (description.lang === lang) {
 
-          if (item.crd == undefined) {
+          if (item.crd === undefined) {
             item.crd = new Date('1990-01-01T00:00:00');
-          };
+          }
 
           elso_date = this.datePipe.transform(item.crd, 'yyyy.MM.dd');
 
@@ -202,16 +197,15 @@ export class CompactComponent implements OnInit, OnChanges {
             if (item.ticketNumber == null) {
               item.ticketNumber = '';
               szoveg_ossze = '(' + szoveg + ')';
-            }
-            else {
+            } else {
               szoveg_ossze = ' (' + szoveg + ')';
             }
 
-            if (elso_date == utolso_date) {
-              text = text + item.ticketNumber + szoveg_ossze + "\n" + description.text + "\n" + "\r";
-            }
-            else {
-              text = text + '----------- ' + this.datePipe.transform(item.crd, 'yyyy.MM.dd') + ' -----------' + "\r" + item.ticketNumber + szoveg_ossze + "\n" + description.text + "\n" + "\r";
+            if (elso_date === utolso_date) {
+              text = text + item.ticketNumber + szoveg_ossze + '\n' + description.text + '\n' + '\r';
+            } else {
+              text = text + '----------- ' + this.datePipe.transform(item.crd, 'yyyy.MM.dd') +
+                ' -----------' + '\r' + item.ticketNumber + szoveg_ossze + '\n' + description.text + '\n' + '\r';
             }
 
             utolso_date = this.datePipe.transform(item.crd, 'yyyy.MM.dd');
@@ -226,9 +220,8 @@ export class CompactComponent implements OnInit, OnChanges {
     if (program.versions && (program.versions.length > 0)) {
       program.versions.sort(ConfigHelper.versionSorter);
       return program.versions[0].version;
-    }
-    else {
-      return "none";
+    } else {
+      return 'none';
     }
 
   }
@@ -240,7 +233,7 @@ export class CompactComponent implements OnInit, OnChanges {
 
 
   public copyMessage(val: string) {
-    let selBox = document.createElement('textarea');
+    const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';

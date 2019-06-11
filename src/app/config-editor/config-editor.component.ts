@@ -28,42 +28,43 @@ export class ConfigEditorComponent implements OnInit {
   }
 
   public configRefresh() {
-    
+
     this.configService.getConfig().subscribe(config => {
-      let programs = [];
+      const programs = [];
       config.programs.forEach(p => {
-        let program: Program = new Program(
+        const program: Program = new Program(
           p.id,
           p.name,
           p.path,
           p.langs,
           p.versions,
-          p.tagInfos          
+          p.tagInfos
         );
         programs.push(program);
       });
       this.programs = programs;
-      console.log("this.programs", this.programs);
+      console.log('this.programs', this.programs);
     });
   }
 
   showDialogToAdd() {
     this.newCar = true;
     this.program = new Program(null,
-       "",
-       "",
-       [],
-       [],
-       []);
+      '',
+      '',
+      [],
+      [],
+      []);
     this.displayDialog = true;
   }
 
   save() {
-    let programs = [...this.programs];
-    if (this.newCar)
+    const programs = [...this.programs];
+    if (this.newCar) {
       programs.push(this.program);
-    else
+    } else {
       programs[this.findSelectedCarIndex()] = this.program;
+    }
 
     this.programs = programs;
     this.program = null;
@@ -71,8 +72,8 @@ export class ConfigEditorComponent implements OnInit {
   }
 
   delete() {
-    let index = this.findSelectedCarIndex();
-    this.programs = this.programs.filter((val, i) => i != index);
+    const index = this.findSelectedCarIndex();
+    this.programs = this.programs.filter((val, i) => i !== index);
     this.program = null;
     this.displayDialog = false;
   }

@@ -1,5 +1,3 @@
-import { Http } from '@angular/http';
-import { Router } from '@angular/router';
 import { Component, HostBinding, HostListener } from '@angular/core';
 
 @Component({
@@ -8,19 +6,19 @@ import { Component, HostBinding, HostListener } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private isOpen:boolean = false;
+  private isOpen = false;
 
-  
-      @HostBinding('class.open') get opened(){
-        return this.isOpen;
-      }
-      constructor() { }
-  
-      @HostListener('click')open(){
-        this.isOpen = true;
-      }
-  
-      @HostListener('mouseleave')close(){
-        this.isOpen = false;
-      }
+
+  @HostBinding('class.open') get opened() {
+    return this.isOpen;
+  }
+  constructor() { }
+
+  @HostListener('click') open() {
+    this.isOpen = true;
+  }
+
+  @HostListener('mouseleave') close() {
+    this.isOpen = false;
+  }
 }

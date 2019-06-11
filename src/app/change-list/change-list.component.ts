@@ -28,7 +28,7 @@ import { TagInfo } from '../models/TagInfo';
 export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
   public program: IProgram;
-  public version: IVersionMetaData = { version: "" };
+  public version: IVersionMetaData = { version: '' };
   public changeList: IVersionChangeLog;
   public action: ChangeLogAction;
   public id: string;
@@ -36,17 +36,15 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public newChangeItem: IChangeLogItem;
   public langs: ILabelValue[] = [];
   public selectedLangs: string[] = [];
-  public filterText: string = "";
-  public loading: boolean = false;
+  public filterText = '';
+  public loading = false;
   public types: ILabelValue[] = [];
   public selectedTypes: string[] = [];
   public importances: ILabelValue[] = [];
   public selectedImportances: string[] = [];
-  private typesSubscribe: Subscription;;
-  private importanceSubscribe: Subscription;
   msgs: Message[] = [];
   private noVersionYetCaption: string;
-  public showReleasedVersionWarning: boolean = false;
+  public showReleasedVersionWarning = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,59 +58,59 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
     this.selectedTypes = [Constants.BUGFIX, Constants.FEATURE];
     this.selectedImportances = [Constants.LOW, Constants.NORMAL, Constants.HIGH];
-    console.log("CurrentLang", this.translateService.currentLang);
+    console.log('CurrentLang', this.translateService.currentLang);
     this.loadTypes();
     this.loadImportance();
-    //Because we load always the same component, the init run only once. So we subscribe the router params changes:
+    // Because we load always the same component, the init run only once. So we subscribe the router params changes:
     this.route.params.subscribe(params => {
-      let programId = params['program-id'];
-      let versionNumber: string = params['version'];
-      let lang = params["lang"];
-      let id = params["id"];
-      let action = params["action"];
-      let wasActionChange: boolean = false;
-      if (action != this.action) {
+      const programId = params['program-id'];
+      const versionNumber: string = params['version'];
+      const lang = params['lang'];
+      const id = params['id'];
+      const action = params['action'];
+      let wasActionChange = false;
+      if (action !== this.action) {
         this.action = action;
         wasActionChange = true;
       }
       this.actualService.actualAction = this.action;
       if (!this.action) {
-        this.action = "read";
-      };
+        this.action = 'read';
+      }
 
-      console.log("programId, version, action, id", programId, versionNumber, this.action, id);
-      let programIdInt = parseInt(programId);
+      console.log('programId, version, action, id', programId, versionNumber, this.action, id);
+      const programIdInt = parseInt(programId, 10);
       this.oldId = this.id;
-      if (id == "null") {
+      if (id === 'null') {
         this.id = null;
       } else {
         this.id = id;
       }
 
-      if (this.programId != programIdInt) {
+      if (this.programId !== programIdInt) {
         this.configService.getConfig()
           .subscribe((config) => {
             this.programId = programIdInt;
             this.program = ConfigHelper.getProgramById(config.programs, this.programId);
             this.actualService.actualProgram = this.program;
-            console.log("New program id", programId);
+            console.log('New program id', programId);
             this.langs = [];
             this.selectedLangs = [];
-            this.program.langs.forEach(lang => {
+            this.program.langs.forEach((l) => {
               this.langs.push({
-                label: lang,
-                value: lang
+                label: l,
+                value: l
               });
-              this.selectedLangs.push(lang);
+              this.selectedLangs.push(l);
             });
             this.setActualTaginfos();
-            //First of all we have get the versions
+            // First of all we have get the versions
             this.changeLogService.getVersionsForProgramId(programId)
               .subscribe((versions) => {
                 versions.sort(ConfigHelper.versionSorter);
                 this.actualService.actualVersions = versions;
-                //If version is the latest we have to find that
-                if ((versionNumber == "last") && (versions.length > 0)) {
+                // If version is the latest we have to find that
+                if ((versionNumber === 'last') && (versions.length > 0)) {
                   this.version = versions[0];
                 } else {
                   this.version = ConfigHelper.getVersion(versions, versionNumber);
@@ -120,7 +118,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
                 this.actualService.actualVersion = this.version;
                 if (this.version != null) {
                   this.getChanges();
-                  if (this.action == "new") {
+                  if (this.action === 'new') {
                     this.newItemCreate();
                   }
                 } else {
@@ -134,15 +132,15 @@ export class ChangeListComponent implements OnInit, OnChanges {
                 }
               });
           });
-      } else if ((this.version != null) && (versionNumber != this.version.version)) {
+      } else if ((this.version != null) && (versionNumber !== this.version.version)) {
         this.version = ConfigHelper.getVersion(this.actualService.actualVersions, versionNumber);
         this.actualService.actualVersion = this.version;
         this.getChanges();
-        if (this.action == "new") {
+        if (this.action === 'new') {
           this.newItemCreate();
         }
       } else if (wasActionChange) {
-        if (this.action == "new") {
+        if (this.action === 'new') {
           this.newItemCreate();
         } else {
           this.refilter();
@@ -155,11 +153,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
       this.loadImportance();
       this.loadTypes();
       this.loadCaptionTranslations();
-      this.filterText = queryParams["filter"];
+      this.filterText = queryParams['filter'];
       if (this.actualService.oriChangeList) {
         this.changeList = this.filter(this.actualService.oriChangeList);
       }
-    })
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -169,32 +167,32 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   private loadCaptionTranslations() {
     setTimeout(() => {
-      this.translateService.get("NO_VERSION_YET")
+      this.translateService.get('NO_VERSION_YET')
         .subscribe((translation) => {
           this.noVersionYetCaption = translation;
-        })
+        });
     }, 100);
   }
 
   private loadTypes() {
-    console.log("in load types");
+    console.log('in load types');
     setTimeout(() => {
       this.types = [];
 
-      this.typesSubscribe = this.translateService.get([Constants.BUGFIX, Constants.FEATURE])
+      this.translateService.get([Constants.BUGFIX, Constants.FEATURE])
         .subscribe((t) => {
-          console.log("in load types subscribe");
+          console.log('in load types subscribe');
           if (t.bugfix) {
-            this.types.push({ value: Constants.BUGFIX, label: t.bugfix })
+            this.types.push({ value: Constants.BUGFIX, label: t.bugfix });
           }
 
           if (t.feature) {
-            this.types.push({ value: Constants.FEATURE, label: t.feature })
+            this.types.push({ value: Constants.FEATURE, label: t.feature });
           }
-          console.log("types", this.types);
+          console.log('types', this.types);
 
           if (t.COMPACT_VIEW) {
-            this.types.push({ value: Constants.COMPACT_VIEW, label: t.COMPACT_VIEW })
+            this.types.push({ value: Constants.COMPACT_VIEW, label: t.COMPACT_VIEW });
           }
 
         });
@@ -206,7 +204,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.importances = [];
 
-      this.importanceSubscribe = this.translateService.get([Constants.LOW, Constants.NORMAL, Constants.HIGH])
+      this.translateService.get([Constants.LOW, Constants.NORMAL, Constants.HIGH])
         .subscribe((t) => {
           if (t.low) {
             this.importances.push({ value: Constants.LOW, label: t.low });
@@ -225,23 +223,25 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   private filter(inputChangeList: IVersionChangeLog): IVersionChangeLog {
-    let changeList = {
+    const changeList = {
       releaseDate: inputChangeList.releaseDate,
       version: inputChangeList.version,
       changes: []
     };
 
     inputChangeList.changes.forEach(change => {
-      console.log("change.importance", change.importance);
-      if ((this.selectedTypes.indexOf(change.type) > -1) && ((!change.importance && (this.selectedImportances.indexOf(Constants.NORMAL) > -1)) || (this.selectedImportances.indexOf(change.importance) > -1))) {
+      console.log('change.importance', change.importance);
+      if ((this.selectedTypes.indexOf(change.type) > -1) &&
+        ((!change.importance && (this.selectedImportances.indexOf(Constants.NORMAL) > -1)) ||
+          (this.selectedImportances.indexOf(change.importance) > -1))) {
         let found = false;
-        let newChange: IChangeLogItem = _.cloneDeep(change);
+        const newChange: IChangeLogItem = _.cloneDeep(change);
         if (!newChange.importance || (newChange.importance == null)) {
-          newChange.importance = "normal";
+          newChange.importance = 'normal';
         }
-        if ((this.filterText) && (this.filterText != null) && (this.filterText != "")) {
-          if (newChange.ticketNumber && (newChange.ticketNumber != null) && (newChange.ticketNumber != "")) {
-            let bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText, true);
+        if ((this.filterText) && (this.filterText != null) && (this.filterText !== '')) {
+          if (newChange.ticketNumber && (newChange.ticketNumber != null) && (newChange.ticketNumber !== '')) {
+            const bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText, true);
             found = bs.bool;
 
             if (found) {
@@ -265,12 +265,12 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   refilter() {
-    if (this.action == "mod") {
+    if (this.action === 'mod') {
       this.changeList.changes.forEach(change => {
-        if (change.id == this.id) {
+        if (change.id === this.id) {
           this.actualService.oriChangeList.changes.forEach(oriChange => {
-            if (oriChange.id == this.id) {
-              let descriptions = [];
+            if (oriChange.id === this.id) {
+              const descriptions = [];
               oriChange.descriptions.forEach(description => {
                 descriptions.push(
                   {
@@ -278,18 +278,18 @@ export class ChangeListComponent implements OnInit, OnChanges {
                     text: description.text
                   }
                 );
-              })
+              });
               change.descriptions = descriptions;
             }
           });
           this.filterDescription(change);
         }
       });
-    } else if (this.action == "read") {
+    } else if (this.action === 'read') {
 
 
       this.changeList.changes.forEach(change => {
-        if (change.id == this.oldId) {
+        if (change.id === this.oldId) {
           this.filterDescription(change);
         }
       });
@@ -304,7 +304,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     if (this.filterText) {
       change.descriptions.forEach(description => {
         if (!found) {
-          let bs = StringHelpers.findAndGreen(description.text, this.filterText, this.action == "read");
+          const bs = StringHelpers.findAndGreen(description.text, this.filterText, this.action === 'read');
           found = bs.bool;
           if (found) {
             description.text = bs.str;
@@ -319,7 +319,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   private getChanges() {
-    if (this.version.version != "none") {
+    if (this.version.version !== 'none') {
       this.loading = true;
       if (this.changeList) {
         this.changeList.changes = [];
@@ -333,12 +333,13 @@ export class ChangeListComponent implements OnInit, OnChanges {
             change.date = new Date(change.date);
           });
           changeList.changes.sort((a, b) => {
-            if (a.date > b.date)
+            if (a.date > b.date) {
               return -1;
-            else if (a.date < b.date)
+            } else if (a.date < b.date) {
               return 1;
-            else
+            } else {
               return 0;
+            }
           });
 
           this.actualService.oriChangeList = changeList;
@@ -347,7 +348,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
           this.loading = false;
         },
           (error) => {
-            console.log("getChanges", error);
+            console.log('getChanges', error);
             this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
             this.loading = false;
           });
@@ -365,20 +366,20 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
 
   public isNewEditing(): boolean {
-    return (this.action == "new") && (this.newChangeItem != undefined);
+    return (this.action === 'new') && (this.newChangeItem !== undefined);
   }
 
   public isReading(): boolean {
-    return (this.action == "read");
+    return (this.action === 'read');
   }
 
   private getNewDescriptions(): I18n[] {
-    let resultList: I18n[] = [];
+    const resultList: I18n[] = [];
     this.program.langs.forEach(lang => {
       resultList.push({
         lang: lang,
-        text: ""
-      })
+        text: ''
+      });
     });
     return resultList;
   }
@@ -386,8 +387,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
   private newItemCreate() {
     this.newChangeItem = {
       id: null,
-      type: "feature",
-      importance: "normal",
+      type: 'feature',
+      importance: 'normal',
       ticketNumber: null,
       date: new Date(),
       descriptions: this.getNewDescriptions(),
@@ -405,19 +406,19 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
 
   public selectedTypesChange(event: string[]) {
-    console.log("selectedTypesChange", event);
+    console.log('selectedTypesChange', event);
     this.selectedTypes = event;
     this.changeList = this.filter(this.actualService.oriChangeList);
   }
 
   public selectedImportancesChange(event: string[]) {
-    console.log("selectedImportancesChange", event);
+    console.log('selectedImportancesChange', event);
     this.selectedImportances = event;
     this.changeList = this.filter(this.actualService.oriChangeList);
   }
 
   public printVersion() {
-    if (this.version && (this.version != null) && (this.version.version != "none")) {
+    if (this.version && (this.version != null) && (this.version.version !== 'none')) {
       return this.version.version;
     } else {
       return this.noVersionYetCaption;
@@ -428,7 +429,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     if (this.version && (this.version != null)) {
       return this.version.version;
     } else {
-      return "";
+      return '';
     }
 
   }
@@ -436,7 +437,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   public saveReleaseDate(event: Event) {
     event.preventDefault();
-    console.log("this.changeList.releaseDate", this.changeList.releaseDate);
+    console.log('this.changeList.releaseDate', this.changeList.releaseDate);
     this.changeLogService.changeLogRelease(this.program.id, this.version.version, this.changeList.releaseDate)
       .subscribe((x) => {
         this.changeLogService.getVersionsForProgramId(this.programId)
@@ -452,13 +453,12 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   private setActualTaginfos() {
-    let resultList: TagInfo[] = [];
-    let program: IProgram = this.actualService.actualProgram;
-    let actualLang: string = this.translateService.currentLang;
-    let tagInfos = program.tagInfos;
+    const resultList: TagInfo[] = [];
+    const program: IProgram = this.actualService.actualProgram;
+    const tagInfos = program.tagInfos;
     if (tagInfos) {
-      for (let tagInfo of tagInfos) {
-        let tio = new TagInfo(
+      for (const tagInfo of tagInfos) {
+        const tio = new TagInfo(
           tagInfo.code,
           tagInfo.captions,
           tagInfo.fix,
@@ -476,7 +476,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   public goCompactView(e: Event) {
     this.actualService.actualChangeList = this.changeList;
-    this.router.navigate(["/compact", this.programId, this.versionNumber],
+    this.router.navigate(['/compact', this.programId, this.versionNumber],
       {
         queryParams: {
           lang: this.getActualLang(),

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProgram } from '../models/IProgram';
 import { ChangeLogService } from './change-log.service';
-import { version } from 'punycode';
-import { StringHelpers } from '../helpers/string-helpers';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 import { TagInfo } from '../models/TagInfo';
@@ -18,10 +16,10 @@ export class ActualService {
   private _actualTagInfos: TagInfo[];
   private _actualFilter: string;
   private _oriChangeList: IVersionChangeLog;
-  private _actualChangeList: IVersionChangeLog; 
+  private _actualChangeList: IVersionChangeLog;
 
 
-  constructor(private changeLogService: ChangeLogService) { 
+  constructor(private changeLogService: ChangeLogService) {
 
   }
 
@@ -29,23 +27,23 @@ export class ActualService {
     return this._actualProgram;
   }
 
-  set actualProgram(value: IProgram) {    
-    this._actualProgram = value;    
+  set actualProgram(value: IProgram) {
+    this._actualProgram = value;
   }
 
   get actualVersions(): IVersionMetaData[] {
     return this._actualVersions;
   }
 
-  set actualVersions(value: IVersionMetaData[]){
+  set actualVersions(value: IVersionMetaData[]) {
     this._actualVersions = value;
   }
 
   get actualVersion(): IVersionMetaData {
     return this._actualVersion;
-  } 
+  }
 
-  set actualVersion(value: IVersionMetaData){
+  set actualVersion(value: IVersionMetaData) {
     this._actualVersion = value;
   }
 
@@ -53,24 +51,24 @@ export class ActualService {
     return this._actualAction;
   }
 
-  set actualAction(value: string) {    
-    this._actualAction = value;    
+  set actualAction(value: string) {
+    this._actualAction = value;
   }
 
   get actualUser(): User {
     return this._actualUser;
   }
 
-  set actualUser(value: User) {    
-    this._actualUser = value;    
+  set actualUser(value: User) {
+    this._actualUser = value;
   }
 
   get actualTagInfos(): TagInfo[] {
     return this._actualTagInfos;
   }
 
-  set actualTagInfos(value: TagInfo[]) {    
-    this._actualTagInfos = value;    
+  set actualTagInfos(value: TagInfo[]) {
+    this._actualTagInfos = value;
   }
 
   get actualFilter(): string {

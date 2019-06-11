@@ -4,7 +4,6 @@ import { IChangeLogItem } from '../models/IChangeLogItem';
 import { ActualService } from '../services/actual.service';
 import { IProgram } from '../models/IProgram';
 import { ChangeLogService } from '../services/change-log.service';
-import { MessageService } from 'primeng/components/common/messageservice';
 import { Message } from 'primeng/components/common/api';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ILabelValue } from '../models/ILableValue';
@@ -26,15 +25,15 @@ import { ITag } from '../models/ITag';
 })
 export class ChangeLogItemComponent implements OnInit, OnChanges {
 
-  @Input("item") changeLogItem: IChangeLogItem;
+  @Input() changeLogItem: IChangeLogItem;
   @Input() action: ChangeLogAction;
   @Input() modId: string;
   @Input() selectedLangs: string[];
-  @Output() onDeleteOrAddingNew: EventEmitter<void> = new EventEmitter();
+  @Output() deleteOrAddingNew: EventEmitter<void> = new EventEmitter();
   msgs: Message[] = [];
-  deleteMessageShown: boolean = false;
-  isEditor: boolean = true;
-  translatePanelShown: boolean = false;
+  deleteMessageShown = false;
+  isEditor = true;
+  translatePanelShown = false;
   froms: ILabelValue[] = [];
   tos: ILabelValue[] = [];
   selectedFrom: string;
@@ -44,8 +43,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   public types: ILabelValue[];
 
   public importances: ILabelValue[];
-  public showReleasedVersionWarning: boolean = false;
-  public compactTags: Tag[]
+  public showReleasedVersionWarning = false;
+  public compactTags: Tag[];
+
   constructor(
     private actualService: ActualService,
     private changeLogService: ChangeLogService,
@@ -59,11 +59,11 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     this.translateService.get([Constants.BUGFIX, Constants.FEATURE])
       .subscribe((t) => {
         if (t.bugfix) {
-          this.types.push({ value: Constants.BUGFIX, label: t.bugfix })
+          this.types.push({ value: Constants.BUGFIX, label: t.bugfix });
         }
 
         if (t.feature) {
-          this.types.push({ value: Constants.FEATURE, label: t.feature })
+          this.types.push({ value: Constants.FEATURE, label: t.feature });
         }
 
       });
@@ -83,7 +83,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
           this.importances.push({ value: Constants.HIGH, label: t.high });
         }
       });
-    if (this.action == "new") {
+    if (this.action === 'new') {
       if (this.version.releaseDate && (this.version.releaseDate != null)) {
         this.showReleasedVersionWarning = true;
       }
@@ -92,12 +92,12 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   private createCompactTags() {
-    let compactTags: Tag[] = [];
-    for (let tagInfo of this.actualService.actualTagInfos) {
+    const compactTags: Tag[] = [];
+    for (const tagInfo of this.actualService.actualTagInfos) {
       let compactTag: Tag;
       if (this.changeLogItem.tags) {
-        for (let tag of this.changeLogItem.tags) {
-          if (tag.code == tagInfo.code) {
+        for (const tag of this.changeLogItem.tags) {
+          if (tag.code === tagInfo.code) {
             compactTag = new Tag(tagInfo, tag.values, tag.value);
           }
         }
@@ -105,15 +105,15 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       if (!compactTag) {
         let value: number | boolean | string;
         if (!tagInfo.moreOptionsAllowed) {
-          if (tagInfo.dataType == "boolean") {
+          if (tagInfo.dataType === 'boolean') {
             if (tagInfo.mandatory) {
               value = false;
             }
-          } else if (tagInfo.dataType == "string") {
+          } else if (tagInfo.dataType === 'string') {
             if (tagInfo.mandatory) {
-              value = "";
+              value = '';
             }
-          } else if (tagInfo.dataType == "number") {
+          } else if (tagInfo.dataType === 'number') {
             if (tagInfo.mandatory) {
               //  value = 0;
             }
@@ -128,10 +128,10 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   private converCompactTagsIntoSimple() {
-    let tags: ITag[] = [];
-    for (let ctag of this.compactTags) {
+    const tags: ITag[] = [];
+    for (const ctag of this.compactTags) {
 
-      let tag: ITag = {
+      const tag: ITag = {
         code: ctag.code,
         values: ctag.values,
         value: ctag.value
@@ -142,29 +142,30 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.action && (changes.action.currentValue != changes.action.previousValue)) {
-      if ((changes.action.currentValue == "mod") && (this.modId == this.changeLogItem.id)) {   
+    if (changes.action && (changes.action.currentValue !== changes.action.previousValue)) {
+      if ((changes.action.currentValue === 'mod') && (this.modId === this.changeLogItem.id)) {
         this.changeLogItemOri = _.cloneDeep(this.changeLogItem);
       }
       this.descriptions = this.getDescriptions();
     }
 
-    if (changes.selectedLangs && (changes.selectedLangs.currentValue != changes.selectedLangs.previousValue)) {
+    if (changes.selectedLangs && (changes.selectedLangs.currentValue !== changes.selectedLangs.previousValue)) {
       this.descriptions = this.getDescriptions();
     }
 
-    if (changes.changeLogItem && (changes.changeLogItem.currentValue != changes.changeLogItem.previousValue)) {
+    if (changes.changeLogItem && (changes.changeLogItem.currentValue !== changes.changeLogItem.previousValue)) {
       this.createCompactTags();
     }
 
   }
   public isEditing(): boolean {
-    return ((this.action == "mod") && (this.modId == this.changeLogItem.id)) || ((this.action == "new") && (this.changeLogItem.id == null));
+    return ((this.action === 'mod') && (this.modId === this.changeLogItem.id)) ||
+      ((this.action === 'new') && (this.changeLogItem.id == null));
 
   }
 
   public canBeModified(): boolean {
-    return this.action == 'read';
+    return this.action === 'read';
   }
 
   public clickMod(event: Event) {
@@ -178,14 +179,14 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   public goEdit() {
-    console.log("It is go edit. Action: mod")
-    this.router.navigate(["/change-list", this.program.id, this.version.version, 'mod', this.changeLogItem.id],
+    console.log('It is go edit. Action: mod');
+    this.router.navigate(['/change-list', this.program.id, this.version.version, 'mod', this.changeLogItem.id],
       {
         queryParams:
-          {
-            lang: this.getActualLang(),
-            filter: this.actualService.actualFilter
-          }
+        {
+          lang: this.getActualLang(),
+          filter: this.actualService.actualFilter
+        }
       });
   }
 
@@ -205,34 +206,34 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       if (user) {
         this.changeLogItem.cru = user.code;
       } else {
-        this.changeLogItem.cru = "ANONYMOUS";
+        this.changeLogItem.cru = 'ANONYMOUS';
       }
       this.changeLogItem.crd = new Date();
     } else {
       if (user) {
         this.changeLogItem.lmu = user.code;
       } else {
-        this.changeLogItem.lmu = "ANONYMOUS";
+        this.changeLogItem.lmu = 'ANONYMOUS';
       }
       this.changeLogItem.lmd = new Date();
     }
 
-    //Adding tags:
+    // Adding tags:
     this.converCompactTagsIntoSimple();
     if (this.valid()) {
-      //Save:
+      // Save:
       this.changeLogService.changeLogWrite(this.program.id, this.version.version, this.changeLogItem)
         .subscribe((x) => {
           if (this.changeLogItem.id == null) {
-            this.onDeleteOrAddingNew.emit();
+            this.deleteOrAddingNew.emit();
           }
-          this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'],
+          this.router.navigate(['/change-list', this.program.id, this.version.version, 'read', 'none'],
             {
               queryParams:
-                {
-                  lang: this.getActualLang(),
-                  filter: this.actualService.actualFilter
-                }
+              {
+                lang: this.getActualLang(),
+                filter: this.actualService.actualFilter
+              }
             });
         },
           (error) => {
@@ -242,22 +243,22 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   private valid(): boolean {
-    //Check mandatory tag is added:
-    let actualTagInfos = this.actualService.actualTagInfos;
-    let ok: boolean = true;
-    for (let tagInfo of actualTagInfos) {
+    // Check mandatory tag is added:
+    const actualTagInfos = this.actualService.actualTagInfos;
+    let ok = true;
+    for (const tagInfo of actualTagInfos) {
       if (tagInfo.mandatory) {
         if (tagInfo.moreOptionsAllowed) {
           ok = false;
-          for (let tag of this.changeLogItem.tags) {
-            if ((tag.code == tagInfo.code) && (tag.values.length > 0)) {
+          for (const tag of this.changeLogItem.tags) {
+            if ((tag.code === tagInfo.code) && (tag.values.length > 0)) {
               ok = true;
             }
           }
         } else {
           ok = false;
-          for (let tag of this.changeLogItem.tags) {
-            if ((tag.code == tagInfo.code) && (tag.value != undefined) && (tag.value != null)) {
+          for (const tag of this.changeLogItem.tags) {
+            if ((tag.code === tagInfo.code) && (tag.value !== undefined) && (tag.value != null)) {
               ok = true;
             }
           }
@@ -265,8 +266,8 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         if (!ok) {
           this.translateService.get(Constants.MANDATORY_TAG)
             .subscribe((translation) => {
-              this.msgs.push({ severity: 'error', summary: 'Hiba', detail: translation + ": " + tagInfo.caption + "!" })
-            })
+              this.msgs.push({ severity: 'error', summary: 'Hiba', detail: translation + ': ' + tagInfo.caption + '!' });
+            });
 
           break;
         }
@@ -279,9 +280,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
   public cancelMod(event: Event) {
     event.preventDefault();
-    
-    if (this.action == "mod") {
-      console.log("before _.clone(this.changeLogItemOri);", this.changeLogItemOri);
+
+    if (this.action === 'mod') {
+      console.log('before _.clone(this.changeLogItemOri);', this.changeLogItemOri);
       this.changeLogItem.crd = this.changeLogItemOri.crd;
       this.changeLogItem.cru = this.changeLogItemOri.cru;
       this.changeLogItem.date = this.changeLogItemOri.date;
@@ -295,12 +296,12 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       this.changeLogItem.tags = _.cloneDeep(this.changeLogItemOri.tags);
       this.descriptions = this.getDescriptions();
     }
-    console.log("after _.clone(this.changeLogItemOri);", this.changeLogItem);
+    console.log('after _.clone(this.changeLogItemOri);', this.changeLogItem);
     this.goToBack();
   }
 
   public goToBack() {
-    this.router.navigate(["/change-list", this.program.id, this.version.version, 'read', 'none'],
+    this.router.navigate(['/change-list', this.program.id, this.version.version, 'read', 'none'],
       {
         queryParams: {
           lang: this.getActualLang(),
@@ -327,7 +328,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     event.preventDefault();
     this.changeLogService.changeLogDelete(this.program.id, this.version.version, this.changeLogItem.id)
       .subscribe((x) => {
-        this.onDeleteOrAddingNew.emit();
+        this.deleteOrAddingNew.emit();
       },
         (error) => {
           this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
@@ -339,7 +340,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     let d = this.getDescriptionByLang(this.selectedFrom);
     if (d != null) {
       this.selectedTos.forEach(to => {
-        if (to != this.selectedFrom) {
+        if (to !== this.selectedFrom) {
           this.googleTranslateService.translate(d.text, this.selectedFrom, to)
             .subscribe((translateData) => {
               d = this.getDescriptionByLang(to);
@@ -357,7 +358,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   private getDescriptionByLang(lang: string): I18n {
     let selectedDescription: I18n = null;
     this.changeLogItem.descriptions.forEach(description => {
-      if (description.lang == lang) {
+      if (description.lang === lang) {
         selectedDescription = description;
       }
     });
@@ -378,20 +379,20 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       this.tos = [];
       this.selectedTos = [];
       let selectedFrom;
-      let i: number = 0;
+      let i = 0;
       this.program.langs.forEach(lang => {
         this.froms.push({
           label: lang,
           value: lang
         });
-        if (i == 0) {
+        if (i === 0) {
           selectedFrom = lang;
         }
         this.tos.push({
           label: lang,
           value: lang
         });
-        if (i == 1) {
+        if (i === 1) {
           this.selectedTos.push(lang);
         }
         i++;
@@ -410,7 +411,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   public getDescriptions() {
-    let descriptions: I18n[] = [];
+    const descriptions: I18n[] = [];
 
     this.changeLogItem.descriptions.forEach(description => {
       if (this.selectedLangs.indexOf(description.lang) > -1) {
@@ -422,9 +423,9 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public inssertModReleaseChangeLogOk(event: Event) {
     event.preventDefault();
-    console.log("inssertModReleaseChangeLogOk. Action: ", this.action);
+    console.log('inssertModReleaseChangeLogOk. Action: ', this.action);
     this.showReleasedVersionWarning = false;
-    if (this.action == "read") {
+    if (this.action === 'read') {
       this.goEdit();
     }
   }
@@ -432,25 +433,22 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   public inssertModReleaseChangeLogCancel(event: Event) {
     event.preventDefault();
     this.showReleasedVersionWarning = false;
-    if (this.action == "new") {
+    if (this.action === 'new') {
       this.goToBack();
     }
 
 
   }
 
-  public copyMessageUnique(val: string,ticket: string){  
+  public copyMessageUnique(val: string, ticket: string) {
 
-    if (ticket == null) 
-      {
-        val =val.replace(/<[^>]*>/g,'');
-      }
-    else
-      {
-        val = ticket + "\n" + val.replace(/<[^>]*>/g,'');
-      }  
+    if (ticket == null) {
+      val = val.replace(/<[^>]*>/g, '');
+    } else {
+      val = ticket + '\n' + val.replace(/<[^>]*>/g, '');
+    }
 
-    let selBox = document.createElement('textarea');
+    const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
@@ -463,5 +461,5 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     document.body.removeChild(selBox);
   }
 
-  
+
 }

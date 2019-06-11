@@ -29,7 +29,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
 import { TagsComponent } from './tags/tags.component';
 import { TagComponent } from './tag/tag.component';
-import {DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -72,7 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CheckboxModule,
     RouterModule.forRoot(ROUTES, {
       useHash: true,
-      onSameUrlNavigation: "reload",
+      onSameUrlNavigation: 'reload',
     }),
     TranslateModule.forRoot({
       loader: {
@@ -82,7 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ConfigService, ActualService, ChangeLogService, MessageService, GoogleTranslateService,DatePipe],
+  providers: [ConfigService, ActualService, ChangeLogService, MessageService, GoogleTranslateService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

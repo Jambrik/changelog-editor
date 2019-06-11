@@ -1,7 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ITag } from '../models/ITag';
-import { ITagInfo } from '../models/ITagInfo';
-import { TagInfo } from '../models/TagInfo';
 import { Tag } from '../models/Tag';
 import { ICodeCaption } from '../models/ICodeCaption';
 
@@ -31,27 +28,29 @@ export class TagComponent implements OnInit {
   }
 
   search(event) {
-    let compactValues: ICodeCaption[] = [];
-    if (event.query == "") {
-      for (let valueCompact of this.tag.tagInfo.valuesCompact) {
-        if (!this.isInTheSelectedValues(valueCompact))
+    const compactValues: ICodeCaption[] = [];
+    if (event.query === '') {
+      for (const valueCompact of this.tag.tagInfo.valuesCompact) {
+        if (!this.isInTheSelectedValues(valueCompact)) {
           compactValues.push(valueCompact);
+        }
       }
     } else {
-      for (let valueCompact of this.tag.tagInfo.valuesCompact) {
-        if ((valueCompact.caption.toUpperCase().indexOf(event.query.toUpperCase()) > -1) && !this.isInTheSelectedValues(valueCompact))
+      for (const valueCompact of this.tag.tagInfo.valuesCompact) {
+        if ((valueCompact.caption.toUpperCase().indexOf(event.query.toUpperCase()) > -1) && !this.isInTheSelectedValues(valueCompact)) {
           compactValues.push(valueCompact);
+        }
       }
-      
+
     }
     this.allCompactValues = compactValues;
 
   }
 
   private isInTheSelectedValues(inValue: ICodeCaption) {
-    let found: boolean = false;
-    for (let value of this.values) {
-      if (value.code == inValue.code) {
+    let found = false;
+    for (const value of this.values) {
+      if (value.code === inValue.code) {
         found = true;
       }
     }

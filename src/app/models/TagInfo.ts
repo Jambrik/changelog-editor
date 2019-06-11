@@ -1,9 +1,9 @@
-import { ITagInfo } from "./ITagInfo";
-import { I18n } from "./I18N";
-import { ICodeCaptions } from "./ICodeCaptions";
-import { TranslateService } from "@ngx-translate/core";
-import { ICodeCaption } from "./ICodeCaption";
-import { ListHelper } from "../helpers/list-helper";
+import { ITagInfo } from './ITagInfo';
+import { I18n } from './I18N';
+import { ICodeCaptions } from './ICodeCaptions';
+import { TranslateService } from '@ngx-translate/core';
+import { ICodeCaption } from './ICodeCaption';
+import { ListHelper } from '../helpers/list-helper';
 
 export class TagInfo implements ITagInfo {
 
@@ -13,7 +13,7 @@ export class TagInfo implements ITagInfo {
         public fix: boolean,
         public moreOptionsAllowed: boolean,
         public mandatory: boolean,
-        public dataType: "string" | "number" | "boolean",
+        public dataType: 'string' | 'number' | 'boolean',
         public setOfValues: ICodeCaptions[],
         public translateService: TranslateService
     ) {
@@ -25,13 +25,13 @@ export class TagInfo implements ITagInfo {
     }
 
     public get valuesCompact(): ICodeCaption[] {
-        let result: ICodeCaption[] = [];
+        const result: ICodeCaption[] = [];
         if (this.setOfValues) {
-            for (let v of this.setOfValues) {
-                let r: ICodeCaption = {
+            for (const v of this.setOfValues) {
+                const r: ICodeCaption = {
                     code: v.code,
                     caption: ListHelper.getCurrentCaption(v.captions, this.translateService.currentLang)
-                }
+                };
 
                 result.push(r);
             }
