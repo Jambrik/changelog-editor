@@ -6,10 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import {
   InputTextModule, ButtonModule, DialogModule, DropdownModule, MessageModule, MessagesModule,
-  CalendarModule, EditorModule, InputSwitchModule, SelectButtonModule, ProgressSpinnerModule, AutoCompleteModule,
+  CalendarModule, InputSwitchModule, SelectButtonModule, ProgressSpinnerModule, AutoCompleteModule,
   TriStateCheckboxModule, CheckboxModule
 } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
+import { EditorModule } from 'primeng/editor';
 import { ChangeListComponent } from './change-list/change-list.component';
 import { CompactComponent } from './compact/compact.component';
 import { AppComponent } from './app.component';
