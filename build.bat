@@ -1,1 +1,1 @@
-ng build --target=production
+npm run build
