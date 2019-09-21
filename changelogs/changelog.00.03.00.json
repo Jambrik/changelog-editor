@@ -37,6 +37,44 @@
 			"crd": "2019-06-11T19:19:13.681Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "429f6380-dca4-11e9-832d-4b87a3f65c60",
+			"type": "bugfix",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2019-09-21T19:15:01.781Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>További verzió frissítés, ami szerencsésen megoldotta az editor megjelenési problémát, ami még a 8.0-ra való átállással jött ki.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<P> For further upgrade, which luckily solved the problem of appearance of the editor, which also came out to the migration to 8.0. </ P>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": true
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 1
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2019-09-21T19:16:06.157Z",
+			"lmu": "RJAMBRIK",
+			"lmd": "2019-09-21T19:16:12.719Z"
 		}
-	]
+	],
+	"releaseDate": "2019-09-20T22:00:00.000Z"
 }
