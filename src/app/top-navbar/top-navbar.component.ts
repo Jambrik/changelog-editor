@@ -1,16 +1,16 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { StringHelpers } from '../helpers/string-helpers';
-import { IProgram } from '../models/IProgram';
-import { ConfigService } from '../services/config.service';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActualService } from '../services/actual.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { StringHelpers } from '../helpers/string-helpers';
+import { IProgram } from '../models/IProgram';
+import { ActualService } from '../services/actual.service';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-top-navbar',

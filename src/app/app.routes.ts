@@ -1,9 +1,9 @@
-import { ConfigEditorComponent } from './config-editor/config-editor.component';
 import { Routes } from '@angular/router';
 import { ChangeListComponent } from './change-list/change-list.component';
-import { ProgramListComponent } from './program-list/program-list.component';
-import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
 import { CompactComponent } from './compact/compact.component';
+import { ConfigEditorComponent } from './config-editor/config-editor.component';
+import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
+import { ProgramListComponent } from './program-list/program-list.component';
 
 
 export const ROUTES: Routes = [

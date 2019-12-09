@@ -19,7 +19,8 @@
         </span>
       </div>
       <div class="col-1">
-        <a href="/" class="btn btn-secondary pull-right" *ngIf="isEditing() && isMoreThenOneLang()" (click)="showTranslatePanel($event)">
+        <a href="/" class="btn btn-secondary pull-right" *ngIf="isEditing() && isMoreThenOneLang()"
+          (click)="showTranslatePanel($event)">
           <span class="fa fa-language"></span>
           <span translate>
             TRANSLATION
@@ -29,7 +30,8 @@
       <div class="col-6">
         <div class="pull-right">
           <span style="font-weight: bold" translate>TYPE</span>:
-          <span [class.text-info]="changeLogItem.type == 'feature'" [class.text-danger]="changeLogItem.type == 'bugfix'">
+          <span [class.text-info]="changeLogItem.type == 'feature'"
+            [class.text-danger]="changeLogItem.type == 'bugfix'">
             <span *ngIf="!isEditing()">
               {{changeLogItem.type | translate}}
             </span>
@@ -38,8 +40,8 @@
         </div>
         <div class="pull-right pr-4">
           <span style="font-weight: bold" translate>IMPORTANCE</span>:
-          <span [class.text-primary]="changeLogItem.importance == 'high'" [class.text-secondary]="changeLogItem.importance == 'low'"
-            *ngIf="!isEditing()">
+          <span [class.text-primary]="changeLogItem.importance == 'high'"
+            [class.text-secondary]="changeLogItem.importance == 'low'" *ngIf="!isEditing()">
             {{changeLogItem.importance | translate}}
           </span>
 
@@ -57,34 +59,39 @@
           <div class="cardcard-primary p-1">
             <blockquote class="card-blockquote">
               <div>
-                <div class="row bortder border border-bottom-0 border-right-0 border-info" >
+                <div class="row bortder border border-bottom-0 border-right-0 border-info">
                   <div class="col-lg-1 col-md-3 col-sm-6 border border-info bg-info text-light rounded">
                     {{description.lang}}
                     <div class="p-2 pl-3 row">
-                     <a class=" pl-0 pr-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)" *ngIf="description.lang=='hu' " style="background-color:black">
-                      <span class="row border-bottom-0 border-right-0 border-info"> 
-                       <div class="col-lg-1" style="color:white" >
-                        <img src="../../assets/masol.png">
+                      <a class=" pl-0 pr-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)"
+                        *ngIf="description.lang=='hu' " style="background-color:black">
+                        <span class="row border-bottom-0 border-right-0 border-info">
+                          <div class="col-lg-1" style="color:white">
+                            <img src="../../assets/masol.png">
 
-                       </div>
-                      </span>
-                     </a>
+                          </div>
+                        </span>
+                      </a>
                     </div>
 
-                     <a class="pl-0 pr-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)" *ngIf="description.lang=='en' " style="background-color:black">
-                      <span class="row border-bottom-0 border-right-0 border-info"> 
-                       <div class="col-lg-1" style="color:white" >
-                          <img src="../../assets/masol.png"> 
-                       </div>
+                    <a class="pl-0 pr-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)"
+                      *ngIf="description.lang=='en' " style="background-color:black">
+                      <span class="row border-bottom-0 border-right-0 border-info">
+                        <div class="col-lg-1" style="color:white">
+                          <img src="../../assets/masol.png">
+                        </div>
                       </span>
-                     </a>
-                 
+                    </a>
+
                   </div>
                   <div class="col-lg-11 col-md-9 col-sm-6">
 
-                    <div *ngIf="!isEditing()" style="width: 100%; min-height: 80px;  " [innerHTML]="description.text | safeHtml"></div>
-                    <p-editor *ngIf="isEditing()&&isEditor" [(ngModel)]="description.text" [style]="{'height':'80px'}"></p-editor>
-                    <textarea *ngIf="isEditing()&&!isEditor" cols="30" rows="10" style="width: 100%; height: 80px" [(ngModel)]="description.text"></textarea>
+                    <div *ngIf="!isEditing()" style="width: 100%; min-height: 80px;  "
+                      [innerHTML]="description.text | safeHtml"></div>
+                    <p-editor *ngIf="isEditing()&&isEditor" [(ngModel)]="description.text" [style]="{'height':'80px'}">
+                    </p-editor>
+                    <textarea *ngIf="isEditing()&&!isEditor" cols="30" rows="10" style="width: 100%; height: 80px"
+                      [(ngModel)]="description.text"></textarea>
 
                   </div>
                 </div>
@@ -93,7 +100,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-sm-6 border border-primary bg bg-light">        
+      <div class="col-lg-4 col-sm-6 border border-primary bg bg-light">
         <div *ngIf="compactTags">
           <app-tags [tags]="compactTags" [editing]="isEditing()"></app-tags>
         </div>

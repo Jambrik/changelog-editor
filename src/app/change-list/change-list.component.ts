@@ -1,23 +1,23 @@
-import { I18n } from '../models/I18N';
-import { StringHelpers } from '../helpers/string-helpers';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ChangeLogService } from '../services/change-log.service';
-import { IVersionChangeLog } from '../models/IVersionChangeLog';
-import { ActualService } from '../services/actual.service';
-import { ConfigService } from '../services/config.service';
-import { IProgram } from '../models/IProgram';
-import { ConfigHelper } from '../helpers/config-helper';
-import { IChangeLogItem } from '../models/IChangeLogItem';
 import { TranslateService } from '@ngx-translate/core';
-import { ILabelValue } from '../models/ILableValue';
 import * as _ from 'lodash';
-import { Constants } from '../constants/constants';
 import { Message } from 'primeng/components/common/message';
+import { Constants } from '../constants/constants';
+import { ConfigHelper } from '../helpers/config-helper';
+import { StringHelpers } from '../helpers/string-helpers';
+import { I18n } from '../models/I18N';
+import { IChangeLogItem } from '../models/IChangeLogItem';
+import { ILabelValue } from '../models/ILableValue';
+import { IProgram } from '../models/IProgram';
+import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
-import { ChangeLogAction } from '../types/types';
 import { TagInfo } from '../models/TagInfo';
-
+import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
+import { ActualService } from '../services/actual.service';
+import { ChangeLogService } from '../services/change-log.service';
+import { ConfigService } from '../services/config.service';
+import { ChangeLogAction } from '../types/types';
 
 @Component({
   selector: 'app-change-list',
@@ -42,8 +42,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public importances: ILabelValue[] = [];
   public selectedImportances: string[] = [];
   msgs: Message[] = [];
+  public isEditor = true;
   private noVersionYetCaption: string;
   public showReleasedVersionWarning = false;
+  public iTagInfosCheckBox: ITagInfosCheckBox[];
+  public iTagInfosCheckBoxAdd: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -51,15 +54,18 @@ export class ChangeListComponent implements OnInit, OnChanges {
     private actualService: ActualService,
     private configService: ConfigService,
     private translateService: TranslateService,
-    private router: Router) { }
+    private router: Router
+
+  ) { }
 
   ngOnInit() {
 
     this.selectedTypes = [Constants.BUGFIX, Constants.FEATURE];
     this.selectedImportances = [Constants.LOW, Constants.NORMAL, Constants.HIGH];
-    console.log('CurrentLang', this.translateService.currentLang);
+
     this.loadTypes();
     this.loadImportance();
+    // this.taginfosBox();
     // Because we load always the same component, the init run only once. So we subscribe the router params changes:
     this.route.params.subscribe(params => {
       const programId = params['program-id'];
@@ -432,7 +438,6 @@ export class ChangeListComponent implements OnInit, OnChanges {
     }
 
   }
-
 
   public saveReleaseDate(event: Event) {
     event.preventDefault();

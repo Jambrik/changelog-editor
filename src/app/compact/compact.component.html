@@ -1,72 +1,83 @@
 <div class="container-fluid">
-    <div class="row">
-        <app-left-navbar [viewMode]="'COMPACT'"></app-left-navbar>
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-            <div class="pb-5">
-                <div class="pl-5 pt-4 pull-right">
-                </div>
+  <div class="row">
+    <app-left-navbar [viewMode]="'COMPACT'"></app-left-navbar>
+    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+      <div class="pb-5">
+        <div class="pl-5 pt-4 pull-right">
+        </div>
 
-            </div>
-            <div class="clearfix">
-                <p-messages [(value)]="msgs"></p-messages>
-            </div>
-            <div class="row">
-              <div class="col-md-3" translate>
-                 STARTING DATE
-                 <p-calendar [(ngModel)]="startDate"  dateFormat="yy.mm.dd" [showIcon]="true"></p-calendar> 
-                 
-              </div>
+      </div>
+      <div class="clearfix">
+        <p-messages [(value)]="msgs"></p-messages>
+      </div>
+      <div class="row m-0" translate>
+        <div class="" translate>
+          STARTING DATE
+          <div class="">
+            <p-calendar [(ngModel)]="startDate" dateFormat="yy.mm.dd" [showIcon]="true"></p-calendar>
+          </div>
+        </div>
 
-               <div class="col-md-3 .col-md-pull-9" translate>
-                  END DATE
-                 <p-calendar [(ngModel)]="vegeDate" dateFormat="yy.mm.dd" [showIcon]="true">></p-calendar>  
-               </div>
+        <div class="col-md-4" translate>
+          END DATE
+          <div class="">
+            <p-calendar [(ngModel)]="vegeDate" dateFormat="yy.mm.dd" [showIcon]="true">></p-calendar>
+          </div>
+        </div>
 
-               <div class="pb-2 pt-4 ml-sm-auto pl-1 col-md-3">
-                <button type="button" class="btn btn-success btn-sm" (click)="buildCompactChangesText($event)" translate>
-                  FILTRATION               
-                </button>
-               </div>
-            </div>
-                <div class="col-md-10 pl-0">
-                        <textarea  cols="118" rows="15" style="color:darkblue; width: 100%; height: 100%" [innerHTML]="text"  
-                        [(ngModel)]="text " > 
-                       </textarea >
-                     
-                       
-                       <a href="/" class="btn btn-danger pull-right" translate> VERSION CHANGES
-                       </a>
-                    <div>
+        <div class="pt-3 ml-sm-5 col-md-3 pull-right">
+          <button type=" button" style="width:  250px; height: 40px;" class="btn btn-info btn-sm pull-right"
+            (click)="buildCompactChangesText($event)" translate>
+            FILTRATION
+          </button>
+        </div>
 
-                    <button class="btn btn-success"  type="button" (click)="copyMessage(this.text)"  translate>
-                      COPY TO CLIPBOARD
-                    </button> 
+      </div>
 
-                  
-                    <a href="#" class="btn btn-primary pull-right" *ngIf="program" href="/" [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
-                        NORMAL VIEW
-                      </a>
-                   
+      <div class="row m-0 row p-1">
+        <span class="p-2" *ngFor="let change of iTagInfosCheckBox">
+          {{change.nev}}:
+          <p-inputSwitch class="p-2 pl-2" name="change.code" (click)="onClick(change.code)"
+            [(ngModel)]="change.selected">
+          </p-inputSwitch>
+        </span>
+      </div>
 
-                    
 
-                    </div>
-                </div>
-            <div>
-            </div>
-        </main>
-    </div>
+      <div class="col-md-10 pl-0">
+        <textarea cols="118" rows="15" style="color:darkblue; width: 100%; height: 100%" [innerHTML]="text"
+          [(ngModel)]="text ">
+                             </textarea>
+
+        <div>
+
+          <a href="#" class="btn btn-success pull-right" *ngIf="program" href="/"
+            [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
+            NORMAL VIEW
+          </a>
+
+          <button class="btn btn-primary pull-right" type="button" (click)="copyMessage(this.text)" translate>
+            COPY TO CLIPBOARD
+          </button>
+          <a href="/" class="btn btn-danger pull-right" translate> VERSION CHANGES
+          </a>
+
+
+          <div class="pb-1" style="color: blue;">Rendezés:</div>
+          <div class="" *ngFor="let change of rendezVezerles">
+            <p-dropdown class="p-2" [options]="rendezKihagy" (onChange)="iRendezCompactValaszt($event.value,change)">
+            </p-dropdown>
+            <button class="row m-0 btn btn-primary" type=" button" (click)='rendezesTorlese($event,change)'>-</button>
+            <button class="row m-0 btn btn-primary" type="button"
+              (click)='rendezesHozzaadas($event.value,change)'>+</button>
+          </div>
+
+
+
+        </div>
+      </div>
+      <div>
+      </div>
+    </main>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-

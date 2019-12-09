@@ -1,0 +1,44 @@
+{
+	"version": "00.04.00",
+	"changes": [
+		{
+			"id": "6e9ab140-1a7c-11ea-9239-df5601933aad",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "201909200082394",
+			"date": "2019-12-09T12:01:57.015Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>A kompakt nézetben kiválasztható, hogy mely metaadatok jelenjenek meg, valamint ezek szerint rendezni is tudunk.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>In the compact view we can choose, whitch is shown, and we can order by the meta data.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"changeloglist"
+					]
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 8
+				}
+			],
+			"cru": "TSZABO",
+			"crd": "2019-12-09T12:07:12.140Z",
+			"lmu": null,
+			"lmd": null
+		}
+	]
+}

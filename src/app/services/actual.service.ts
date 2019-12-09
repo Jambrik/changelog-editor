@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { ILabelValue } from '../models/ILableValue';
 import { IProgram } from '../models/IProgram';
-import { ChangeLogService } from './change-log.service';
+import { IRendezCompact } from '../models/IRendezCompact';
 import { User } from '../models/IUser';
+import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 import { TagInfo } from '../models/TagInfo';
-import { IVersionChangeLog } from '../models/IVersionChangeLog';
+import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
+import { ChangeLogService } from './change-log.service';
 
 @Injectable()
 export class ActualService {
@@ -17,8 +20,11 @@ export class ActualService {
   private _actualFilter: string;
   private _oriChangeList: IVersionChangeLog;
   private _actualChangeList: IVersionChangeLog;
-
-
+  private _iTagInfosCheckBox: ITagInfosCheckBox[];
+  private _actualRendezValaszt: IRendezCompact[];
+  private _actualRendezKihagy: IRendezCompact[];
+  private _actualRendezValasztKiir: ILabelValue[];
+  private _actualRendezKihagyKiir: ILabelValue[];
   constructor(private changeLogService: ChangeLogService) {
 
   }
@@ -95,5 +101,46 @@ export class ActualService {
     this._actualChangeList = value;
   }
 
+
+  get iTagInfosCheckBox(): ITagInfosCheckBox[] {
+    return this._iTagInfosCheckBox;
+  }
+
+  set iTagInfosCheckBox(value: ITagInfosCheckBox[]) {
+    this._iTagInfosCheckBox = value;
+  }
+
+
+  get actualRendezValaszt(): IRendezCompact[] {
+    return this._actualRendezValaszt;
+  }
+
+  set actualRendezValaszt(value: IRendezCompact[]) {
+    this._actualRendezValaszt = value;
+  }
+
+  get actualRendezKihagy(): IRendezCompact[] {
+    return this._actualRendezKihagy;
+  }
+
+  set actualRendezKihagy(value: IRendezCompact[]) {
+    this._actualRendezKihagy = value;
+  }
+
+  get actualRendezValasztKiir(): ILabelValue[] { // ILabelValue
+    return this._actualRendezValasztKiir;
+  }
+
+  set actualRendezValasztKiir(value: ILabelValue[]) {
+    this._actualRendezValasztKiir = value;
+  }
+
+  get actualRendezKihagyKiir(): ILabelValue[] {
+    return this._actualRendezKihagyKiir;
+  }
+
+  set actualRendezKihagyKiir(value: ILabelValue[]) {
+    this._actualRendezKihagyKiir = value;
+  }
 
 }

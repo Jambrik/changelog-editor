@@ -32,6 +32,8 @@ import { NewVersionCreatationComponent } from './new-version-creatation/new-vers
 import { TagsComponent } from './tags/tags.component';
 import { TagComponent } from './tag/tag.component';
 import { DatePipe } from '@angular/common';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -82,7 +84,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    DropDownsModule
   ],
   providers: [ConfigService, ActualService, ChangeLogService, MessageService, GoogleTranslateService, DatePipe],
   bootstrap: [AppComponent]

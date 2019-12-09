@@ -16,36 +16,36 @@ exports.changeLogLoad = function (param) {
 };
 
 
-exports.changeLogVersions = function (param, res) {        
+exports.changeLogVersions = function (param, res) {
     if (param.programId) {
         let config = configDao.mainConfigLoad();
         if (config) {
             let program = configHelpers.getProgramById(config, param.programId);
-            if (program) {                
-                let versions = this.getVersionsByProgram(program);                
+            if (program) {
+                let versions = this.getVersionsByProgram(program);
                 res.json(versions);
             }
         }
-    }    
+    }
 
 };
 
-exports.getTaginfos = function (program){
+exports.getTaginfos = function (program) {
     let path = program.path;
     let fileName = path + "tag-infos.json";
-    if(fs.existsSync(fileName)) {
+    if (fs.existsSync(fileName)) {
         return fs.readJsonSync(fileName);
     }
 }
 
-exports.getVersionsByProgram = function (program) {    
+exports.getVersionsByProgram = function (program) {
     if (program) {
         let path = program.path;
-        var files = fs.readdirSync(path);        
+        var files = fs.readdirSync(path);
         let versions = [];
-        files.forEach(file => {            
-            if(file != "tag-infos.json"){
-                let v = fs.readJsonSync(path + file);            
+        files.forEach(file => {
+            if (file != "tag-infos.json") {
+                let v = fs.readJsonSync(path + file);
                 versions.push({
                     version: v.version,
                     releaseDate: v.releaseDate,
@@ -54,7 +54,7 @@ exports.getVersionsByProgram = function (program) {
             }
 
         });
-        
+
         return versions;
     }
 }
@@ -65,7 +65,7 @@ exports.changeLogSave = function (param) {
         version: param.version
     });
     if (param.item.id == null) {
-        let id = idGenerator.getNext();        
+        let id = idGenerator.getNext();
         param.item.id = id;
         changeLogs.changes.push(param.item);
     } else {
@@ -76,7 +76,7 @@ exports.changeLogSave = function (param) {
                 item.type = param.item.type;
                 item.importance = param.item.importance;
                 item.descriptions = param.item.descriptions;
-                item.tags = param.item.tags;                                
+                item.tags = param.item.tags;
                 item.lmu = param.item.lmu;
                 item.lmd = param.item.lmd;
             }
@@ -109,21 +109,22 @@ exports.changeLogRelease = function (param) {
     let changeLogs = this.changeLogLoad({
         programId: param.programId,
         version: param.version
-    });    
-    changeLogs.releaseDate = param.releaseDate;    
+    });
+    changeLogs.releaseDate = param.releaseDate;
     this.changeLogFileSave(param.programId, param.version, changeLogs);
 }
 
 exports.changeLogFileSave = function (programId, version, changeLogs) {
     let config = configDao.mainConfigLoad();
-    let program = configHelpers.getProgramById(config, programId);    
-    fs.writeJsonSync(program.path + "/" + "changelog." + version + ".json", changeLogs, {spaces: "\t"});
+    let program = configHelpers.getProgramById(config, programId);
+    fs.writeJsonSync(program.path + "/" + "changelog." + version + ".json", changeLogs, { spaces: "\t" });
 }
 
 exports.newVersion = function (programId, version) {
     let changeLogs = {
         version: version,
-        changes: []};
+        changes: []
+    };
     this.changeLogFileSave(programId, version, changeLogs);
 }
 

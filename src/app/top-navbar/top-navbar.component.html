@@ -1,19 +1,20 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <a class="navbar-brand" href="#" translate>CHANGE_LOGS</a>
-  <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
-    aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false" translate>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" translate>
           PROGRAM
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a *ngFor="let program of programs" class="dropdown-item" href="#" [routerLink]="['change-list', program.id, getLastVersionNumber(program), 'read', 'none']"
+          <a *ngFor="let program of programs" class="dropdown-item" href="#"
+            [routerLink]="['change-list', program.id, getLastVersionNumber(program), 'read', 'none']"
             [queryParams]="{lang: getActualLang()}">
             {{program.name}}
           </a>
@@ -21,7 +22,8 @@
       </li>
       <li class="nav-item">
 
-        <a class="nav-link" href="/" [routerLink]="['/config-editor']" [queryParams]="{lang: getActualLang()}" translate>SETTINGS</a>
+        <a class="nav-link" href="/" [routerLink]="['/config-editor']" [queryParams]="{lang: getActualLang()}"
+          translate>SETTINGS</a>
       </li>
       <li class="nav-item" *ngIf="getUserCode()">
         <div class="navbar-text pl-5" translate> USER</div>
@@ -30,8 +32,9 @@
       </li>
     </ul>
     <form class="form-inline mt-2 mt-md-0" (ngSubmit)="apply($event)">
-      <input class="form-control mr-sm-2" type="text" placeholder="{{'SEARCH' | translate}}" aria-label="Search" (keyup)="searchTerm$.next($event.target.value)"
-        name="filter" [disabled]="action!='read'" [value] = "filterText" />
+      <input class="form-control mr-sm-2" type="text" placeholder="{{'SEARCH' | translate}}" aria-label="Search"
+        (keyup)="searchTerm$.next($event.target.value)" name="filter" [disabled]="action!='read'"
+        [value]="filterText" />
     </form>
 
     <a class="nav-link" [class.border]="isSelected('hu')" href="/" (click)="changeLang($event, 'hu')">
