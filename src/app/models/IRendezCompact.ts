@@ -3,4 +3,5 @@ export interface IRendezCompact {
     gysor: number;
     id: number;
     property: string;
+    rendezes: boolean;
 }

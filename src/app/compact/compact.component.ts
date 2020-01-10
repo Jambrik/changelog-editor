@@ -24,6 +24,8 @@ import { ConfigService } from '../services/config.service';
   templateUrl: './compact.component.html',
   styleUrls: ['./compact.component.scss']
 })
+
+
 export class CompactComponent implements OnInit, OnChanges {
 
   @Input() tagInfosCheckBox: ITagInfosCheckBox;
@@ -55,6 +57,13 @@ export class CompactComponent implements OnInit, OnChanges {
   public w = false;
   public alr = false;
   public men = false;
+  public elsoRendez: any = false;
+  public masodikRendez = false;
+  public harmadikRendez = false;
+  public negyedikRendez = false;
+  public otodikRendez = false;
+  public hatodikRendez = false;
+  public hetedikRendez = false;
   public pageCode: string;
   public techCode: string;
   public workCode: string;
@@ -77,12 +86,13 @@ export class CompactComponent implements OnInit, OnChanges {
   public iRendezCompactKiValaszt: IRendezCompact[] = [];
   public sortChanges: IChangeLogItem[];
   public sorba: IRendezCompact[] = [];
-  public elsoRendezes: any = '';
-  public masodikRendezes: any = '';
-  public harmadikRendezes: any = '';
-  public negyedikRendezes: any = '';
-  public otodikRendezes: any = '';
-  public hatodikRendez: any = '';
+  public elsoProperty: any = '';
+  public masodikProperty: any = '';
+  public harmadikProperty: any = '';
+  public negyedikProperty: any = '';
+  public otodikProperty: any = '';
+  public hatodikProperty: any = '';
+  public hetedikProperty: any = '';
   public rendezKivalaszt: ILabelValue[] = [];
   public rendezKihagy: ILabelValue[] = [];
   public rendezKihagyAdd: ILabelValue[] = [];
@@ -91,6 +101,23 @@ export class CompactComponent implements OnInit, OnChanges {
   public megNincsPluszSor = true;
   public kiValasztmegmarad: IRendezCompact[] = [];
   public elementNev: string;
+  public csokkenNovekvo = false;
+  public csokkenNovekvoElso = true;
+  public csokkenNovekvoMasodik = true;
+  public csokkenNovekvoHarmadik = true;
+  public csokkenNovekvoNegyedik = true;
+  public csokkenNovekvoOtodik = true;
+  public csokkenNovekvoHatodik = true;
+  public csokkenNovekvoHetedik = true;
+  public tableInfo: IChangeLogItem[];
+  public tableElso = '';
+  public tableMasodik = '';
+  public tableAdatok: any[] = [];
+  public tableAdatokRendezes: IRendezCompact[];
+  public tableAdatokRendezesNelkul: IRendezCompact[];
+  public torlesHozzadasVezerles = 0;
+
+
 
   constructor(
     private actualService: ActualService,
@@ -181,6 +208,21 @@ export class CompactComponent implements OnInit, OnChanges {
         });
     });
 
+    this.actualService.actualRendezValaszt = [];
+    if (this.actualService.actualRendezValaszt) {
+      this.actualService.actualRendezValaszt = [];
+
+      const element = {
+        value: 'Dátum',
+        gysor: 0,
+        id: 0,
+        property: 'date',
+        rendezes: true
+      };
+
+      this.actualService.actualRendezValaszt.push(element);
+      this.iRendezCompactKiValaszt.push(element);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -221,6 +263,9 @@ export class CompactComponent implements OnInit, OnChanges {
     let szoveg_ossze = '';
     let elso_date = '';
     let utolso_date = '';
+    let tableAdatok: any = '';
+    this.tableAdatok = [];
+    const importance = '';
 
     for (const item of this.actualService.actualChangeList.changes) {
       for (const description of item.descriptions) {
@@ -346,7 +391,7 @@ export class CompactComponent implements OnInit, OnChanges {
                     }
                   }
 
-                  this.pageSzoveg = c.text + ': ' + code.values + '\n';
+                  this.pageSzoveg = code.values + '\n';
                 }
                 if (code.code === change.code && description.lang === c.lang && code.code === 'TECHNICAL_CHANGE') {
                   if (code.value === true) {
@@ -354,11 +399,11 @@ export class CompactComponent implements OnInit, OnChanges {
                   } else if (code.value === false) {
                     code.value = 'Nincs';
                   }
-                  this.techSzoveg = c.text + ': ' + code.value + '\n';
+                  this.techSzoveg = code.value + '\n';
                 }
 
                 if (code.code === change.code && description.lang === c.lang && code.code === 'WORK_HOURS') {
-                  this.workSzoveg = c.text + ': ' + code.value + '\n';
+                  this.workSzoveg = code.value + '\n';
                 }
 
                 if (code.code === change.code && description.lang === c.lang && code.code === 'WS') {
@@ -368,7 +413,7 @@ export class CompactComponent implements OnInit, OnChanges {
                       code.values = [change.setOfValues[index].captions[0].text];
                     }
                   }
-                  this.wsSzoveg = c.text + ': ' + code.values + '\n';
+                  this.wsSzoveg = code.values + '\n';
                 }
 
                 if (code.code === change.code && description.lang === c.lang && code.code === 'ALRKOD') {
@@ -376,15 +421,10 @@ export class CompactComponent implements OnInit, OnChanges {
                     const element = change.setOfValues[index].code;
 
                     if (code.values.toString() === element.toString()) {
-                      console.log(code.values.toString());
-                      console.log(element);
-                      console.log(change.setOfValues[index].captions[0].text);
                       code.values = [change.setOfValues[index].captions[0].text];
                     }
                   }
-                  console.log(c.text);
-                  console.log(code.value);
-                  this.alrSzoveg = c.text + ': ' + code.value + '\n';
+                  this.alrSzoveg = code.values + '\n';
                 }
 
                 if (code.code === change.code && description.lang === c.lang && code.code === 'MENUKOD') {
@@ -396,7 +436,7 @@ export class CompactComponent implements OnInit, OnChanges {
                       }
                     }
                   }
-                  this.menuSzoveg = c.text + ': ' + code.value + '\n';
+                  this.menuSzoveg = code.value + '\n';
                 }
 
 
@@ -460,11 +500,29 @@ export class CompactComponent implements OnInit, OnChanges {
 
               });
 
+
+            this.importances = [];
+            this.translateService.get([item.importance])
+              .subscribe((t) => {
+                if (t.low) {
+                  this.importances.push({ value: Constants.LOW, label: t.low });
+                }
+
+                if (t.normal) {
+                  this.importances.push({ value: Constants.NORMAL, label: t.normal });
+                }
+
+                if (t.high) {
+                  this.importances.push({ value: Constants.HIGH, label: t.high });
+                }
+              });
+
+
             if (item.ticketNumber == null) {
               item.ticketNumber = '';
-              szoveg_ossze = '(' + szoveg + ')';
+              szoveg_ossze = szoveg;
             } else {
-              szoveg_ossze = ' (' + szoveg + ')';
+              szoveg_ossze = szoveg;
             }
 
             if (item.ticketNumber !== '') {
@@ -483,6 +541,24 @@ export class CompactComponent implements OnInit, OnChanges {
                 + szoveg_ossze + '\n' + description.text + '\n' + '\r';
             }
 
+
+            tableAdatok = {
+              date: elso_date,
+              ticketNumber: item.ticketNumber.replace(/<[^>]*>/g, ''),
+              page: this.pageSzoveg.replace(/<[^>]*>/g, ''),
+              technical_change: this.techSzoveg.replace(/<[^>]*>/g, ''),
+              work_hours: this.workSzoveg.replace(/<[^>]*>/g, ''),
+              ws: this.wsSzoveg.replace(/<[^>]*>/g, ''),
+              alrkod: this.alrSzoveg.replace(/<[^>]*>/g, ''),
+              type: szoveg_ossze.replace(/<[^>]*>/g, ''),
+              menukod: this.menuSzoveg.replace(/<[^>]*>/g, ''),
+              text: description.text.replace(/<[^>]*>/g, ''),
+              importance: this.importances[0].label.replace(/<[^>]*>/g, ''),
+
+            };
+            this.tableAdatok.push(tableAdatok);
+
+
             utolso_date = this.datePipe.transform(item.crd, 'yyyy.MM.dd');
           }
         }
@@ -493,7 +569,8 @@ export class CompactComponent implements OnInit, OnChanges {
       }
     }
 
-    this.text = text.replace(/<[^>]*>/g, '');
+    this.text = text;
+
   }
 
   public getLastVersion(program: IProgram): string {
@@ -581,6 +658,7 @@ export class CompactComponent implements OnInit, OnChanges {
     this.rendezConst = [];
     this.rendezConst = ['Dátum', 'Típus', 'Fontosság', 'Jegyszám'];
     this.rendezConstproperty = ['date', 'type', 'importance', 'ticketNumber'];
+
     for (let index = 0; index < this.actualService.iTagInfosCheckBox.length; index++) {
       const element = this.actualService.iTagInfosCheckBox[index].code;
 
@@ -618,6 +696,7 @@ export class CompactComponent implements OnInit, OnChanges {
         gysor: i,
         id: i,
         property: this.rendezConstproperty[i],
+        rendezes: true
       };
 
       const elementKiir = {
@@ -629,11 +708,10 @@ export class CompactComponent implements OnInit, OnChanges {
     }
     this.actualService.actualRendezKihagy = this.iRendezCompactKihagy;
     this.actualService.actualRendezKihagyKiir = this.rendezKihagy;
-    // }
   }
 
   public iRendezCompactValaszt(value: string, sorszam: number) {
-    if (!this.iRendezCompactKiValaszt[0]) { // Egynelőre nincs töltve az a változó amit tovább viszek, akkor feltöltjük
+    if (!this.actualService.actualRendezValaszt) { // Egynelőre nincs töltve az a változó amit tovább viszek, akkor feltöltjük
       console.log('Egyenlőre még semmi');
       for (const item of this.actualService.actualRendezKihagy) {
         if (item.property === value) {
@@ -641,13 +719,15 @@ export class CompactComponent implements OnInit, OnChanges {
             value: item.value,
             gysor: sorszam,
             id: sorszam,
-            property: item.property
+            property: item.property,
+            rendezes: item.rendezes
           };
           const elementKiir = {
             value: item.property,
             label: item.value,
           };
           this.iRendezCompactKiValaszt.push(element);
+          this.actualService.actualRendezValaszt.push(element);
           this.rendezKivalaszt.push(elementKiir);
         }
 
@@ -656,7 +736,7 @@ export class CompactComponent implements OnInit, OnChanges {
     } else {// Már töltve van az a változó amit tovább viszek, akkor updateljük a megfelelő sort
       console.log('Már töltve van');
       this.megNincsPluszSor = true;
-      for (const kiValaszt of this.iRendezCompactKiValaszt) { // update
+      for (const kiValaszt of this.actualService.actualRendezValaszt) { // update
         if (kiValaszt.gysor === sorszam) {
           console.log('Ez már hozzá van rendelve.');
 
@@ -668,8 +748,6 @@ export class CompactComponent implements OnInit, OnChanges {
               this.megNincsPluszSor = false;
             }
           }
-          console.log(this.iRendezCompactKiValaszt);
-
         }
       }
 
@@ -680,13 +758,15 @@ export class CompactComponent implements OnInit, OnChanges {
               value: item.value,
               gysor: sorszam,
               id: sorszam,
-              property: item.property
+              property: item.property,
+              rendezes: item.rendezes
             };
             const elementKiir = {
               value: item.property,
               label: item.value,
             };
             this.iRendezCompactKiValaszt.push(element);
+            this.actualService.actualRendezValaszt.push(element);
             this.rendezKivalaszt.push(elementKiir);
           }
 
@@ -696,8 +776,10 @@ export class CompactComponent implements OnInit, OnChanges {
     }
 
     console.log('Így néz ki az eredmény:');
-    console.log(this.iRendezCompactKiValaszt);
-    this.actualService.actualRendezValaszt = this.iRendezCompactKiValaszt;
+    console.log(this.actualService.actualRendezValaszt);
+    this.buildCompactChangesText(null);
+    this.sorrendNelkulOszlopok(this.actualService.actualRendezValaszt, this.actualService.actualRendezKihagy);
+    // this.actualService.actualRendezValaszt = this.iRendezCompactKiValaszt; // ezt kell töltenem normálisan this.iRendezCompactKiValaszt
   }
 
 
@@ -714,7 +796,8 @@ export class CompactComponent implements OnInit, OnChanges {
           value: item.value,
           gysor: item.gysor,
           id: item.id,
-          property: item.property
+          property: item.property,
+          rendezes: item.rendezes
         };
         const elementKiir = {
           value: item.property,
@@ -729,7 +812,8 @@ export class CompactComponent implements OnInit, OnChanges {
           value: item.value,
           gysor: item.gysor,
           id: item.id,
-          property: item.property
+          property: item.property,
+          rendezes: item.rendezes
         };
         const elementKiir = {
           value: item.property,
@@ -749,6 +833,7 @@ export class CompactComponent implements OnInit, OnChanges {
     if (this.rendezVezerles.length <= this.rendezConst.length - 1) {
       this.rendezVezerles.push(this.rendezVezerles.length);
     }
+    this.torlesHozzadasVezerles = this.rendezVezerles.length - 1;
   }
 
 
@@ -764,28 +849,38 @@ export class CompactComponent implements OnInit, OnChanges {
       }
     }
 
-
     if (this.rendezVezerles.length > 1) {
-      this.rendezVezerles = [];
-      this.kiValasztmegmarad = [];
+      const maxErtek = this.rendezVezerles.length - 1;
+      if (maxErtek === sorszam) {  // csak akkor lehet törölni ha az az utolsó
+        this.rendezVezerles = [];
+        this.kiValasztmegmarad = [];
 
-      console.log('Ezen megyünk át: ', this.iRendezCompactKiValaszt);
-      console.log('Ezt a sorszámot töröljük: ', sorszam);
-      for (let i = 0; i < this.iRendezCompactKiValaszt.length; i++) {
-        if (this.iRendezCompactKiValaszt[i].gysor !== sorszam) {
-          const element = {
-            value: this.iRendezCompactKiValaszt[i].value,
-            gysor: this.iRendezCompactKiValaszt[i].gysor,
-            id: this.iRendezCompactKiValaszt[i].id,
-            property: this.iRendezCompactKiValaszt[i].property,
-          };
-          this.kiValasztmegmarad.push(element);
-          this.rendezVezerles.push(i);
+        for (let i = 0; i < this.actualService.actualRendezValaszt.length; i++) {
+          if (this.actualService.actualRendezValaszt[i].gysor !== sorszam) {
+            const element = {
+              value: this.actualService.actualRendezValaszt[i].value,
+              gysor: this.actualService.actualRendezValaszt[i].gysor,
+              id: this.actualService.actualRendezValaszt[i].id,
+              property: this.actualService.actualRendezValaszt[i].property,
+              rendezes: this.actualService.actualRendezValaszt[i].rendezes,
+            };
+            this.kiValasztmegmarad.push(element);
+            this.rendezVezerles.push(i);
 
+          }
         }
+
+        this.actualService.actualRendezValaszt = [];
+        this.actualService.actualRendezValaszt = this.kiValasztmegmarad;
+        this.rendezVezerles = [];
+        for (let i = 0; i < this.actualService.actualRendezValaszt.length; i++) {
+          this.actualService.actualRendezValaszt[i].gysor = i;
+          this.actualService.actualRendezValaszt[i].id = i;
+          this.rendezVezerles[i] = i;
+        }
+        this.torlesHozzadasVezerles = this.rendezVezerles.length - 1;
+
       }
-      this.iRendezCompactKiValaszt = this.kiValasztmegmarad;
-      this.actualService.actualRendezValaszt = this.kiValasztmegmarad;
     }
   }
 
@@ -795,7 +890,7 @@ export class CompactComponent implements OnInit, OnChanges {
   public compactRendezes() {
     console.log('Rendezés!');
     this.sortChanges = this.actualService.actualChangeList.changes;
-
+    console.log(this.actualService.actualRendezValaszt);
     if (this.actualService.actualRendezValaszt === undefined) {
       this.actualService.actualRendezValaszt = [];
     }
@@ -810,6 +905,7 @@ export class CompactComponent implements OnInit, OnChanges {
         }
       });
     } else {
+      console.log('Itt kell lennünk');
       this.sorba = [];
       for (let index = 0; index < this.actualService.actualRendezValaszt.length; index++) {
         const element = {
@@ -817,6 +913,7 @@ export class CompactComponent implements OnInit, OnChanges {
           gysor: index + 1,
           value: this.actualService.actualRendezValaszt[index].value,
           property: this.actualService.actualRendezValaszt[index].property,
+          rendezes: this.actualService.actualRendezValaszt[index].rendezes
         };
         this.sorba.push(element);
       }
@@ -825,130 +922,330 @@ export class CompactComponent implements OnInit, OnChanges {
 
       for (let index = 0; index < this.actualService.actualRendezValaszt.length; index++) {
         if (this.actualService.actualRendezValaszt[0] !== undefined) {
-          this.elsoRendezes = this.actualService.actualRendezValaszt[0].property;
+          this.elsoProperty = this.actualService.actualRendezValaszt[0].property;
+          this.elsoRendez = this.actualService.actualRendezValaszt[0].rendezes;
         }
         if (this.actualService.actualRendezValaszt[1] !== undefined) {
-          this.masodikRendezes = this.actualService.actualRendezValaszt[1].property;
+          this.masodikProperty = this.actualService.actualRendezValaszt[1].property;
+          this.masodikRendez = this.actualService.actualRendezValaszt[1].rendezes;
         }
         if (this.actualService.actualRendezValaszt[2] !== undefined) {
-          this.harmadikRendezes = this.actualService.actualRendezValaszt[2].property;
+          this.harmadikProperty = this.actualService.actualRendezValaszt[2].property;
+          this.harmadikRendez = this.actualService.actualRendezValaszt[2].rendezes;
         }
         if (this.actualService.actualRendezValaszt[3] !== undefined) {
-          this.negyedikRendezes = this.actualService.actualRendezValaszt[3].property;
+          this.negyedikProperty = this.actualService.actualRendezValaszt[3].property;
+          this.negyedikRendez = this.actualService.actualRendezValaszt[3].rendezes;
         }
         if (this.actualService.actualRendezValaszt[4] !== undefined) {
-          this.otodikRendezes = this.actualService.actualRendezValaszt[4].property;
+          this.otodikProperty = this.actualService.actualRendezValaszt[4].property;
+          this.otodikRendez = this.actualService.actualRendezValaszt[4].rendezes;
         }
         if (this.actualService.actualRendezValaszt[5] !== undefined) {
-          this.hatodikRendez = this.actualService.actualRendezValaszt[5].property;
+          this.hatodikProperty = this.actualService.actualRendezValaszt[5].property;
+          this.hatodikRendez = this.actualService.actualRendezValaszt[5].rendezes;
+        }
+        if (this.actualService.actualRendezValaszt[6] !== undefined) {
+          this.hetedikProperty = this.actualService.actualRendezValaszt[5].property;
+          this.hetedikRendez = this.actualService.actualRendezValaszt[5].rendezes;
         }
       }
 
-      const elsoProperty: any = this.elsoRendezes;
-      const masodikProperty: any = this.masodikRendezes;
-      const harmadikProperty: any = this.harmadikRendezes;
-      const negyedikProperty: any = this.negyedikRendezes;
-      const otodikProperty: any = this.otodikRendezes;
-      const hatodikProperty: any = this.hatodikRendez;
+      const elsoProperty: any = this.elsoProperty;
+      const masodikProperty: any = this.masodikProperty;
+      const harmadikProperty: any = this.harmadikProperty;
+      const negyedikProperty: any = this.negyedikProperty;
+      const otodikProperty: any = this.otodikProperty;
+      const hatodikProperty: any = this.hatodikProperty;
+      const hetedikProperty: any = this.hetedikProperty;
+
+      // csak így lehet átvinni az értékét a sort-ba
+      const elsoRendez: boolean = this.elsoRendez;
+      const masodikRendez: boolean = this.masodikRendez;
+      const harmadikRendez: boolean = this.harmadikRendez;
+      const negyedikRendez: boolean = this.negyedikRendez;
+      const otodikRendez: boolean = this.otodikRendez;
+      const hatodikRendez: boolean = this.hatodikRendez;
+      const hetedikRendez: boolean = this.hetedikRendez;
 
       console.log('rendezés nélkül: ', this.sortChanges);
       this.sortChanges.sort(function (a, b) {
-        if (a[elsoProperty] > b[elsoProperty]) { return 1; }
-        if (a[elsoProperty] < b[elsoProperty]) { return -1; }
+        if (!elsoRendez) {
+          if (a[elsoProperty] < b[elsoProperty]) { return 1; }
+          if (a[elsoProperty] > b[elsoProperty]) { return -1; }
+        } else {
+          if (b[elsoProperty] < a[elsoProperty]) { return 1; }
+          if (b[elsoProperty] > a[elsoProperty]) { return -1; }
+        }
 
         for (let index = 0; index < a.tags.length; index++) {
           const element = a.tags[index];
           if (element.code.toLocaleLowerCase() === elsoProperty) {
-            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws') {
-              if (a.tags[index].values[0] < b.tags[index].values[0]) { return -1; }
-              if (a.tags[index].values[0] > b.tags[index].values[0]) { return 1; }
+            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws'
+              || element.code.toLocaleLowerCase() === 'alrkod') {
+              if (!elsoRendez) {
+                if (a.tags[index].values[0] < b.tags[index].values[0]) { return 1; }
+                if (a.tags[index].values[0] > b.tags[index].values[0]) { return -1; }
+              } else {
+                if (b.tags[index].values[0] < a.tags[index].values[0]) { return 1; }
+                if (b.tags[index].values[0] > a.tags[index].values[0]) { return -1; }
+              }
             } else if (element.code.toLocaleLowerCase() === 'work_hours' || element.code.toLocaleLowerCase() === 'technical_change'
+              || element.code.toLocaleLowerCase() === 'menukod'
             ) {
-              if (a.tags[index].value < b.tags[index].value) { return -1; }
-              if (a.tags[index].value > b.tags[index].value) { return 1; }
+              if (!elsoRendez) {
+                if (a.tags[index].value < b.tags[index].value) { return 1; }
+                if (a.tags[index].value > b.tags[index].value) { return -1; }
+              } else {
+                if (b.tags[index].value < a.tags[index].value) { return 1; }
+                if (b.tags[index].value > a.tags[index].value) { return -1; }
+              }
             }
           }
         }
 
-        if (a[masodikProperty] > b[masodikProperty]) { return 1; }
-        if (a[masodikProperty] < b[masodikProperty]) { return -1; }
+
+        if (!masodikRendez) {
+          if (a[masodikProperty] > b[masodikProperty]) { return -1; }
+          if (a[masodikProperty] < b[masodikProperty]) { return 1; }
+        } else {
+          if (b[masodikProperty] < a[masodikProperty]) { return 1; }
+          if (b[masodikProperty] > a[masodikProperty]) { return -1; }
+        }
+
         for (let index = 0; index < a.tags.length; index++) {
           const element = a.tags[index];
           if (element.code.toLocaleLowerCase() === masodikProperty) {
-            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws') {
-              if (a.tags[index].values[0] < b.tags[index].values[0]) { return -1; }
-              if (a.tags[index].values[0] > b.tags[index].values[0]) { return 1; }
+            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws'
+              || element.code.toLocaleLowerCase() === 'alrkod') {
+              if (!masodikRendez) {
+                if (a.tags[index].values[0] < b.tags[index].values[0]) { return 1; }
+                if (a.tags[index].values[0] > b.tags[index].values[0]) { return -1; }
+              } else {
+                if (b.tags[index].values[0] < a.tags[index].values[0]) { return 1; }
+                if (b.tags[index].values[0] > a.tags[index].values[0]) { return -1; }
+              }
             } else if (element.code.toLocaleLowerCase() === 'work_hours' || element.code.toLocaleLowerCase() === 'technical_change'
+              || element.code.toLocaleLowerCase() === 'menukod'
             ) {
-              if (a.tags[index].value < b.tags[index].value) { return -1; }
-              if (a.tags[index].value > b.tags[index].value) { return 1; }
+              if (!masodikRendez) {
+                if (a.tags[index].value < b.tags[index].value) { return 1; }
+                if (a.tags[index].value > b.tags[index].value) { return -1; }
+              } else {
+                if (b.tags[index].value < a.tags[index].value) { return 1; }
+                if (b.tags[index].value > a.tags[index].value) { return -1; }
+              }
             }
           }
         }
-        if (a[harmadikProperty] > b[harmadikProperty]) { return 1; }
-        if (a[harmadikProperty] < b[harmadikProperty]) { return -1; }
+
+
+        if (!harmadikRendez) {
+          if (a[harmadikProperty] > b[harmadikProperty]) { return -1; }
+          if (a[harmadikProperty] < b[harmadikProperty]) { return 1; }
+        } else {
+          if (b[harmadikProperty] < a[harmadikProperty]) { return 1; }
+          if (b[harmadikProperty] > a[harmadikProperty]) { return -1; }
+        }
+
         for (let index = 0; index < a.tags.length; index++) {
           const element = a.tags[index];
           if (element.code.toLocaleLowerCase() === harmadikProperty) {
-            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws') {
-              if (a.tags[index].values[0] < b.tags[index].values[0]) { return -1; }
-              if (a.tags[index].values[0] > b.tags[index].values[0]) { return 1; }
+            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws'
+              || element.code.toLocaleLowerCase() === 'alrkod') {
+              if (!harmadikRendez) {
+                if (a.tags[index].values[0] < b.tags[index].values[0]) { return 1; }
+                if (a.tags[index].values[0] > b.tags[index].values[0]) { return -1; }
+              } else {
+                if (b.tags[index].values[0] < a.tags[index].values[0]) { return 1; }
+                if (b.tags[index].values[0] > a.tags[index].values[0]) { return -1; }
+              }
             } else if (element.code.toLocaleLowerCase() === 'work_hours' || element.code.toLocaleLowerCase() === 'technical_change'
+              || element.code.toLocaleLowerCase() === 'menukod'
             ) {
-              if (a.tags[index].value < b.tags[index].value) { return -1; }
-              if (a.tags[index].value > b.tags[index].value) { return 1; }
+              if (!harmadikRendez) {
+                if (a.tags[index].value < b.tags[index].value) { return 1; }
+                if (a.tags[index].value > b.tags[index].value) { return -1; }
+              } else {
+                if (b.tags[index].value < a.tags[index].value) { return 1; }
+                if (b.tags[index].value > a.tags[index].value) { return -1; }
+              }
             }
           }
         }
-        if (a[negyedikProperty] > b[negyedikProperty]) { return 1; }
-        if (a[negyedikProperty] < b[negyedikProperty]) { return -1; }
+
+
+        if (!negyedikRendez) {
+          if (a[negyedikProperty] > b[negyedikProperty]) { return -1; }
+          if (a[negyedikProperty] < b[negyedikProperty]) { return 1; }
+        } else {
+          if (b[negyedikProperty] < a[negyedikProperty]) { return 1; }
+          if (b[negyedikProperty] > a[negyedikProperty]) { return -1; }
+        }
+
         for (let index = 0; index < a.tags.length; index++) {
           const element = a.tags[index];
           if (element.code.toLocaleLowerCase() === negyedikProperty) {
-            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws') {
-              if (a.tags[index].values[0] < b.tags[index].values[0]) { return -1; }
-              if (a.tags[index].values[0] > b.tags[index].values[0]) { return 1; }
+            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws'
+              || element.code.toLocaleLowerCase() === 'alrkod') {
+              if (!negyedikRendez) {
+                if (a.tags[index].values[0] < b.tags[index].values[0]) { return 1; }
+                if (a.tags[index].values[0] > b.tags[index].values[0]) { return -1; }
+              } else {
+                if (b.tags[index].values[0] < a.tags[index].values[0]) { return 1; }
+                if (b.tags[index].values[0] > a.tags[index].values[0]) { return -1; }
+              }
             } else if (element.code.toLocaleLowerCase() === 'work_hours' || element.code.toLocaleLowerCase() === 'technical_change'
+              || element.code.toLocaleLowerCase() === 'menukod'
             ) {
-              if (a.tags[index].value < b.tags[index].value) { return -1; }
-              if (a.tags[index].value > b.tags[index].value) { return 1; }
+              if (!negyedikRendez) {
+                if (a.tags[index].value < b.tags[index].value) { return 1; }
+                if (a.tags[index].value > b.tags[index].value) { return -1; }
+              } else {
+                if (b.tags[index].value < a.tags[index].value) { return 1; }
+                if (b.tags[index].value > a.tags[index].value) { return -1; }
+              }
             }
           }
         }
-        if (a[otodikProperty] > b[otodikProperty]) { return 1; }
-        if (a[otodikProperty] < b[otodikProperty]) { return -1; }
+
+
+        if (!otodikRendez) {
+          if (a[otodikProperty] > b[otodikProperty]) { return -1; }
+          if (a[otodikProperty] < b[otodikProperty]) { return 1; }
+        } else {
+          if (b[otodikProperty] < a[otodikProperty]) { return 1; }
+          if (b[otodikProperty] > a[otodikProperty]) { return -1; }
+        }
+
         for (let index = 0; index < a.tags.length; index++) {
           const element = a.tags[index];
           if (element.code.toLocaleLowerCase() === otodikProperty) {
-            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws') {
-              if (a.tags[index].values[0] < b.tags[index].values[0]) { return -1; }
-              if (a.tags[index].values[0] > b.tags[index].values[0]) { return 1; }
+            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws'
+              || element.code.toLocaleLowerCase() === 'alrkod') {
+              if (!otodikRendez) {
+                if (a.tags[index].values[0] < b.tags[index].values[0]) { return 1; }
+                if (a.tags[index].values[0] > b.tags[index].values[0]) { return -1; }
+              } else {
+                if (b.tags[index].values[0] < a.tags[index].values[0]) { return 1; }
+                if (b.tags[index].values[0] > a.tags[index].values[0]) { return -1; }
+              }
             } else if (element.code.toLocaleLowerCase() === 'work_hours' || element.code.toLocaleLowerCase() === 'technical_change'
+              || element.code.toLocaleLowerCase() === 'menukod'
             ) {
-              if (a.tags[index].value < b.tags[index].value) { return -1; }
-              if (a.tags[index].value > b.tags[index].value) { return 1; }
+              if (!otodikRendez) {
+                if (a.tags[index].value < b.tags[index].value) { return 1; }
+                if (a.tags[index].value > b.tags[index].value) { return -1; }
+              } else {
+                if (b.tags[index].value < a.tags[index].value) { return 1; }
+                if (b.tags[index].value > a.tags[index].value) { return -1; }
+              }
             }
           }
         }
-        if (a[hatodikProperty] > b[hatodikProperty]) { return 1; }
-        if (a[hatodikProperty] < b[hatodikProperty]) { return -1; }
+
+
+        if (!hatodikRendez) {
+          if (a[hatodikProperty] > b[hatodikProperty]) { return -1; }
+          if (a[hatodikProperty] < b[hatodikProperty]) { return 1; }
+        } else {
+          if (b[hatodikProperty] < a[hatodikProperty]) { return 1; }
+          if (b[hatodikProperty] > a[hatodikProperty]) { return -1; }
+        }
+
         for (let index = 0; index < a.tags.length; index++) {
           const element = a.tags[index];
           if (element.code.toLocaleLowerCase() === hatodikProperty) {
-            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws') {
-              if (a.tags[index].values[0] < b.tags[index].values[0]) { return -1; }
-              if (a.tags[index].values[0] > b.tags[index].values[0]) { return 1; }
+            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws'
+              || element.code.toLocaleLowerCase() === 'alrkod') {
+              if (!hatodikRendez) {
+                if (a.tags[index].values[0] < b.tags[index].values[0]) { return 1; }
+                if (a.tags[index].values[0] > b.tags[index].values[0]) { return -1; }
+              } else {
+                if (b.tags[index].values[0] < a.tags[index].values[0]) { return 1; }
+                if (b.tags[index].values[0] > a.tags[index].values[0]) { return -1; }
+              }
             } else if (element.code.toLocaleLowerCase() === 'work_hours' || element.code.toLocaleLowerCase() === 'technical_change'
+              || element.code.toLocaleLowerCase() === 'menukod'
             ) {
-              if (a.tags[index].value < b.tags[index].value) { return -1; }
-              if (a.tags[index].value > b.tags[index].value) { return 1; }
+              if (!hatodikRendez) {
+                if (a.tags[index].value < b.tags[index].value) { return 1; }
+                if (a.tags[index].value > b.tags[index].value) { return -1; }
+              } else {
+                if (b.tags[index].value < a.tags[index].value) { return 1; }
+                if (b.tags[index].value > a.tags[index].value) { return -1; }
+              }
+            }
+          }
+        }
+
+
+        if (!hetedikRendez) {
+          if (a[hetedikProperty] > b[hetedikProperty]) { return -1; }
+          if (a[hetedikProperty] < b[hetedikProperty]) { return 1; }
+        } else {
+          if (b[hetedikProperty] < a[hetedikProperty]) { return 1; }
+          if (b[hetedikProperty] > a[hetedikProperty]) { return -1; }
+        }
+
+        for (let index = 0; index < a.tags.length; index++) {
+          const element = a.tags[index];
+          if (element.code.toLocaleLowerCase() === hetedikProperty) {
+            if (element.code.toLocaleLowerCase() === 'page' || element.code.toLocaleLowerCase() === 'ws'
+              || element.code.toLocaleLowerCase() === 'alrkod') {
+              if (!hetedikRendez) {
+                if (a.tags[index].values[0] < b.tags[index].values[0]) { return 1; }
+                if (a.tags[index].values[0] > b.tags[index].values[0]) { return -1; }
+              } else {
+                if (b.tags[index].values[0] < a.tags[index].values[0]) { return 1; }
+                if (b.tags[index].values[0] > a.tags[index].values[0]) { return -1; }
+              }
+            } else if (element.code.toLocaleLowerCase() === 'work_hours' || element.code.toLocaleLowerCase() === 'technical_change'
+              || element.code.toLocaleLowerCase() === 'menukod'
+            ) {
+              if (!hetedikRendez) {
+                if (a.tags[index].value < b.tags[index].value) { return 1; }
+                if (a.tags[index].value > b.tags[index].value) { return -1; }
+              } else {
+                if (b.tags[index].value < a.tags[index].value) { return 1; }
+                if (b.tags[index].value > a.tags[index].value) { return -1; }
+              }
             }
           }
         }
         return 0;
       });
       console.log('rendezéssel: ', this.sortChanges);
+      this.tableAdatokRendezes = this.actualService.actualRendezValaszt;
+      this.sorrendNelkulOszlopok(this.actualService.actualRendezValaszt, this.actualService.actualRendezKihagy);
+
+
+
+
+
     }
   }
-}
 
+  public toggleVisibility(e, value: any) {
+    this.actualService.actualRendezValaszt[value].rendezes = e.target.checked;
+    this.buildCompactChangesText(null);
+  }
+
+  private dinamikusTable(tableData: IRendezCompact[], property: string) {
+    return tableData[property];
+  }
+
+  public sorrendNelkulOszlopok(kiValaszt: IRendezCompact[], megMarad: IRendezCompact[]) {
+    this.tableAdatokRendezesNelkul = [];
+
+    for (let index = 0; index < megMarad.length; index++) {
+      if (this.elsoProperty !== megMarad[index].property && this.masodikProperty !== megMarad[index].property &&
+        this.harmadikProperty !== megMarad[index].property && this.negyedikProperty !== megMarad[index].property &&
+        this.otodikProperty !== megMarad[index].property && this.hatodikProperty !== megMarad[index].property &&
+        this.hetedikProperty !== megMarad[index].property) {
+        this.tableAdatokRendezesNelkul.push(megMarad[index]);
+      }
+    }
+  }
+
+}
