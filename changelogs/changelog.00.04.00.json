@@ -39,6 +39,45 @@
 			"crd": "2019-12-09T12:07:12.140Z",
 			"lmu": null,
 			"lmd": null
+		},
+		{
+			"id": "451869c0-338b-11ea-beb8-dffa187a57d6",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "201909200082394 ",
+			"date": "2020-01-10T09:24:45.681Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Compact nézet módosítása.</p><p>Rendezési lehetőségek megadása.</p><p>Adatok megjelenítése táblázatban textarea helyett.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Change the compact view.</p><p>Specify sorting options.</p><p>Display data in a table instead of textarea.</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"changeloglist"
+					]
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 8
+				}
+			],
+			"cru": "TSZABO",
+			"crd": "2020-01-10T09:26:23.948Z",
+			"lmu": null,
+			"lmd": null
 		}
 	]
 }
