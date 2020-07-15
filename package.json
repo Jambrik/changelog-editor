@@ -40,7 +40,7 @@
     "fs-extra": "^8.1.0",
     "google-translate-api": "^2.3.0",
     "jade": "~1.11.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "morgan": "~1.9.1",
     "primeicons": "^1.0.0",
     "primeng": "^8.0.3",
