@@ -223,6 +223,7 @@ export class CompactComponent implements OnInit, OnChanges {
       this.actualService.actualRendezValaszt.push(element);
       this.iRendezCompactKiValaszt.push(element);
     }
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -236,6 +237,7 @@ export class CompactComponent implements OnInit, OnChanges {
     const resultList: TagInfo[] = [];
     const program: IProgram = this.actualService.actualProgram;
     const tagInfos = program.tagInfos;
+    program.tagInfos.forEach((x) => console.log('taginfo:' + x.captions.forEach((y) => console.log('caption:' + y.text))));
     if (tagInfos) {
       for (const tagInfo of tagInfos) {
         const tio = new TagInfo(
@@ -371,32 +373,35 @@ export class CompactComponent implements OnInit, OnChanges {
                 }
 
                 if (code.code === change.code && description.lang === c.lang && code.code === 'PAGE') {
-
                   for (let index = 0; index < change.setOfValues.length; index++) {
                     const element = change.setOfValues[index].code;
-                    if (element.toString() === code.values.toString()) {
+                    for (let codeValuesIndex = 0; codeValuesIndex < code.values.length; codeValuesIndex++) {
+                      if (element.toString() === code.values[codeValuesIndex].toString()) {
+                        for (let i = 0; i < change.setOfValues.length; i++) {
 
-                      for (let i = 0; i < change.setOfValues.length; i++) {
+                          const e = change.setOfValues[i].code;
 
-                        const e = change.setOfValues[i].code;
-                        if (e === [element].toString()) {
-                          for (let index2 = 0; index2 < change.setOfValues[i].captions.length; index2++) {
-                            const element2 = change.setOfValues[i].captions[index2].lang;
-                            if (element2 === description.lang) {
-                              code.values = [change.setOfValues[i].captions[index2].text];
+                          if (e === [element].toString()) {
+                            for (let index2 = 0; index2 < change.setOfValues[i].captions.length; index2++) {
+                              const element2 = change.setOfValues[i].captions[index2].lang;
+                              if (element2 === description.lang) {
+                                code.values[codeValuesIndex] = change.setOfValues[i].captions[index2].text;
+                              }
                             }
                           }
                         }
                       }
                     }
+
                   }
 
+                  console.log('code.values:' + code.values);
                   this.pageSzoveg = code.values + '\n';
                 }
                 if (code.code === change.code && description.lang === c.lang && code.code === 'TECHNICAL_CHANGE') {
-                  if (code.value === true) {
+                  if (code.value) {
                     code.value = 'Van';
-                  } else if (code.value === false) {
+                  } else if (!code.value) {
                     code.value = 'Nincs';
                   }
                   this.techSzoveg = code.value + '\n';
@@ -633,7 +638,7 @@ export class CompactComponent implements OnInit, OnChanges {
         const iTagInfosCheckBoxConst = {
           code: this.actualService.actualProgram.tagInfos[i].code,
           id: i,
-          selected: false,
+          selected: true,
           nev: this.elementNev
 
         };
@@ -890,7 +895,7 @@ export class CompactComponent implements OnInit, OnChanges {
   public compactRendezes() {
     console.log('Rendezés!');
     this.sortChanges = this.actualService.actualChangeList.changes;
-    console.log(this.actualService.actualRendezValaszt);
+    console.table(this.actualService.actualRendezValaszt);
     if (this.actualService.actualRendezValaszt === undefined) {
       this.actualService.actualRendezValaszt = [];
     }
@@ -969,6 +974,7 @@ export class CompactComponent implements OnInit, OnChanges {
       const hetedikRendez: boolean = this.hetedikRendez;
 
       console.log('rendezés nélkül: ', this.sortChanges);
+      console.table(this.sortChanges);
       this.sortChanges.sort(function (a, b) {
         if (!elsoRendez) {
           if (a[elsoProperty] < b[elsoProperty]) { return 1; }
@@ -1216,13 +1222,9 @@ export class CompactComponent implements OnInit, OnChanges {
         return 0;
       });
       console.log('rendezéssel: ', this.sortChanges);
+      console.table(this.sortChanges);
       this.tableAdatokRendezes = this.actualService.actualRendezValaszt;
       this.sorrendNelkulOszlopok(this.actualService.actualRendezValaszt, this.actualService.actualRendezKihagy);
-
-
-
-
-
     }
   }
 
@@ -1231,7 +1233,7 @@ export class CompactComponent implements OnInit, OnChanges {
     this.buildCompactChangesText(null);
   }
 
-  private dinamikusTable(tableData: IRendezCompact[], property: string) {
+  public dinamikusTable(tableData: IRendezCompact[], property: string) {
     return tableData[property];
   }
 
