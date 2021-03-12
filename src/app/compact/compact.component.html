@@ -9,6 +9,14 @@
       <div class="clearfix">
         <p-messages [(value)]="msgs"></p-messages>
       </div>
+      <div class="row m-0" style="padding-bottom: 2%;">
+        <div class="col-md-3">
+          <a href="#" class="btn btn-success" *ngIf="program" href="/"
+            [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
+            NORMAL VIEW
+          </a>
+        </div>
+      </div>
       <div class="row m-0" translate>
         STARTING DATE
         <p-calendar [(ngModel)]="startDate" dateFormat="yy.mm.dd" [showIcon]="true"></p-calendar>
@@ -16,7 +24,7 @@
           END DATE
           <p-calendar [(ngModel)]="vegeDate" dateFormat="yy.mm.dd" [showIcon]="true">></p-calendar>
         </div>
-        <div class="col-md-3 pull-right">
+        <div class="col-md-3">
           <button type=" button" style="width:  250px; height: 40px;" class="btn btn-info btn-sm pull-right"
             (click)="buildCompactChangesText($event)" translate>
             FILTRATION
@@ -37,7 +45,7 @@
         <span> Rendezés {{change+1}}: </span>
         <p-dropdown class="p-2 mb-3" [options]=" rendezKihagy" (onChange)="iRendezCompactValaszt($event.value,change)">
         </p-dropdown>
-        <span class="mb-5">
+        <span class="mb-5 p-2">
           <input class="mb-3" *ngIf="change===0" type="checkbox" [(ngModel)]="csokkenNovekvoElso"
             (change)="toggleVisibility($event,change)" />
           <input class="mb-3" *ngIf="change===1" type="checkbox" [(ngModel)]="csokkenNovekvoMasodik"
@@ -61,54 +69,63 @@
                 change===4 && !csokkenNovekvoOtodik || change===5 && !csokkenNovekvoHatodik || 
                 change===6 && !csokkenNovekvoHetedik"> Csökkenő</span>
         </span>
-        <span class="p-2">
+        <span class="p-1">
           <button *ngIf="this.torlesHozzadasVezerles===change" class="row m-0 btn btn-primary" type=" button"
             (click)='rendezesTorlese($event,change)'>-</button>
+        </span>
+        <span class="p-1">
           <button *ngIf="this.torlesHozzadasVezerles===change" class="row m-0 btn btn-primary" type="button"
             (click)='rendezesHozzaadas($event.value,change)'>+</button>
         </span>
       </div>
 
 
+
       <div class="col-md-10 pl-0">
         <div>
-          <table style="background:rgb(218, 228, 228);" class="table table-striped mt-3 mb-3">
-            <tbody>
-              <th *ngFor="let item of tableAdatokRendezes; let i = index" [attr.data-index]="i">
-                {{ tableAdatokRendezes[i].value}}
-              </th>
-              <th *ngFor="let item of tableAdatokRendezesNelkul; let i = index" [attr.data-index]="i">
-                {{ tableAdatokRendezesNelkul[i].value}}
-              </th>
-              <th>
-                Szöveg
-              </th>
-              <tr *ngFor="let tableData of this.tableAdatok let i=index">
+          <table class="table table-hover table-bordered mt-3 mb-3" style="padding-top: 5%;">
+            <thead class="thead-dark">
+              <tr>
                 <th *ngFor="let item of tableAdatokRendezes; let i = index" [attr.data-index]="i">
-                  {{ dinamikusTable(tableData,this.tableAdatokRendezes[i].property)}}
+                  {{ tableAdatokRendezes[i].value}}
                 </th>
                 <th *ngFor="let item of tableAdatokRendezesNelkul; let i = index" [attr.data-index]="i">
-                  {{ dinamikusTable(tableData,this.tableAdatokRendezesNelkul[i].property)}}
+                  {{ tableAdatokRendezesNelkul[i].value}}
                 </th>
                 <th>
-                  {{tableData.text}}
+                  Szöveg
                 </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tableData of this.tableAdatok let i=index">
+                <td *ngFor="let item of tableAdatokRendezes; let i = index" [attr.data-index]="i">
+                  {{ dinamikusTable(tableData,this.tableAdatokRendezes[i].property)}}
+                </td>
+                <td *ngFor="let item of tableAdatokRendezesNelkul; let i = index" [attr.data-index]="i">
+                  {{ dinamikusTable(tableData,this.tableAdatokRendezesNelkul[i].property)}}
+                </td>
+                <td>
+                  {{tableData.text}}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div>
-          <a href="#" class="btn btn-success pull-right" *ngIf="program" href="/"
-            [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
-            NORMAL VIEW
-          </a>
+        <div class="pull-right">
 
-          <button class="btn btn-primary pull-right" type="button" (click)="copyMessage(this.text)" translate>
-            COPY TO CLIPBOARD
-          </button>
-          <a href="/" class="btn btn-danger pull-right" translate> VERSION CHANGES
-          </a>
+          <span class="p-2">
+            <button class="btn btn-primary" type="button" (click)="copyMessage(this.text)" translate>
+              COPY TO CLIPBOARD
+            </button>
+          </span>
+
+          <span class="p-2">
+            <a href="/" class="btn btn-danger" translate> VERSION CHANGES
+            </a>
+          </span>
+
         </div>
       </div>
     </main>

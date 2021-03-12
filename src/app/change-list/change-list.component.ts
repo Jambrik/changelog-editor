@@ -323,7 +323,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     return found;
   }
 
-  private getChanges() {
+  public getChanges() {
     if (this.version.version !== 'none') {
       this.loading = true;
       if (this.changeList) {
