@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { StringHelpers } from '../helpers/string-helpers';
+import { ConfigHelper } from '../helpers/config-helper';
 import { IProgram } from '../models/IProgram';
 import { ActualService } from '../services/actual.service';
 import { ConfigService } from '../services/config.service';
@@ -96,7 +96,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
 
   public getLastVersionNumber(program: IProgram): string {
     if (program.versions && (program.versions.length > 0)) {
-      program.versions.sort(StringHelpers.sortDesc);
+      program.versions.sort(ConfigHelper.versionSorter);
       return program.versions[0].version;
     } else {
       return 'last';
