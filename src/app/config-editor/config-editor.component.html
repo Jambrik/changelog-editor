@@ -1,19 +1,32 @@
 <div class="p-5">
     <div *ngIf="programs">
-
-        <p-table [value]="programs" [selectionMode]="'single'" [(selection)]="selectedProgram"
-            (onRowSelect)="onRowSelect($event)" [paginator]="true" rows="15" [responsive]="true">
-            <p-header translate>PROGRAMS</p-header>
-            <p-column field="id" header="{{'ID' | translate}}" [sortable]="true"></p-column>
-            <p-column field="name" header="{{'NAME' | translate}}" [sortable]="true"></p-column>
-            <p-column field="path" header="{{'PATH' | translate}}" [sortable]="true"></p-column>
-            <p-column field="langList" header="{{'LANG_LIST' | translate}}" [sortable]="true"></p-column>
-            <p-footer>
-                <div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus"
+        <p-table [columns]="cols" [value]="programs" [selectionMode]="'single'" [(selection)]="selectedProgram"
+            (onRowSelect)="onRowSelect($event)" [paginator]="true" rows="15" [responsive]="true" [autoLayout]="true">
+            <ng-template pTemplate="caption" translate>
+                PROGRAMS
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header | translate}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-program let-columns="columns">
+                <tr>
+                    <td *ngFor="let col of columns">
+                        {{program[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <div class="ui-helper-clearfix p-1" style="width:100%"><button type="button" pButton icon="fa fa-plus"
                         style="float:left" (click)="showDialogToAdd()" label="Add"></button></div>
-            </p-footer>
+            </ng-template>
         </p-table>
     </div>
+
 
     <p-dialog header="{{'PROGRAMS_DETAILS' | translate}}" [(visible)]="displayDialog" [responsive]="true"
         showEffect="fade" [modal]="true">
@@ -33,8 +46,8 @@
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
-                <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+                <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
             </div>
         </p-footer>
     </p-dialog>

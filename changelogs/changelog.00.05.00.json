@@ -1,0 +1,83 @@
+{
+	"version": "00.05.00",
+	"changes": [
+		{
+			"id": "08eed2b0-8635-11eb-8c21-bf200075164b",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": "",
+			"date": "2021-03-16T08:35:58.938Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Kompakt nézet módosítása.</p><p>Kompakt nézetben a Checkbox-ok automatikus bekapcsolása.</p><p>Kompakt nézetben a Caption-ök vesszővel elválasztva jelenjenek meg.</p><p>Legfrissebbtől a legrégebbi verzióig rendezze a programok verzióit.</p><p><br></p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>Change compact view. </p><p>Activate checkbox automatically. </p><p>In a compact view, the captions is separated by commas. </p><p>From the latest to the oldest versions of the programs. </p><p><br></p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"compact"
+					]
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 8
+				}
+			],
+			"cru": "hegedus.dominik",
+			"crd": "2021-03-16T08:53:10.560Z",
+			"lmu": "hegedus.dominik",
+			"lmd": "2021-03-16T08:55:17.327Z"
+		},
+		{
+			"id": "8a820ea0-8635-11eb-8c21-bf200075164b",
+			"type": "bugfix",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2021-03-16T08:55:19.829Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>Beállítások felületen nem jelent meg adat a táblázatban.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>On the settings surface, no data appeared in the table. </p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": [
+						"configeditor"
+					]
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 2
+				}
+			],
+			"cru": "hegedus.dominik",
+			"crd": "2021-03-16T08:56:47.978Z",
+			"lmu": null,
+			"lmd": null
+		}
+	]
+}

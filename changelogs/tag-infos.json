@@ -1,4 +1,4 @@
-[    
+[
     {
         "code": "PAGE",
         "captions": [
@@ -47,11 +47,24 @@
                 "captions": [
                     {
                         "lang": "hu",
-                        "text": "Beállások"
+                        "text": "Beállítások"
                     },
                     {
                         "lang": "en",
                         "text": "Settings"
+                    }
+                ]
+            },
+            {
+                "code": "compact",
+                "captions": [
+                    {
+                        "lang": "hu",
+                        "text": "Kompakt nézet"
+                    },
+                    {
+                        "lang": "en",
+                        "text": "Compact view"
                     }
                 ]
             }
@@ -68,7 +81,7 @@
                 "lang": "en",
                 "text": "Technical change"
             }
-        ],        
+        ],
         "mandatory": true,
         "dataType": "boolean",
         "moreOptionsAllowed": false
@@ -84,7 +97,7 @@
                 "lang": "en",
                 "text": "Work hours"
             }
-        ],        
+        ],
         "mandatory": true,
         "dataType": "number",
         "moreOptionsAllowed": false

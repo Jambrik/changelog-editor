@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../services/config.service';
 import * as _ from 'lodash';
 import { Program } from '../models/Program';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-config-editor',
@@ -20,10 +20,13 @@ export class ConfigEditorComponent implements OnInit {
 
   programs: Program[];
 
+  cols: any[];
+
   constructor(private configService: ConfigService) { }
 
   ngOnInit() {
     this.configRefresh();
+    this.getCols();
   }
 
   public configRefresh() {
@@ -44,6 +47,15 @@ export class ConfigEditorComponent implements OnInit {
       this.programs = programs;
       console.log('this.programs', this.programs);
     });
+  }
+
+  public getCols() {
+    this.cols = [
+      { field: 'id', header: 'ID' },
+      { field: 'name', header: 'NAME' },
+      { field: 'path', header: 'PATH' },
+      { field: 'langs', header: 'LANG_LIST' },
+    ];
   }
 
   showDialogToAdd() {
