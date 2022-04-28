@@ -1,21 +1,21 @@
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
-import { IChangeLogItem } from '../models/IChangeLogItem';
-import { ActualService } from '../services/actual.service';
-import { IProgram } from '../models/IProgram';
-import { ChangeLogService } from '../services/change-log.service';
-import { Message } from 'primeng/components/common/api';
-import { ILabelValue } from '../models/ILableValue';
-import { GoogleTranslateService } from '../services/google-translate.service';
-import { I18n } from '../models/I18N';
-import * as _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
+import * as _ from 'lodash';
+import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
+import { I18n } from '../models/I18N';
+import { IChangeLogItem } from '../models/IChangeLogItem';
+import { ILabelValue } from '../models/ILableValue';
+import { IProgram } from '../models/IProgram';
+import { ITag } from '../models/ITag';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
-import { ChangeLogAction } from '../types/types';
 import { Tag } from '../models/Tag';
-import { ITag } from '../models/ITag';
+import { ActualService } from '../services/actual.service';
+import { ChangeLogService } from '../services/change-log.service';
+import { GoogleTranslateService } from '../services/google-translate.service';
+import { ChangeLogAction } from '../types/types';
 
 @Component({
   selector: 'app-change-log-item',

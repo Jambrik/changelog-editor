@@ -1,4 +1,4 @@
-<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" >
+<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
   <div *ngIf="actualProgramName" class="card-header">
     <h4>
       {{actualProgramName}}
@@ -9,25 +9,23 @@
   </h4>
   <ul *ngIf="isReading()" class="nav nav-pills flex-column">
     <li class="nav-item" *ngIf="actualProgramName && viewMode=='NORMAL'">
-      <a class="nav-link" 
-      href="/" [routerLink]="['/new-version', actualProgramId]"  routerLinkActive="active"
-      [queryParams]="{lang: getActualLang()}"
-       translate>
+      <a class="nav-link" href="/" [routerLink]="['/new-version', actualProgramId]" routerLinkActive="active"
+        [queryParams]="{lang: getActualLang()}" translate>
         NEW_VERSION_CREATION
       </a>
     </li>
-    <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>    
+    <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>
     <li class="nav-item" *ngFor="let version of versions">
       <a class="nav-link" href="/" [routerLink]="openVersionChanges(version.version)" routerLinkActive="active"
-      [queryParams]="{lang: getActualLang()}">
-      {{version.version}} {{version.releaseDate ? '('+(version.releaseDate | date : "yyyy.MM.dd")+')' : ""}}       
+        [queryParams]="{lang: getActualLang()}">
+        {{version.version}} {{version?.releaseDate ? '('+(version.releaseDate | date : 'yyyy.MM.dd')+')' : ''}}
       </a>
     </li>
   </ul>
-  <ul *ngIf="!isReading()" class="nav nav-pills flex-column">      
-      <li class="nav-link active" [class.active]="isActual(version)" *ngFor="let version of versions">        
-          {{version.version}} {{version.releaseDate ? '('+(version.releaseDate | date : "yyyy.MM.dd")+')' : ""}}       
-      </li>
-    </ul>
+  <ul *ngIf="!isReading()" class="nav nav-pills flex-column">
+    <li class="nav-link active" [class.active]="isActual(version)" *ngFor="let version of versions">
+      {{version.version}} {{version?.releaseDate ? '('+(version.releaseDate | date : 'yyyy.MM.dd')+')' : ''}}
+    </li>
+  </ul>
 
 </nav>
