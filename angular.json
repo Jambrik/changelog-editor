@@ -23,7 +23,8 @@
             ],
             "styles": [
               {
-                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css",
+                "inject": true
               },
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/nova-light/theme.css",
@@ -49,7 +50,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -93,7 +93,8 @@
             ],
             "styles": [
               {
-                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css",
+                "inject": true
               },
               "node_modules/quill/dist/quill.core.css",
               "node_modules/quill/dist/quill.snow.css",
