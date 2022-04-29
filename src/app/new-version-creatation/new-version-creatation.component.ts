@@ -1,12 +1,12 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ActualService } from '../services/actual.service';
-import { IProgram } from '../models/IProgram';
-import { ConfigService } from '../services/config.service';
-import { ConfigHelper } from '../helpers/config-helper';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ChangeLogService } from '../services/change-log.service';
+import { ConfigHelper } from '../helpers/config-helper';
+import { IProgram } from '../models/IProgram';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { ActualService } from '../services/actual.service';
+import { ChangeLogService } from '../services/change-log.service';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-new-version-creatation',
@@ -80,7 +80,7 @@ export class NewVersionCreatationComponent implements OnInit {
     event.preventDefault();
     const lastVersion: IVersionMetaData = this.getLastVersion();
     if (lastVersion != null) {
-      this.router.navigate(['/change-list', this.program.id, lastVersion, 'read', 'none'],
+      this.router.navigate(['/change-list', this.program.id, lastVersion.version, 'read', 'none'],
         { queryParams: { lang: this.getActualLang() } });
     }
   }

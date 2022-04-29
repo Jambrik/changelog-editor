@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Message } from 'primeng/components/common/message';
+import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
 import { ConfigHelper } from '../helpers/config-helper';
 import { I18n } from '../models/I18N';

@@ -1,39 +1,45 @@
-import { ROUTES } from './app.routes';
-import { RouterModule } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
-import {
-  InputTextModule, ButtonModule, DialogModule, DropdownModule, MessageModule, MessagesModule,
-  CalendarModule, InputSwitchModule, SelectButtonModule, ProgressSpinnerModule, AutoCompleteModule,
-  TriStateCheckboxModule, CheckboxModule
-} from 'primeng/primeng';
-import { TableModule } from 'primeng/table';
-import { EditorModule } from 'primeng/editor';
-import { ChangeListComponent } from './change-list/change-list.component';
-import { CompactComponent } from './compact/compact.component';
-import { AppComponent } from './app.component';
-import { TopNavbarComponent } from './top-navbar/top-navbar.component';
-import { LeftNavbarComponent } from './left-navbar/left-navbar.component';
-import { ProgramListComponent } from './program-list/program-list.component';
-import { ConfigEditorComponent } from './config-editor/config-editor.component';
+import { DatePipe } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ConfigService } from './services/config.service';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AutoCompleteModule, DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { EditorModule } from 'primeng/editor';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TableModule } from 'primeng/table';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { AppComponent } from './app.component';
+import { ROUTES } from './app.routes';
+import { ChangeListComponent } from './change-list/change-list.component';
+import { ChangeLogItemComponent } from './change-log-item/change-log-item.component';
+import { CompactComponent } from './compact/compact.component';
+import { ConfigEditorComponent } from './config-editor/config-editor.component';
+import { LeftNavbarComponent } from './left-navbar/left-navbar.component';
+import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { ProgramListComponent } from './program-list/program-list.component';
 import { ActualService } from './services/actual.service';
 import { ChangeLogService } from './services/change-log.service';
-import { ChangeLogItemComponent } from './change-log-item/change-log-item.component';
-import { MessageService } from 'primeng/components/common/messageservice';
-import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { ConfigService } from './services/config.service';
 import { GoogleTranslateService } from './services/google-translate.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
-import { TagsComponent } from './tags/tags.component';
 import { TagComponent } from './tag/tag.component';
-import { DatePipe } from '@angular/common';
-import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-
+import { TagsComponent } from './tags/tags.component';
+import { TopNavbarComponent } from './top-navbar/top-navbar.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
