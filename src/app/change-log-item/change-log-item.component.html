@@ -159,10 +159,10 @@
   <p-header translate>
     CONFIRMATION
   </p-header>
-  <span *ngIf="!version.releaseDate || (version.releaseDate == null)" translate>
+  <span *ngIf="!version?.releaseDate || (version?.releaseDate == null)" translate>
     ARE_YOU_SURE_DELETE_THIS_CHANGE_LOG_ITEM
   </span>
-  <span *ngIf="version.releaseDate && (version.releaseDate != null)" translate>
+  <span *ngIf="version?.releaseDate && (version?.releaseDate != null)" translate>
     ARE_YOU_SURE_DELETE_RELEASED_CHANGE_LOG_ITEM
   </span>
   <div class="p-2">

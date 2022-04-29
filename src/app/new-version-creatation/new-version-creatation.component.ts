@@ -80,7 +80,7 @@ export class NewVersionCreatationComponent implements OnInit {
     event.preventDefault();
     const lastVersion: IVersionMetaData = this.getLastVersion();
     if (lastVersion != null) {
-      this.router.navigate(['/change-list', this.program.id.toString(), lastVersion, 'read', 'none'],
+      this.router.navigate(['/change-list', this.program.id, lastVersion.version, 'read', 'none'],
         { queryParams: { lang: this.getActualLang() } });
     }
   }
