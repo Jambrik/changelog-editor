@@ -143,7 +143,6 @@
       }
     }
   },
-  "defaultProject": "hu.libra.commons.changelog.editor",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
