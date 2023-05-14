@@ -1,4 +1,4 @@
-export interface IBoolString {
+export interface BoolString {
     bool: boolean;
     str: string;
 }

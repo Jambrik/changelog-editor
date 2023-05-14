@@ -1,4 +1,4 @@
-import { IBoolString } from '../models/IBoolString';
+import { BoolString } from '../models/BoolString';
 
 export class StringHelpers {
     public static sortAsc(a: any, b: any) {
@@ -21,7 +21,7 @@ export class StringHelpers {
         }
     }
 
-    public static findAndGreen(text: string, part: string, green: boolean): IBoolString {
+    public static findAndGreen(text: string, part: string, green: boolean): BoolString {
         const index = text.toUpperCase().indexOf(part.toUpperCase());
         if (green && (index > -1)) {
             text = text.replace(text.substring(index, index + part.length),
