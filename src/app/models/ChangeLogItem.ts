@@ -1,5 +1,5 @@
 import { I18n } from './I18N';
-import { ITag } from './ITag';
+import { Tag } from './Tag';
 
 export interface ChangeLogItem {
     id: string;
@@ -8,7 +8,7 @@ export interface ChangeLogItem {
     type: 'bugfix' | 'feature';
     importance: 'low' | 'normal' | 'high';
     descriptions: I18n[];
-    tags: ITag[];
+    tags: Tag[];
     cru?: string;
     crd?: Date;
     lmu?: string;

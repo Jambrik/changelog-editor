@@ -13,7 +13,7 @@ import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
 import { RendezCompact } from '../models/RendezCompact';
 import { TagImpl } from '../models/TagImpl';
-import { TagInfoImpl } from '../models/TagInfo';
+import { TagInfoImpl } from '../models/TagInfoImpl';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';

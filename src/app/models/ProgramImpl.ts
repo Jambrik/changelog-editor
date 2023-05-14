@@ -1,6 +1,6 @@
-import { ITagInfo } from './ITagInfo';
 import { IVersionMetaData } from './IVersionMetaData';
 import { Program } from './Program';
+import { TagInfo } from './TagInfo';
 
 export class ProgramImpl implements Program {
     constructor(
@@ -9,7 +9,7 @@ export class ProgramImpl implements Program {
         public path: string,
         public langs: string[],
         public versions: IVersionMetaData[],
-        public tagInfos: ITagInfo[]) {
+        public tagInfos: TagInfo[]) {
     }
 
     get langList(): string {

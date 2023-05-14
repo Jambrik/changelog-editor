@@ -12,7 +12,7 @@ import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
-import { TagInfoImpl } from '../models/TagInfo';
+import { TagInfoImpl } from '../models/TagInfoImpl';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';

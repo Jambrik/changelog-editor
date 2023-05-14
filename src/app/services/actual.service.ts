@@ -5,7 +5,7 @@ import { IVersionMetaData } from '../models/IVersionMetaData';
 import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
 import { RendezCompact } from '../models/RendezCompact';
-import { TagInfoImpl } from '../models/TagInfo';
+import { TagInfoImpl } from '../models/TagInfoImpl';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
 import { ChangeLogService } from './change-log.service';
 

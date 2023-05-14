@@ -6,11 +6,11 @@ import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
 import { ChangeLogItem } from '../models/ChangeLogItem';
 import { I18n } from '../models/I18N';
-import { ITag } from '../models/ITag';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
 import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
+import { Tag } from '../models/Tag';
 import { TagImpl } from '../models/TagImpl';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
@@ -127,10 +127,10 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   private converCompactTagsIntoSimple() {
-    const tags: ITag[] = [];
+    const tags: Tag[] = [];
     for (const ctag of this.compactTags) {
 
-      const tag: ITag = {
+      const tag: Tag = {
         code: ctag.code,
         values: ctag.values,
         value: ctag.value

@@ -1,8 +1,8 @@
 import { CodeCaption } from './CodeCaption';
-import { ITag } from './ITag';
-import { TagInfoImpl } from './TagInfo';
+import { Tag } from './Tag';
+import { TagInfoImpl } from './TagInfoImpl';
 
-export class TagImpl implements ITag {
+export class TagImpl implements Tag {
     private _compactValues: CodeCaption[] = [];
     public code: string;
     constructor(

@@ -1,11 +1,11 @@
-import { ITagInfo } from './ITagInfo';
 import { IVersionMetaData } from './IVersionMetaData';
+import { TagInfo } from './TagInfo';
 
 export interface Program {
     id: number;
     name: string;
     path: string;
     langs: string[];
-    tagInfos: ITagInfo[];
+    tagInfos: TagInfo[];
     versions: IVersionMetaData[];
 }
