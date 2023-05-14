@@ -11,7 +11,7 @@ import { IProgram } from '../models/IProgram';
 import { ITag } from '../models/ITag';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
-import { Tag } from '../models/Tag';
+import { TagImpl } from '../models/TagImpl';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
 import { GoogleTranslateService } from '../services/google-translate.service';
@@ -43,7 +43,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
 
   public importances: ILabelValue[];
   public showReleasedVersionWarning = false;
-  public compactTags: Tag[];
+  public compactTags: TagImpl[];
 
   constructor(
     private actualService: ActualService,
@@ -91,13 +91,13 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   }
 
   private createCompactTags() {
-    const compactTags: Tag[] = [];
+    const compactTags: TagImpl[] = [];
     for (const tagInfo of this.actualService.actualTagInfos) {
-      let compactTag: Tag;
+      let compactTag: TagImpl;
       if (this.changeLogItem.tags) {
         for (const tag of this.changeLogItem.tags) {
           if (tag.code === tagInfo.code) {
-            compactTag = new Tag(tagInfo, tag.values, tag.value);
+            compactTag = new TagImpl(tagInfo, tag.values, tag.value);
           }
         }
       }
@@ -119,7 +119,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
           }
         }
 
-        compactTag = new Tag(tagInfo, [], value);
+        compactTag = new TagImpl(tagInfo, [], value);
       }
       compactTags.push(compactTag);
     }

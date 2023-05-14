@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Tag } from '../models/Tag';
+import { Component, Input, OnInit } from '@angular/core';
 import { ICodeCaption } from '../models/ICodeCaption';
+import { TagImpl } from '../models/TagImpl';
 
 @Component({
   selector: 'app-tag',
@@ -8,7 +8,7 @@ import { ICodeCaption } from '../models/ICodeCaption';
   styleUrls: ['./tag.component.scss']
 })
 export class TagComponent implements OnInit {
-  @Input() tag: Tag;
+  @Input() tag: TagImpl;
   @Input() editing: boolean;
   public allCompactValues: ICodeCaption[];
 

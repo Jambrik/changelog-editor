@@ -1,8 +1,8 @@
 import { IProgram } from './IProgram';
-import { IVersionMetaData } from './IVersionMetaData';
 import { ITagInfo } from './ITagInfo';
+import { IVersionMetaData } from './IVersionMetaData';
 
-export class Program implements IProgram {
+export class ProgramImpl implements IProgram {
     constructor(
         public id: number,
         public name: string,

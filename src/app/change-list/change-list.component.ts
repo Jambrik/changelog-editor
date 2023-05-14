@@ -12,7 +12,7 @@ import { ILabelValue } from '../models/ILableValue';
 import { IProgram } from '../models/IProgram';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
-import { TagInfo } from '../models/TagInfo';
+import { TagInfoImpl } from '../models/TagInfo';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
@@ -457,12 +457,12 @@ export class ChangeListComponent implements OnInit, OnChanges {
   }
 
   private setActualTaginfos() {
-    const resultList: TagInfo[] = [];
+    const resultList: TagInfoImpl[] = [];
     const program: IProgram = this.actualService.actualProgram;
     const tagInfos = program.tagInfos;
     if (tagInfos) {
       for (const tagInfo of tagInfos) {
-        const tio = new TagInfo(
+        const tio = new TagInfoImpl(
           tagInfo.code,
           tagInfo.captions,
           tagInfo.fix,

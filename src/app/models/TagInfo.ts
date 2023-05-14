@@ -1,11 +1,11 @@
-import { ITagInfo } from './ITagInfo';
-import { I18n } from './I18N';
-import { ICodeCaptions } from './ICodeCaptions';
 import { TranslateService } from '@ngx-translate/core';
-import { ICodeCaption } from './ICodeCaption';
 import { ListHelper } from '../helpers/list-helper';
+import { I18n } from './I18N';
+import { ICodeCaption } from './ICodeCaption';
+import { ICodeCaptions } from './ICodeCaptions';
+import { ITagInfo } from './ITagInfo';
 
-export class TagInfo implements ITagInfo {
+export class TagInfoImpl implements ITagInfo {
 
     constructor(
         public code: string,

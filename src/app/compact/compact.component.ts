@@ -12,8 +12,8 @@ import { IProgram } from '../models/IProgram';
 import { IRendezCompact } from '../models/IRendezCompact';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
-import { Tag } from '../models/Tag';
-import { TagInfo } from '../models/TagInfo';
+import { TagImpl } from '../models/TagImpl';
+import { TagInfoImpl } from '../models/TagInfo';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
@@ -44,7 +44,7 @@ export class CompactComponent implements OnInit, OnChanges {
   public selectedTypes: string[] = [];
   public importances: ILabelValue[] = [];
   public selectedImportances: string[] = [];
-  public compactTags: Tag[];
+  public compactTags: TagImpl[];
   public startDate: Date;
   public vegeDate: Date;
   descriptions: I18n[] = [];
@@ -234,13 +234,13 @@ export class CompactComponent implements OnInit, OnChanges {
 
 
   private setActualTaginfosAdd() {
-    const resultList: TagInfo[] = [];
+    const resultList: TagInfoImpl[] = [];
     const program: IProgram = this.actualService.actualProgram;
     const tagInfos = program.tagInfos;
     program.tagInfos.forEach((x) => console.log('taginfo:' + x.captions.forEach((y) => console.log('caption:' + y.text))));
     if (tagInfos) {
       for (const tagInfo of tagInfos) {
-        const tio = new TagInfo(
+        const tio = new TagInfoImpl(
           tagInfo.code,
           tagInfo.captions,
           tagInfo.fix,

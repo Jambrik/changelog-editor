@@ -5,7 +5,7 @@ import { IRendezCompact } from '../models/IRendezCompact';
 import { User } from '../models/IUser';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
-import { TagInfo } from '../models/TagInfo';
+import { TagInfoImpl } from '../models/TagInfo';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
 import { ChangeLogService } from './change-log.service';
 
@@ -16,7 +16,7 @@ export class ActualService {
   private _actualVersion: IVersionMetaData;
   private _actualAction: string;
   private _actualUser: User;
-  private _actualTagInfos: TagInfo[];
+  private _actualTagInfos: TagInfoImpl[];
   private _actualFilter: string;
   private _oriChangeList: IVersionChangeLog;
   private _actualChangeList: IVersionChangeLog;
@@ -69,11 +69,11 @@ export class ActualService {
     this._actualUser = value;
   }
 
-  get actualTagInfos(): TagInfo[] {
+  get actualTagInfos(): TagInfoImpl[] {
     return this._actualTagInfos;
   }
 
-  set actualTagInfos(value: TagInfo[]) {
+  set actualTagInfos(value: TagInfoImpl[]) {
     this._actualTagInfos = value;
   }
 

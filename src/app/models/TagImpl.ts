@@ -1,12 +1,12 @@
-import { ITag } from './ITag';
-import { TagInfo } from './TagInfo';
 import { ICodeCaption } from './ICodeCaption';
+import { ITag } from './ITag';
+import { TagInfoImpl } from './TagInfo';
 
-export class Tag implements ITag {
+export class TagImpl implements ITag {
     private _compactValues: ICodeCaption[] = [];
     public code: string;
     constructor(
-        public tagInfo: TagInfo,
+        public tagInfo: TagInfoImpl,
         public values?: string[],
         public value?: boolean | string | number
     ) {

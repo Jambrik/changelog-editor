@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
-import { Program } from '../models/Program';
+import { ProgramImpl } from '../models/ProgramImpl';
 import { ConfigService } from '../services/config.service';
 
 @Component({
@@ -12,13 +12,13 @@ export class ConfigEditorComponent implements OnInit {
 
   displayDialog: boolean;
 
-  program: Program;
+  program: ProgramImpl;
 
-  selectedProgram: Program;
+  selectedProgram: ProgramImpl;
 
   newCar: boolean;
 
-  programs: Program[];
+  programs: ProgramImpl[];
 
   cols: any[];
 
@@ -34,7 +34,7 @@ export class ConfigEditorComponent implements OnInit {
     this.configService.getConfig().subscribe(config => {
       const programs = [];
       config.programs.forEach(p => {
-        const program: Program = new Program(
+        const program: ProgramImpl = new ProgramImpl(
           p.id,
           p.name,
           p.path,
@@ -60,7 +60,7 @@ export class ConfigEditorComponent implements OnInit {
 
   showDialogToAdd() {
     this.newCar = true;
-    this.program = new Program(null,
+    this.program = new ProgramImpl(null,
       '',
       '',
       [],
@@ -95,7 +95,7 @@ export class ConfigEditorComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  cloneProgram(p: Program): Program {
+  cloneProgram(p: ProgramImpl): ProgramImpl {
     return _.cloneDeep(p);
   }
 

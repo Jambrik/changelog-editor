@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Tag } from '../models/Tag';
+import { Component, Input, OnInit } from '@angular/core';
+import { TagImpl } from '../models/TagImpl';
 
 
 
@@ -9,7 +9,7 @@ import { Tag } from '../models/Tag';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
-  @Input() tags: Tag[];
+  @Input() tags: TagImpl[];
   @Input() editing: boolean;
   constructor(
   ) {
