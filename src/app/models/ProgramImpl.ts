@@ -1,6 +1,6 @@
-import { IVersionMetaData } from './IVersionMetaData';
 import { Program } from './Program';
 import { TagInfo } from './TagInfo';
+import { VersionMetaData } from './VersionMetaData';
 
 export class ProgramImpl implements Program {
     constructor(
@@ -8,7 +8,7 @@ export class ProgramImpl implements Program {
         public name: string,
         public path: string,
         public langs: string[],
-        public versions: IVersionMetaData[],
+        public versions: VersionMetaData[],
         public tagInfos: TagInfo[]) {
     }
 

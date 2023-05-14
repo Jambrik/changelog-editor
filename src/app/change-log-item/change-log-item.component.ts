@@ -6,12 +6,12 @@ import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
 import { ChangeLogItem } from '../models/ChangeLogItem';
 import { I18n } from '../models/I18N';
-import { User } from '../models/IUser';
-import { IVersionMetaData } from '../models/IVersionMetaData';
 import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
 import { Tag } from '../models/Tag';
 import { TagImpl } from '../models/TagImpl';
+import { User } from '../models/User';
+import { VersionMetaData } from '../models/VersionMetaData';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
 import { GoogleTranslateService } from '../services/google-translate.service';
@@ -193,7 +193,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     return this.actualService.actualProgram;
   }
 
-  public get version(): IVersionMetaData {
+  public get version(): VersionMetaData {
     return this.actualService.actualVersion;
   }
 

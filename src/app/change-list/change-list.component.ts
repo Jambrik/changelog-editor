@@ -8,12 +8,12 @@ import { ConfigHelper } from '../helpers/config-helper';
 import { StringHelpers } from '../helpers/string-helpers';
 import { ChangeLogItem } from '../models/ChangeLogItem';
 import { I18n } from '../models/I18N';
-import { IVersionChangeLog } from '../models/IVersionChangeLog';
-import { IVersionMetaData } from '../models/IVersionMetaData';
 import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
 import { TagInfoImpl } from '../models/TagInfoImpl';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
+import { VersionChangeLog } from '../models/VersionChangeLog';
+import { VersionMetaData } from '../models/VersionMetaData';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
 import { ConfigService } from '../services/config.service';
@@ -27,8 +27,8 @@ import { ChangeLogAction } from '../types/types';
 export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
   public program: Program;
-  public version: IVersionMetaData = { version: '' };
-  public changeList: IVersionChangeLog;
+  public version: VersionMetaData = { version: '' };
+  public changeList: VersionChangeLog;
   public action: ChangeLogAction;
   public id: string;
   public oldId: string;
@@ -227,7 +227,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   }
 
-  private filter(inputChangeList: IVersionChangeLog): IVersionChangeLog {
+  private filter(inputChangeList: VersionChangeLog): VersionChangeLog {
     const changeList = {
       releaseDate: inputChangeList.releaseDate,
       version: inputChangeList.version,

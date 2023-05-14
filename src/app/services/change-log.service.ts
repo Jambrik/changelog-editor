@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ChangeLogItem } from '../models/ChangeLogItem';
-import { IVersionChangeLog } from '../models/IVersionChangeLog';
-import { IVersionMetaData } from '../models/IVersionMetaData';
+import { VersionChangeLog } from '../models/VersionChangeLog';
+import { VersionMetaData } from '../models/VersionMetaData';
 
 @Injectable()
 export class ChangeLogService {
@@ -17,12 +17,12 @@ export class ChangeLogService {
   ) { }
 
 
-  public getVersionsForProgramId(programId: number): Observable<IVersionMetaData[]> {
-    return this.http.get<IVersionMetaData[]>(environment.backEndUrl + 'api/versions/' + programId);
+  public getVersionsForProgramId(programId: number): Observable<VersionMetaData[]> {
+    return this.http.get<VersionMetaData[]>(environment.backEndUrl + 'api/versions/' + programId);
   }
 
-  public getChangeLogs(programId: number, versionNumber: string): Observable<IVersionChangeLog> {
-    return this.http.get<IVersionChangeLog>(environment.backEndUrl + 'api/change-log-load/' + programId + '/' + versionNumber);
+  public getChangeLogs(programId: number, versionNumber: string): Observable<VersionChangeLog> {
+    return this.http.get<VersionChangeLog>(environment.backEndUrl + 'api/change-log-load/' + programId + '/' + versionNumber);
   }
 
   public changeLogWrite(programId: number, versionNumber: string, item: ChangeLogItem) {
@@ -57,7 +57,7 @@ export class ChangeLogService {
   }
 
   public createNewVersion(programId: number, version: string) {
-    return this.http.get<IVersionChangeLog>(environment.backEndUrl + 'api/new-version/' + programId + '/' + version);
+    return this.http.get<VersionChangeLog>(environment.backEndUrl + 'api/new-version/' + programId + '/' + version);
   }
 
 }

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigHelper } from '../helpers/config-helper';
-import { IVersionMetaData } from '../models/IVersionMetaData';
 import { Program } from '../models/Program';
+import { VersionMetaData } from '../models/VersionMetaData';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
 import { ConfigService } from '../services/config.service';
@@ -66,7 +66,7 @@ export class NewVersionCreatationComponent implements OnInit {
   }
 
   private valid(): boolean {
-    const lastVersion: IVersionMetaData = this.getLastVersion();
+    const lastVersion: VersionMetaData = this.getLastVersion();
     if (lastVersion != null) {
       this.smaller = this.versionNumber <= lastVersion.version;
     } else {
@@ -78,14 +78,14 @@ export class NewVersionCreatationComponent implements OnInit {
 
   public cancel(event: Event) {
     event.preventDefault();
-    const lastVersion: IVersionMetaData = this.getLastVersion();
+    const lastVersion: VersionMetaData = this.getLastVersion();
     if (lastVersion != null) {
       this.router.navigate(['/change-list', this.program.id, lastVersion.version, 'read', 'none'],
         { queryParams: { lang: this.getActualLang() } });
     }
   }
 
-  private getLastVersion(): IVersionMetaData {
+  private getLastVersion(): VersionMetaData {
     if (this.actualService.actualProgram.versions.length > 0) {
       return this.actualService.actualProgram.versions[0];
     } else {

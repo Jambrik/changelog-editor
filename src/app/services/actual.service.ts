@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/IUser';
-import { IVersionChangeLog } from '../models/IVersionChangeLog';
-import { IVersionMetaData } from '../models/IVersionMetaData';
 import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
 import { RendezCompact } from '../models/RendezCompact';
 import { TagInfoImpl } from '../models/TagInfoImpl';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
+import { User } from '../models/User';
+import { VersionChangeLog } from '../models/VersionChangeLog';
+import { VersionMetaData } from '../models/VersionMetaData';
 import { ChangeLogService } from './change-log.service';
 
 @Injectable()
 export class ActualService {
   private _actualProgram: Program;
-  private _actualVersions: IVersionMetaData[];
-  private _actualVersion: IVersionMetaData;
+  private _actualVersions: VersionMetaData[];
+  private _actualVersion: VersionMetaData;
   private _actualAction: string;
   private _actualUser: User;
   private _actualTagInfos: TagInfoImpl[];
   private _actualFilter: string;
-  private _oriChangeList: IVersionChangeLog;
-  private _actualChangeList: IVersionChangeLog;
+  private _oriChangeList: VersionChangeLog;
+  private _actualChangeList: VersionChangeLog;
   private _iTagInfosCheckBox: ITagInfosCheckBox[];
   private _actualRendezValaszt: RendezCompact[];
   private _actualRendezKihagy: RendezCompact[];
@@ -37,19 +37,19 @@ export class ActualService {
     this._actualProgram = value;
   }
 
-  get actualVersions(): IVersionMetaData[] {
+  get actualVersions(): VersionMetaData[] {
     return this._actualVersions;
   }
 
-  set actualVersions(value: IVersionMetaData[]) {
+  set actualVersions(value: VersionMetaData[]) {
     this._actualVersions = value;
   }
 
-  get actualVersion(): IVersionMetaData {
+  get actualVersion(): VersionMetaData {
     return this._actualVersion;
   }
 
-  set actualVersion(value: IVersionMetaData) {
+  set actualVersion(value: VersionMetaData) {
     this._actualVersion = value;
   }
 
@@ -85,19 +85,19 @@ export class ActualService {
     this._actualFilter = value;
   }
 
-  get oriChangeList(): IVersionChangeLog {
+  get oriChangeList(): VersionChangeLog {
     return this._oriChangeList;
   }
 
-  set oriChangeList(value: IVersionChangeLog) {
+  set oriChangeList(value: VersionChangeLog) {
     this._oriChangeList = value;
   }
 
-  get actualChangeList(): IVersionChangeLog {
+  get actualChangeList(): VersionChangeLog {
     return this._actualChangeList;
   }
 
-  set actualChangeList(value: IVersionChangeLog) {
+  set actualChangeList(value: VersionChangeLog) {
     this._actualChangeList = value;
   }
 

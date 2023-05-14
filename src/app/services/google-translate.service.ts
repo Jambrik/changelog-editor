@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ITranslate } from '../models/ITranslateData';
+import { Translate } from '../models/TranslateData';
 
 @Injectable()
 export class GoogleTranslateService {
 
   constructor(private http: HttpClient) { }
 
-  public translate(text: string, from: string, to: string): Observable<ITranslate> {
-    return this.http.post<ITranslate>(environment.backEndUrl + 'api/translate/',
+  public translate(text: string, from: string, to: string): Observable<Translate> {
+    return this.http.post<Translate>(environment.backEndUrl + 'api/translate/',
       {
         text: text,
         from: from,

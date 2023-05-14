@@ -1,5 +1,5 @@
-import { IVersionMetaData } from '../models/IVersionMetaData';
 import { Program } from '../models/Program';
+import { VersionMetaData } from '../models/VersionMetaData';
 
 export class ConfigHelper {
     static getProgramById(programs: Program[], id: number) {
@@ -12,7 +12,7 @@ export class ConfigHelper {
         return null;
     }
 
-    static versionSorter = (a: IVersionMetaData, b: IVersionMetaData) => {
+    static versionSorter = (a: VersionMetaData, b: VersionMetaData) => {
         if (a.version < b.version) {
             return 1;
         } else if (a.version === b.version) {
@@ -22,8 +22,8 @@ export class ConfigHelper {
         }
     }
 
-    static getVersion(versions: IVersionMetaData[], versionNumber: string): IVersionMetaData {
-        let result: IVersionMetaData = null;
+    static getVersion(versions: VersionMetaData[], versionNumber: string): VersionMetaData {
+        let result: VersionMetaData = null;
         versions.forEach(v => {
             if (v.version === versionNumber) {
                 result = v;
