@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ILabelValue } from '../models/ILableValue';
-import { IProgram } from '../models/IProgram';
-import { IRendezCompact } from '../models/IRendezCompact';
 import { User } from '../models/IUser';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { LabelValue } from '../models/LableValue';
+import { Program } from '../models/Program';
+import { RendezCompact } from '../models/RendezCompact';
 import { TagInfoImpl } from '../models/TagInfo';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
 import { ChangeLogService } from './change-log.service';
 
 @Injectable()
 export class ActualService {
-  private _actualProgram: IProgram;
+  private _actualProgram: Program;
   private _actualVersions: IVersionMetaData[];
   private _actualVersion: IVersionMetaData;
   private _actualAction: string;
@@ -21,19 +21,19 @@ export class ActualService {
   private _oriChangeList: IVersionChangeLog;
   private _actualChangeList: IVersionChangeLog;
   private _iTagInfosCheckBox: ITagInfosCheckBox[];
-  private _actualRendezValaszt: IRendezCompact[];
-  private _actualRendezKihagy: IRendezCompact[];
-  private _actualRendezValasztKiir: ILabelValue[];
-  private _actualRendezKihagyKiir: ILabelValue[];
+  private _actualRendezValaszt: RendezCompact[];
+  private _actualRendezKihagy: RendezCompact[];
+  private _actualRendezValasztKiir: LabelValue[];
+  private _actualRendezKihagyKiir: LabelValue[];
   constructor(private changeLogService: ChangeLogService) {
 
   }
 
-  get actualProgram(): IProgram {
+  get actualProgram(): Program {
     return this._actualProgram;
   }
 
-  set actualProgram(value: IProgram) {
+  set actualProgram(value: Program) {
     this._actualProgram = value;
   }
 
@@ -111,35 +111,35 @@ export class ActualService {
   }
 
 
-  get actualRendezValaszt(): IRendezCompact[] {
+  get actualRendezValaszt(): RendezCompact[] {
     return this._actualRendezValaszt;
   }
 
-  set actualRendezValaszt(value: IRendezCompact[]) {
+  set actualRendezValaszt(value: RendezCompact[]) {
     this._actualRendezValaszt = value;
   }
 
-  get actualRendezKihagy(): IRendezCompact[] {
+  get actualRendezKihagy(): RendezCompact[] {
     return this._actualRendezKihagy;
   }
 
-  set actualRendezKihagy(value: IRendezCompact[]) {
+  set actualRendezKihagy(value: RendezCompact[]) {
     this._actualRendezKihagy = value;
   }
 
-  get actualRendezValasztKiir(): ILabelValue[] { // ILabelValue
+  get actualRendezValasztKiir(): LabelValue[] { // ILabelValue
     return this._actualRendezValasztKiir;
   }
 
-  set actualRendezValasztKiir(value: ILabelValue[]) {
+  set actualRendezValasztKiir(value: LabelValue[]) {
     this._actualRendezValasztKiir = value;
   }
 
-  get actualRendezKihagyKiir(): ILabelValue[] {
+  get actualRendezKihagyKiir(): LabelValue[] {
     return this._actualRendezKihagyKiir;
   }
 
-  set actualRendezKihagyKiir(value: ILabelValue[]) {
+  set actualRendezKihagyKiir(value: LabelValue[]) {
     this._actualRendezKihagyKiir = value;
   }
 

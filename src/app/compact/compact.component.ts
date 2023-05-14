@@ -5,13 +5,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
 import { ConfigHelper } from '../helpers/config-helper';
+import { ChangeLogItem } from '../models/ChangeLogItem';
 import { I18n } from '../models/I18N';
-import { IChangeLogItem } from '../models/IChangeLogItem';
-import { ILabelValue } from '../models/ILableValue';
-import { IProgram } from '../models/IProgram';
-import { IRendezCompact } from '../models/IRendezCompact';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { LabelValue } from '../models/LableValue';
+import { Program } from '../models/Program';
+import { RendezCompact } from '../models/RendezCompact';
 import { TagImpl } from '../models/TagImpl';
 import { TagInfoImpl } from '../models/TagInfo';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
@@ -36,13 +36,13 @@ export class CompactComponent implements OnInit, OnChanges {
   public version: IVersionMetaData = { version: '' };
   public id: string;
   public oldId: string;
-  public newChangeItem: IChangeLogItem;
-  public langs: ILabelValue[] = [];
+  public newChangeItem: ChangeLogItem;
+  public langs: LabelValue[] = [];
   public filterText = '';
   public loading = false;
-  public types: ILabelValue[] = [];
+  public types: LabelValue[] = [];
   public selectedTypes: string[] = [];
-  public importances: ILabelValue[] = [];
+  public importances: LabelValue[] = [];
   public selectedImportances: string[] = [];
   public compactTags: TagImpl[];
   public startDate: Date;
@@ -50,7 +50,7 @@ export class CompactComponent implements OnInit, OnChanges {
   descriptions: I18n[] = [];
   msgs: Message[] = [];
   public showReleasedVersionWarning = false;
-  changeLogItemOri: IChangeLogItem;
+  changeLogItemOri: ChangeLogItem;
   public page = false;
   public tech = false;
   public work = false;
@@ -78,14 +78,14 @@ export class CompactComponent implements OnInit, OnChanges {
   public menuSzoveg: string;
   public iTagInfosCheckBox: ITagInfosCheckBox[];
   public iTagInfosCheckBoxAdd: string[] = [];
-  public iRendezCompactMind: IRendezCompact[];
-  public iRendezCompactMindValaszt: IRendezCompact[];
+  public iRendezCompactMind: RendezCompact[];
+  public iRendezCompactMindValaszt: RendezCompact[];
   public rendezConst: string[] = ['Dátum', 'Típus', 'Fontosság', 'Jegyszám'];
   public rendezConstproperty: string[] = ['date', 'type', 'importance', 'ticketNumber'];
-  public iRendezCompactKihagy: IRendezCompact[];
-  public iRendezCompactKiValaszt: IRendezCompact[] = [];
-  public sortChanges: IChangeLogItem[];
-  public sorba: IRendezCompact[] = [];
+  public iRendezCompactKihagy: RendezCompact[];
+  public iRendezCompactKiValaszt: RendezCompact[] = [];
+  public sortChanges: ChangeLogItem[];
+  public sorba: RendezCompact[] = [];
   public elsoProperty: any = '';
   public masodikProperty: any = '';
   public harmadikProperty: any = '';
@@ -93,13 +93,13 @@ export class CompactComponent implements OnInit, OnChanges {
   public otodikProperty: any = '';
   public hatodikProperty: any = '';
   public hetedikProperty: any = '';
-  public rendezKivalaszt: ILabelValue[] = [];
-  public rendezKihagy: ILabelValue[] = [];
-  public rendezKihagyAdd: ILabelValue[] = [];
+  public rendezKivalaszt: LabelValue[] = [];
+  public rendezKihagy: LabelValue[] = [];
+  public rendezKihagyAdd: LabelValue[] = [];
   public rendezVezerles: any[] = [0];
   public rendezesTorleseAtadas: any[] = [];
   public megNincsPluszSor = true;
-  public kiValasztmegmarad: IRendezCompact[] = [];
+  public kiValasztmegmarad: RendezCompact[] = [];
   public elementNev: string;
   public csokkenNovekvo = false;
   public csokkenNovekvoElso = true;
@@ -109,12 +109,12 @@ export class CompactComponent implements OnInit, OnChanges {
   public csokkenNovekvoOtodik = true;
   public csokkenNovekvoHatodik = true;
   public csokkenNovekvoHetedik = true;
-  public tableInfo: IChangeLogItem[];
+  public tableInfo: ChangeLogItem[];
   public tableElso = '';
   public tableMasodik = '';
   public tableAdatok: any[] = [];
-  public tableAdatokRendezes: IRendezCompact[];
-  public tableAdatokRendezesNelkul: IRendezCompact[];
+  public tableAdatokRendezes: RendezCompact[];
+  public tableAdatokRendezesNelkul: RendezCompact[];
   public torlesHozzadasVezerles = 0;
 
 
@@ -235,7 +235,7 @@ export class CompactComponent implements OnInit, OnChanges {
 
   private setActualTaginfosAdd() {
     const resultList: TagInfoImpl[] = [];
-    const program: IProgram = this.actualService.actualProgram;
+    const program: Program = this.actualService.actualProgram;
     const tagInfos = program.tagInfos;
     program.tagInfos.forEach((x) => console.log('taginfo:' + x.captions.forEach((y) => console.log('caption:' + y.text))));
     if (tagInfos) {
@@ -578,7 +578,7 @@ export class CompactComponent implements OnInit, OnChanges {
 
   }
 
-  public getLastVersion(program: IProgram): string {
+  public getLastVersion(program: Program): string {
     if (program.versions && (program.versions.length > 0)) {
       program.versions.sort(ConfigHelper.versionSorter);
       return program.versions[0].version;
@@ -589,7 +589,7 @@ export class CompactComponent implements OnInit, OnChanges {
   }
 
 
-  public get program(): IProgram {
+  public get program(): Program {
     return this.actualService.actualProgram;
   }
 
@@ -834,7 +834,7 @@ export class CompactComponent implements OnInit, OnChanges {
     }
   }
 
-  public rendezesHozzaadas(nemKell: IRendezCompact[], value: string) {
+  public rendezesHozzaadas(nemKell: RendezCompact[], value: string) {
     if (this.rendezVezerles.length <= this.rendezConst.length - 1) {
       this.rendezVezerles.push(this.rendezVezerles.length);
     }
@@ -1233,11 +1233,11 @@ export class CompactComponent implements OnInit, OnChanges {
     this.buildCompactChangesText(null);
   }
 
-  public dinamikusTable(tableData: IRendezCompact[], property: string) {
+  public dinamikusTable(tableData: RendezCompact[], property: string) {
     return tableData[property];
   }
 
-  public sorrendNelkulOszlopok(kiValaszt: IRendezCompact[], megMarad: IRendezCompact[]) {
+  public sorrendNelkulOszlopok(kiValaszt: RendezCompact[], megMarad: RendezCompact[]) {
     this.tableAdatokRendezesNelkul = [];
 
     for (let index = 0; index < megMarad.length; index++) {

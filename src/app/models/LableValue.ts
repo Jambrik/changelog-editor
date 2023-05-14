@@ -1,4 +1,4 @@
-export interface ILabelValue {
+export interface LabelValue {
     label: string;
     value: any;
 }

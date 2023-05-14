@@ -4,13 +4,13 @@ import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
+import { ChangeLogItem } from '../models/ChangeLogItem';
 import { I18n } from '../models/I18N';
-import { IChangeLogItem } from '../models/IChangeLogItem';
-import { ILabelValue } from '../models/ILableValue';
-import { IProgram } from '../models/IProgram';
 import { ITag } from '../models/ITag';
 import { User } from '../models/IUser';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { LabelValue } from '../models/LableValue';
+import { Program } from '../models/Program';
 import { TagImpl } from '../models/TagImpl';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
@@ -24,7 +24,7 @@ import { ChangeLogAction } from '../types/types';
 })
 export class ChangeLogItemComponent implements OnInit, OnChanges {
 
-  @Input() changeLogItem: IChangeLogItem;
+  @Input() changeLogItem: ChangeLogItem;
   @Input() action: ChangeLogAction;
   @Input() modId: string;
   @Input() selectedLangs: string[];
@@ -33,15 +33,15 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   deleteMessageShown = false;
   isEditor = true;
   translatePanelShown = false;
-  froms: ILabelValue[] = [];
-  tos: ILabelValue[] = [];
+  froms: LabelValue[] = [];
+  tos: LabelValue[] = [];
   selectedFrom: string;
   selectedTos: string[] = [];
-  changeLogItemOri: IChangeLogItem;
+  changeLogItemOri: ChangeLogItem;
   descriptions: I18n[] = [];
-  public types: ILabelValue[];
+  public types: LabelValue[];
 
-  public importances: ILabelValue[];
+  public importances: LabelValue[];
   public showReleasedVersionWarning = false;
   public compactTags: TagImpl[];
 
@@ -189,7 +189,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       });
   }
 
-  public get program(): IProgram {
+  public get program(): Program {
     return this.actualService.actualProgram;
   }
 

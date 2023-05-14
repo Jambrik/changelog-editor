@@ -1,4 +1,4 @@
-export interface ICodeCaption {
+export interface CodeCaption {
     code: string;
     caption: string;
 }

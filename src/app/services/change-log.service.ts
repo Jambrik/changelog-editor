@@ -1,11 +1,11 @@
-import { environment } from '../../environments/environment';
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IVersionChangeLog } from '../models/IVersionChangeLog';
-import { IChangeLogItem } from '../models/IChangeLogItem';
+import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IVersionMetaData } from '../models/IVersionMetaData';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { ChangeLogItem } from '../models/ChangeLogItem';
+import { IVersionChangeLog } from '../models/IVersionChangeLog';
+import { IVersionMetaData } from '../models/IVersionMetaData';
 
 @Injectable()
 export class ChangeLogService {
@@ -25,7 +25,7 @@ export class ChangeLogService {
     return this.http.get<IVersionChangeLog>(environment.backEndUrl + 'api/change-log-load/' + programId + '/' + versionNumber);
   }
 
-  public changeLogWrite(programId: number, versionNumber: string, item: IChangeLogItem) {
+  public changeLogWrite(programId: number, versionNumber: string, item: ChangeLogItem) {
     return this.http.post(environment.backEndUrl + 'api/change-log-write',
       {
         programId: programId,

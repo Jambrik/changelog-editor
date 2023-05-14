@@ -1,9 +1,9 @@
-import { ICodeCaption } from './ICodeCaption';
+import { CodeCaption } from './CodeCaption';
 import { ITag } from './ITag';
 import { TagInfoImpl } from './TagInfo';
 
 export class TagImpl implements ITag {
-    private _compactValues: ICodeCaption[] = [];
+    private _compactValues: CodeCaption[] = [];
     public code: string;
     constructor(
         public tagInfo: TagInfoImpl,
@@ -14,7 +14,7 @@ export class TagImpl implements ITag {
 
     }
 
-    public get compactValues(): ICodeCaption[] {
+    public get compactValues(): CodeCaption[] {
         this._compactValues.length = 0;
         for (const value of this.values) {
             for (const compactValue of this.tagInfo.valuesCompact) {
@@ -26,7 +26,7 @@ export class TagImpl implements ITag {
         return this._compactValues;
     }
 
-    public set compactValues(compactValues: ICodeCaption[]) {
+    public set compactValues(compactValues: CodeCaption[]) {
         const values: string[] = [];
         for (const compactValue of compactValues) {
             values.push(compactValue.code);

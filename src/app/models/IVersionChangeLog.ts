@@ -1,6 +1,6 @@
-import { IChangeLogItem } from './IChangeLogItem';
+import { ChangeLogItem } from './ChangeLogItem';
 import { IVersionMetaData } from './IVersionMetaData';
 
 export interface IVersionChangeLog extends IVersionMetaData {
-    changes: IChangeLogItem[];
+    changes: ChangeLogItem[];
 }

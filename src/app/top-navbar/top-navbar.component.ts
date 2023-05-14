@@ -1,14 +1,14 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { ConfigHelper } from '../helpers/config-helper';
-import { IProgram } from '../models/IProgram';
+import { Program } from '../models/Program';
 import { ActualService } from '../services/actual.service';
 import { ConfigService } from '../services/config.service';
 
@@ -19,7 +19,7 @@ import { ConfigService } from '../services/config.service';
 })
 export class TopNavbarComponent implements OnInit, OnChanges {
   public filterText: string;
-  public programs: IProgram[];
+  public programs: Program[];
   public searchTerm$ = new Subject<string>();
   constructor(
     private configService: ConfigService,
@@ -81,7 +81,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
   }
 
 
-  public openProgram(program: IProgram) {
+  public openProgram(program: Program) {
     this.actualService.actualProgram = program;
 
   }
@@ -94,7 +94,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
     }
   }
 
-  public getLastVersionNumber(program: IProgram): string {
+  public getLastVersionNumber(program: Program): string {
     if (program.versions && (program.versions.length > 0)) {
       program.versions.sort(ConfigHelper.versionSorter);
       return program.versions[0].version;

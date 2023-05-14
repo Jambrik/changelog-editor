@@ -1,7 +1,7 @@
 import { I18n } from './I18N';
 import { ITag } from './ITag';
 
-export interface IChangeLogItem {
+export interface ChangeLogItem {
     id: string;
     date: Date;
     ticketNumber?: string;

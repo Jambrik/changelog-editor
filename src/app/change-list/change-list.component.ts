@@ -6,12 +6,12 @@ import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
 import { ConfigHelper } from '../helpers/config-helper';
 import { StringHelpers } from '../helpers/string-helpers';
+import { ChangeLogItem } from '../models/ChangeLogItem';
 import { I18n } from '../models/I18N';
-import { IChangeLogItem } from '../models/IChangeLogItem';
-import { ILabelValue } from '../models/ILableValue';
-import { IProgram } from '../models/IProgram';
 import { IVersionChangeLog } from '../models/IVersionChangeLog';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { LabelValue } from '../models/LableValue';
+import { Program } from '../models/Program';
 import { TagInfoImpl } from '../models/TagInfo';
 import { ITagInfosCheckBox } from '../models/TagInfosCheckBox';
 import { ActualService } from '../services/actual.service';
@@ -26,20 +26,20 @@ import { ChangeLogAction } from '../types/types';
 })
 export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
-  public program: IProgram;
+  public program: Program;
   public version: IVersionMetaData = { version: '' };
   public changeList: IVersionChangeLog;
   public action: ChangeLogAction;
   public id: string;
   public oldId: string;
-  public newChangeItem: IChangeLogItem;
-  public langs: ILabelValue[] = [];
+  public newChangeItem: ChangeLogItem;
+  public langs: LabelValue[] = [];
   public selectedLangs: string[] = [];
   public filterText = '';
   public loading = false;
-  public types: ILabelValue[] = [];
+  public types: LabelValue[] = [];
   public selectedTypes: string[] = [];
-  public importances: ILabelValue[] = [];
+  public importances: LabelValue[] = [];
   public selectedImportances: string[] = [];
   msgs: Message[] = [];
   public isEditor = true;
@@ -240,7 +240,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         ((!change.importance && (this.selectedImportances.indexOf(Constants.NORMAL) > -1)) ||
           (this.selectedImportances.indexOf(change.importance) > -1))) {
         let found = false;
-        const newChange: IChangeLogItem = _.cloneDeep(change);
+        const newChange: ChangeLogItem = _.cloneDeep(change);
         if (!newChange.importance || (newChange.importance == null)) {
           newChange.importance = 'normal';
         }
@@ -304,7 +304,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   }
 
-  filterDescription(change: IChangeLogItem): boolean {
+  filterDescription(change: ChangeLogItem): boolean {
     let found = false;
     if (this.filterText) {
       change.descriptions.forEach(description => {
@@ -458,7 +458,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
 
   private setActualTaginfos() {
     const resultList: TagInfoImpl[] = [];
-    const program: IProgram = this.actualService.actualProgram;
+    const program: Program = this.actualService.actualProgram;
     const tagInfos = program.tagInfos;
     if (tagInfos) {
       for (const tagInfo of tagInfos) {

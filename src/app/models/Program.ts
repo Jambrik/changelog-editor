@@ -1,7 +1,7 @@
-import { IVersionMetaData } from './IVersionMetaData';
 import { ITagInfo } from './ITagInfo';
+import { IVersionMetaData } from './IVersionMetaData';
 
-export interface IProgram {
+export interface Program {
     id: number;
     name: string;
     path: string;

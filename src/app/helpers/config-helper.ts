@@ -1,8 +1,8 @@
-import { IProgram } from '../models/IProgram';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { Program } from '../models/Program';
 
 export class ConfigHelper {
-    static getProgramById(programs: IProgram[], id: number) {
+    static getProgramById(programs: Program[], id: number) {
         for (const program of programs) {
             if (program.id === id) {
                 return program;

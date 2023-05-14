@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigHelper } from '../helpers/config-helper';
-import { IProgram } from '../models/IProgram';
 import { IVersionMetaData } from '../models/IVersionMetaData';
+import { Program } from '../models/Program';
 import { ActualService } from '../services/actual.service';
 import { ChangeLogService } from '../services/change-log.service';
 import { ConfigService } from '../services/config.service';
@@ -47,7 +47,7 @@ export class NewVersionCreatationComponent implements OnInit {
   }
 
 
-  public get program(): IProgram {
+  public get program(): Program {
     return this.actualService.actualProgram;
 
   }

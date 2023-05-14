@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICodeCaption } from '../models/ICodeCaption';
+import { CodeCaption } from '../models/CodeCaption';
 import { TagImpl } from '../models/TagImpl';
 
 @Component({
@@ -10,7 +10,7 @@ import { TagImpl } from '../models/TagImpl';
 export class TagComponent implements OnInit {
   @Input() tag: TagImpl;
   @Input() editing: boolean;
-  public allCompactValues: ICodeCaption[];
+  public allCompactValues: CodeCaption[];
 
   constructor() { }
 
@@ -19,16 +19,16 @@ export class TagComponent implements OnInit {
     this.values = this.tag.compactValues;
   }
 
-  public get values(): ICodeCaption[] {
+  public get values(): CodeCaption[] {
     return this.tag.compactValues;
   }
 
-  public set values(values: ICodeCaption[]) {
+  public set values(values: CodeCaption[]) {
     this.tag.compactValues = values;
   }
 
   search(event) {
-    const compactValues: ICodeCaption[] = [];
+    const compactValues: CodeCaption[] = [];
     if (event.query === '') {
       for (const valueCompact of this.tag.tagInfo.valuesCompact) {
         if (!this.isInTheSelectedValues(valueCompact)) {
@@ -47,7 +47,7 @@ export class TagComponent implements OnInit {
 
   }
 
-  private isInTheSelectedValues(inValue: ICodeCaption) {
+  private isInTheSelectedValues(inValue: CodeCaption) {
     let found = false;
     for (const value of this.values) {
       if (value.code === inValue.code) {

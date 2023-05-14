@@ -1,4 +1,4 @@
-export interface IRendezCompact {
+export interface RendezCompact {
     value: string;
     gysor: number;
     id: number;

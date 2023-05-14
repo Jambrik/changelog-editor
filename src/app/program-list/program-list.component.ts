@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../services/config.service';
-import { IProgram } from '../models/IProgram';
-import { ActualService } from '../services/actual.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigHelper } from '../helpers/config-helper';
+import { Program } from '../models/Program';
+import { ActualService } from '../services/actual.service';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-program-list',
@@ -11,7 +11,7 @@ import { ConfigHelper } from '../helpers/config-helper';
   styleUrls: ['./program-list.component.scss']
 })
 export class ProgramListComponent implements OnInit {
-  public programs: IProgram[];
+  public programs: Program[];
   constructor(private configService: ConfigService,
     private actualService: ActualService,
     private translateService: TranslateService
@@ -33,7 +33,7 @@ export class ProgramListComponent implements OnInit {
     );
   }
 
-  public getLastVersion(program: IProgram): string {
+  public getLastVersion(program: Program): string {
     if (program.versions && (program.versions.length > 0)) {
       program.versions.sort(ConfigHelper.versionSorter);
       return program.versions[0].version;
