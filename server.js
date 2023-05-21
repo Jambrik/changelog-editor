@@ -27,7 +27,7 @@ router.get('/', function (req, res) {
   res.json({ message: 'Welcome! It is a light weight change-log app-api!' });
 });
 
-router.route('/change-log-load/:program_id/:version')
+router.route('/changelog/load/:program_id/:version')
   .get(function (req, res) {
     var param = {
       programId: req.params.program_id,
@@ -37,7 +37,15 @@ router.route('/change-log-load/:program_id/:version')
     res.json(cl);
   });
 
-  router.route('/change-log-write/')
+  router.route('/changelog/config/get')
+  .get(function (req, res) {
+    let config = configDao.mainConfigLoad();    
+    res.json(config);  
+
+  });
+
+
+  router.route('/changelog/write/')
   .post(function (req, res) {    
     var param = {
       programId: req.body.programId,
@@ -48,7 +56,7 @@ router.route('/change-log-load/:program_id/:version')
     res.json({done: true});
   });
 
-  router.route('/change-log-delete/')
+  router.route('/changelog/delete/')
   .post(function (req, res) {    
     var param = {
       programId: req.body.programId,
@@ -59,7 +67,7 @@ router.route('/change-log-load/:program_id/:version')
     res.json({done: true});
   });
 
-  router.route('/change-log-release/')
+  router.route('/changelog/release/')
   .post(function (req, res) {    
     var param = {
       programId: req.body.programId,
@@ -70,7 +78,7 @@ router.route('/change-log-load/:program_id/:version')
     res.json({done: true});
   });
 
-router.route('/versions/:program_id/')
+router.route('/changelog/versions/:program_id/')
   .get(function (req, res) {    
 
     var param = {
@@ -79,7 +87,7 @@ router.route('/versions/:program_id/')
     changeLogDao.changeLogVersions(param, res);    
   });
 
-  router.route('/new-version/:program_id/:version')
+  router.route('/changelog/new-version/:program_id/:version')
   .get(function (req, res) {            
     changeLogDao.newVersion(req.params.program_id, req.params.version);    
     res.json({done: true});
@@ -89,13 +97,6 @@ router.route('/versions/:program_id/')
   .post(function (req, res) {    
     
     translate.translate(req.body.text, req.body.from, req.body.to, res);    
-  });
-
-router.route('/config')
-  .get(function (req, res) {
-    let config = configDao.mainConfigLoad();    
-    res.json(config);  
-
   });
 
 
@@ -111,7 +112,7 @@ router.route('/config')
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use('/api', router);
+app.use('/rest', router);
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');

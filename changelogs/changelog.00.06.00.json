@@ -1,0 +1,43 @@
+{
+	"version": "00.06.00",
+	"changes": [
+		{
+			"id": "b31c8650-f7d1-11ed-bdb3-87ec3eb35b43",
+			"type": "feature",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2023-05-21T12:18:21.623Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>REST útvonalak megváltoztattva.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p> Rest routes changed. </p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": true
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 1
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2023-05-21T12:19:14.293Z",
+			"lmu": null,
+			"lmd": null
+		}
+	],
+	"releaseDate": "2023-05-20T22:00:00.000Z"
+}

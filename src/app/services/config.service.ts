@@ -13,7 +13,7 @@ export class ConfigService {
     private actualService: ActualService) { }
 
   public getConfig(): Observable<ChangeLogEditorConfig> {
-    return this.http.get<ChangeLogEditorConfig>(environment.backEndUrl + 'api/config')
+    return this.http.get<ChangeLogEditorConfig>(environment.backEndUrl + 'rest/changelog/config/get')
       .map((response: ChangeLogEditorConfig) => {
         console.log('User', response.user);
         this.actualService.actualUser = response.user;

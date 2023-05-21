@@ -18,15 +18,15 @@ export class ChangeLogService {
 
 
   public getVersionsForProgramId(programId: number): Observable<VersionMetaData[]> {
-    return this.http.get<VersionMetaData[]>(environment.backEndUrl + 'api/versions/' + programId);
+    return this.http.get<VersionMetaData[]>(environment.backEndUrl + 'rest/changelog/versions/' + programId);
   }
 
   public getChangeLogs(programId: number, versionNumber: string): Observable<VersionChangeLog> {
-    return this.http.get<VersionChangeLog>(environment.backEndUrl + 'api/change-log-load/' + programId + '/' + versionNumber);
+    return this.http.get<VersionChangeLog>(environment.backEndUrl + 'rest/changelog/load/' + programId + '/' + versionNumber);
   }
 
   public changeLogWrite(programId: number, versionNumber: string, item: ChangeLogItem) {
-    return this.http.post(environment.backEndUrl + 'api/change-log-write',
+    return this.http.post(environment.backEndUrl + 'rest/changelog/write',
       {
         programId: programId,
         version: versionNumber,
@@ -36,7 +36,7 @@ export class ChangeLogService {
   }
 
   public changeLogDelete(programId: number, versionNumber: string, id: string) {
-    return this.http.post(environment.backEndUrl + 'api/change-log-delete',
+    return this.http.post(environment.backEndUrl + 'rest/changelog/delete',
       {
         programId: programId,
         version: versionNumber,
@@ -47,7 +47,7 @@ export class ChangeLogService {
 
 
   public changeLogRelease(programId: number, versionNumber: string, releaseDate: Date) {
-    return this.http.post(environment.backEndUrl + 'api/change-log-release',
+    return this.http.post(environment.backEndUrl + 'rest/changelog/release',
       {
         programId: programId,
         version: versionNumber,
@@ -57,7 +57,7 @@ export class ChangeLogService {
   }
 
   public createNewVersion(programId: number, version: string) {
-    return this.http.get<VersionChangeLog>(environment.backEndUrl + 'api/new-version/' + programId + '/' + version);
+    return this.http.get<VersionChangeLog>(environment.backEndUrl + 'rest/changelog/new-version/' + programId + '/' + version);
   }
 
 }
