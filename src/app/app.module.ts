@@ -43,6 +43,10 @@ import { TagsComponent } from './tags/tags.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+import { IndicatorsModule } from '@progress/kendo-angular-indicators';
+import { NotificationModule } from '@progress/kendo-angular-notification';
+
+
 
 
 
@@ -98,7 +102,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     DropDownsModule,
     ButtonsModule,
-    DateInputsModule
+    DateInputsModule,
+    IndicatorsModule,
+    NotificationModule
   ],
   providers: [ConfigService, ActualService, ChangeLogService, MessageService, GoogleTranslateService, DatePipe],
   bootstrap: [AppComponent]
