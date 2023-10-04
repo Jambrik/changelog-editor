@@ -192,7 +192,12 @@
     <span translate>
       GOAL_LANGUAGES
     </span>:
-    <p-selectButton [options]="tos" [(ngModel)]="selectedTos" [multiple]="true"></p-selectButton>
+    <kendo-buttongroup selection="multiple">
+      <button *ngFor="let to of tos" kendoButton [toggleable]="true" [selected]="true">
+        {{to.label}}
+      </button>
+    </kendo-buttongroup>
+    <!--     <p-selectButton [options]="tos" [(ngModel)]="selectedTos" [multiple]="true"></p-selectButton> -->
   </div>
   <div class="p-2">
     <a href="/" class="btn btn-secondary pull-right" (click)="cancelTranslate($event)">
