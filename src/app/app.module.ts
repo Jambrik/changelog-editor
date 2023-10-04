@@ -41,6 +41,8 @@ import { GoogleTranslateService } from './services/google-translate.service';
 import { TagComponent } from './tag/tag.component';
 import { TagsComponent } from './tags/tags.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -92,7 +94,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    DropDownsModule
+    DropDownsModule,
+    ButtonsModule
   ],
   providers: [ConfigService, ActualService, ChangeLogService, MessageService, GoogleTranslateService, DatePipe],
   bootstrap: [AppComponent]
