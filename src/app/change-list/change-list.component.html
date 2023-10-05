@@ -14,7 +14,7 @@
                           year: 'YYYY',
                           month: 'MM',
                           day: 'DD'
-                        }"></kendo-datepicker>
+                        }" style="width:170px"></kendo-datepicker>
                     </span>
                     <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)">
                         <span class="fa fa-save"></span>
@@ -23,8 +23,9 @@
 
             </div>
             <div class="clearfix">
-
-                <p-messages [(value)]="msgs"></p-messages>
+                <!-- <kendo-grid>
+                    <kendo-grid-messages *ngFor="msg of msgs">{{msg}} </kendo-grid-messages>
+                </kendo-grid> -->
             </div>
             <div class="row">
                 <div class="pl-4">
@@ -81,7 +82,6 @@
                 <div class="row justify-content-md-center">
 
                     <kendo-loader type="infinite-spinner"></kendo-loader>
-                    <!-- <p-progressSpinner animationDuration=".5s"></p-progressSpinner> -->
                 </div>
             </div>
             <div *ngIf="changeList">

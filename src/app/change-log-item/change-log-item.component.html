@@ -15,7 +15,7 @@
       <div class="col-2">
         <span *ngIf="isEditing()">
           Okos szerkesztő:
-          <p-inputSwitch onLabel="Igen" offLabel="Nem" [(ngModel)]="isEditor"></p-inputSwitch>
+          <kendo-switch onLabel="Igen" offLabel="Nem" [(ngModel)]="isEditor"></kendo-switch>
         </span>
       </div>
       <div class="col-1">
@@ -35,7 +35,8 @@
             <span *ngIf="!isEditing()">
               {{changeLogItem.type | translate}}
             </span>
-            <p-dropdown [options]="types" [(ngModel)]="changeLogItem.type" *ngIf="isEditing()"></p-dropdown>
+            <kendo-dropdownlist [data]="types" [(ngModel)]="changeLogItem.type" textField="label" valueField="value"
+              [valuePrimitive]="true" style="width:100px;" *ngIf="isEditing()"></kendo-dropdownlist>
           </span>
         </div>
         <div class="pull-right pr-4">
@@ -44,8 +45,8 @@
             [class.text-secondary]="changeLogItem.importance == 'low'" *ngIf="!isEditing()">
             {{changeLogItem.importance | translate}}
           </span>
-
-          <p-dropdown [options]="importances" [(ngModel)]="changeLogItem.importance" *ngIf="isEditing()"></p-dropdown>
+          <kendo-dropdownlist *ngIf="isEditing()" [data]="importances" textField="label" valueField="value"
+            [(ngModel)]="changeLogItem.importance" [valuePrimitive]="true" style="width: 100px;"></kendo-dropdownlist>
         </div>
       </div>
     </div>
@@ -82,17 +83,17 @@
                         </div>
                       </span>
                     </a>
-
                   </div>
                   <div class="col-lg-11 col-md-9 col-sm-6">
 
                     <div *ngIf="!isEditing()" style="width: 100%; min-height: 80px;  "
                       [innerHTML]="description.text | safeHtml"></div>
-                    <p-editor *ngIf="isEditing()&&isEditor" [(ngModel)]="description.text" [style]="{'height':'80px'}">
-                    </p-editor>
+                    <kendo-editor *ngIf="isEditing()&&isEditor" [(ngModel)]="description.text"
+                      [style]="{'height':'150px'}">
+                    </kendo-editor>
+
                     <textarea *ngIf="isEditing()&&!isEditor" cols="30" rows="10" style="width: 100%; height: 80px"
                       [(ngModel)]="description.text"></textarea>
-
                   </div>
                 </div>
               </div>
@@ -137,8 +138,11 @@
     <span *ngIf="!isEditing()">
       {{changeLogItem.date | date: 'yyyy.MM.dd.'}}
     </span>
-    <p-calendar *ngIf="isEditing()" [(ngModel)]="changeLogItem.date" dateFormat="yy.mm.dd"></p-calendar>
-
+    <kendo-datepicker [(ngModel)]="changeLogItem.date" format="yyyy/MM/dd" [formatPlaceholder]="{
+      year: 'YYYY',
+      month: 'MM',
+      day: 'DD'
+    }" style="width:170px"></kendo-datepicker>
     <a href="/" class="btn btn-danger pull-right" (click)="deleteMessageShow($event)" *ngIf="canBeModified()">
       <span class="fa fa-trash"></span>
     </a>
@@ -155,11 +159,9 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="deleteMessageShown" modal="true">
-  <p-header translate>
-    CONFIRMATION
-  </p-header>
-  <span *ngIf="!version?.releaseDate || (version?.releaseDate == null)" translate>
+<kendo-dialog *ngIf="deleteMessageShown" (close)="cancelDelete($event)" (keydown.escape)="cancelDelete($event)">
+  <kendo-dialog-titlebar>{{'CONFIRMATION' | translate}}</kendo-dialog-titlebar>
+  <span *ngIf="!version?.releaseDate || (version?.releaseDate == null)" style="text-align: left;" translate>
     ARE_YOU_SURE_DELETE_THIS_CHANGE_LOG_ITEM
   </span>
   <span *ngIf="version?.releaseDate && (version?.releaseDate != null)" translate>
@@ -173,19 +175,17 @@
       <span class="fa fa-trash" translate>DELETE</span>
     </a>
   </div>
+</kendo-dialog>
 
-</p-dialog>
-
-<p-dialog [(visible)]="translatePanelShown" modal="true">
-  <p-header translate>
-    TRANSLATION
-  </p-header>
-  <div class="p-2">
+<kendo-dialog *ngIf="translatePanelShown" (close)="cancelTranslate($event)" (keydown.escape)="cancelTranslate($event)">
+  <kendo-dialog-titlebar>{{'TRANSLATION' | translate}}</kendo-dialog-titlebar>
+  <div class=" p-2">
     <span translate>
       SOURCE_LANGUAGE
     </span>:
     <span *ngIf="froms&&froms.length>0">
-      <p-dropdown [options]="froms" [(ngModel)]="selectedFrom"></p-dropdown>
+      <kendo-dropdownlist [data]="froms" textField="label" valueField="value" [(ngModel)]="selectedFrom"
+        [valuePrimitive]="true"></kendo-dropdownlist>
     </span>
   </div>
   <div class="p-2">
@@ -193,7 +193,8 @@
       GOAL_LANGUAGES
     </span>:
     <kendo-buttongroup selection="multiple">
-      <button *ngFor="let to of tos" kendoButton [toggleable]="true" [selected]="selectedTos.includes(to.value)">
+      <button *ngFor="let to of tos" kendoButton [toggleable]="true" [(ngModel)]="selectedTos"
+        [selected]="selectedTos.includes(to.value)">
         {{to.label}}
       </button>
     </kendo-buttongroup>
@@ -206,16 +207,18 @@
       <span class="fa fa-language" translate>TRANSLATE</span>
     </a>
   </div>
+</kendo-dialog>
 
-</p-dialog>
-
-<p-dialog [(visible)]="showReleasedVersionWarning" modal="true">
-  <p-header translate>
-    CONFIRMATION
-  </p-header>
+<kendo-dialog *ngIf="showReleasedVersionWarning" (close)="inssertModReleaseChangeLogCancel($event)"
+  (keydown.escape)="inssertModReleaseChangeLogCancel($event)">
+  <kendo-dialog-titlebar>{{'CONFIRMATION' | translate}}</kendo-dialog-titlebar>
   <span translate>
     ARE_YOU_SURE_ADDING_MOD_TO_RELEASED_CHANGE_LOG
   </span>
+  <!--   <kendo-dialog-actions>
+    <button kendoButton (click)="inssertModReleaseChangeLogCancel($event)">{{'CANCEL' | translate}}</button>
+    <button kendoButton (click)="inssertModReleaseChangeLogOk($event)">{{'YES' | translate}}</button>
+  </kendo-dialog-actions> -->
   <div class="p-2">
     <a href="/" class="btn btn-secondary pull-right" (click)="inssertModReleaseChangeLogCancel($event)">
       <span class="fa fa-close" translate>CANCEL</span>
@@ -224,5 +227,4 @@
       <span class="fa fa-edit" translate>YES</span>
     </a>
   </div>
-
-</p-dialog>
+</kendo-dialog>

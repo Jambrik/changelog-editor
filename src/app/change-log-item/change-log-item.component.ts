@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { NotificationService } from "@progress/kendo-angular-notification";
 import * as _ from 'lodash';
 import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
@@ -50,7 +51,8 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     private changeLogService: ChangeLogService,
     private router: Router,
     private googleTranslateService: GoogleTranslateService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -160,7 +162,6 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   public isEditing(): boolean {
     return ((this.action === 'mod') && (this.modId === this.changeLogItem.id)) ||
       ((this.action === 'new') && (this.changeLogItem.id == null));
-
   }
 
   public canBeModified(): boolean {
@@ -237,6 +238,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         },
           (error) => {
             this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+            console.log('msgs: ' + this.msgs);
           });
     }
   }
@@ -459,6 +461,5 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
     document.execCommand('copy');
     document.body.removeChild(selBox);
   }
-
 
 }
