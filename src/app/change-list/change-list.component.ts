@@ -415,7 +415,6 @@ export class ChangeListComponent implements OnInit, OnChanges {
       this.selectedTypes.splice(this.selectedTypes.indexOf(type.value, 0), 1);
     }
     this.changeList = this.filter(this.actualService.oriChangeList);
-    console.log('fuggveny utan: ' + this.selectedTypes);
   }
 
   public selectedImportancesChange(event: string[], importance) {
@@ -424,6 +423,16 @@ export class ChangeListComponent implements OnInit, OnChanges {
       this.selectedImportances.push(importance.value);
     } else {
       this.selectedImportances.splice(this.selectedImportances.indexOf(importance.value, 0), 1);
+    }
+    this.changeList = this.filter(this.actualService.oriChangeList);
+  }
+
+  public selectedLangsChange(event: string[], lang) {
+    console.log('selectedLangsChange', event, lang);
+    if (event) {
+      this.selectedLangs.push(lang.value);
+    } else {
+      this.selectedLangs.splice(this.selectedLangs.indexOf(lang.value, 0), 1);
     }
     this.changeList = this.filter(this.actualService.oriChangeList);
   }

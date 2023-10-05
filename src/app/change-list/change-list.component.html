@@ -30,20 +30,18 @@
                 <div class="pl-4">
                     <span translate>SHOWN_LANGS</span>:
                     <kendo-buttongroup selection="multiple">
-                        <button *ngFor="let lang of langs" kendoButton [toggleable]="true"
+                        <button *ngFor="let lang of langs" kendoButton [toggleable]="true" [(ngModel)]="selectedLangs"
+                            [selected]="selectedLangs.includes(lang.value)"
                             (selectedChange)="selectedLangsChange($event, lang)">
                             {{lang.label}}
                         </button>
                     </kendo-buttongroup>
-                    <!--                     <p-selectButton [options]="langs" [(ngModel)]="selectedLangs" [multiple]="true"></p-selectButton> -->
-
                 </div>
                 <div class="pl-4">
                     <span translate>IMPORTANCE</span>:
                     <kendo-buttongroup selection="multiple">
-                        <!-- <button *ngFor="let to of tos" kendoButton [toggleable]="true" [selected]="selectedTos"></button> -->
                         <button *ngFor="let importance of importances" kendoButton [toggleable]="true"
-                            [selected]="selectedImportances.includes(importance)"
+                            [selected]="selectedImportances.includes(importance.value)"
                             (selectedChange)="selectedImportancesChange($event, importance)">
                             {{importance.label}}
                         </button>
@@ -52,8 +50,9 @@
                 <div class="pl-4">
                     <span translate>TYPE</span>:
                     <kendo-buttongroup selection="multiple">
-                        <button kendoButton *ngFor="let type of types" [selected]="selectedTypes"
-                            (selectedChange)="selectedTypesChange($event, type)" [toggleable]="true">
+                        <button kendoButton *ngFor="let type of types" [toggleable]="true"
+                            [selected]="selectedTypes.includes(type.value)"
+                            (selectedChange)="selectedTypesChange($event, type)">
                             {{type.label}}
                         </button>
                     </kendo-buttongroup>
