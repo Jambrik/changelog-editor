@@ -89,7 +89,6 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         this.showReleasedVersionWarning = true;
       }
     }
-
   }
 
   private createCompactTags() {
