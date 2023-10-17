@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationService } from "@progress/kendo-angular-notification";
+import { NotificationService, NotificationSettings } from "@progress/kendo-angular-notification";
 import * as _ from 'lodash';
 import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
@@ -45,6 +45,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
   public importances: LabelValue[];
   public showReleasedVersionWarning = false;
   public compactTags: TagImpl[];
+  public notifications: NotificationSettings[] = [];
 
   constructor(
     private actualService: ActualService,
@@ -89,6 +90,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         this.showReleasedVersionWarning = true;
       }
     }
+    this.notifications.forEach((notification) => this.notificationService.show(notification));
   }
 
   private createCompactTags() {
@@ -237,9 +239,12 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         },
           (error) => {
             this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+            this.notifications.push({ type: { style: 'error', icon: true }, content: error.error, closable: true })
             console.log('msgs: ' + this.msgs);
           });
+
     }
+
   }
 
   private valid(): boolean {
@@ -267,6 +272,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
           this.translateService.get(Constants.MANDATORY_TAG)
             .subscribe((translation) => {
               this.msgs.push({ severity: 'error', summary: 'Hiba', detail: translation + ': ' + tagInfo.caption + '!' });
+              this.notifications.push({ type: { style: 'error', icon: true }, content: translation, closable: true })
             });
 
           break;
@@ -332,6 +338,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
       },
         (error) => {
           this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+          this.notifications.push({ type: { style: 'error', icon: true }, content: error.error, closable: true })
         });
   }
 
@@ -349,6 +356,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
             },
               (error) => {
                 this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+                this.notifications.push({ type: { style: 'error', icon: true }, content: error.error, closable: true })
               });
         }
       });
