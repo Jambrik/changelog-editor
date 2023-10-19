@@ -272,9 +272,7 @@ export class ChangeLogItemComponent implements OnInit, OnChanges {
         }
       }
     }
-    if (ok) {
-      this.msgs.length = 0;
-    }
+
     return ok;
   }
   public cancelMod(event: Event) {
