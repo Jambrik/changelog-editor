@@ -1,9 +1,8 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationService, NotificationSettings } from '@progress/kendo-angular-notification';
+import { NotificationService } from '@progress/kendo-angular-notification';
 import * as _ from 'lodash';
-import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
 import { ConfigHelper } from '../helpers/config-helper';
 import { StringHelpers } from '../helpers/string-helpers';
@@ -42,13 +41,11 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public selectedTypes: string[] = [];
   public importances: LabelValue[] = [];
   public selectedImportances: string[] = [];
-  msgs: Message[] = [];
   public isEditor = true;
   private noVersionYetCaption: string;
   public showReleasedVersionWarning = false;
   public iTagInfosCheckBox: ITagInfosCheckBox[];
   public iTagInfosCheckBoxAdd: string[] = [];
-  public notifications: NotificationSettings[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -166,7 +163,6 @@ export class ChangeListComponent implements OnInit, OnChanges {
         this.changeList = this.filter(this.actualService.oriChangeList);
       }
     });
-    this.notifications.forEach((notification) => this.notificationService.show(notification));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -358,8 +354,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         },
           (error) => {
             console.log('getChanges', error);
-            this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-            this.notifications.push({ type: { style: 'error', icon: true }, content: error.error, closable: true })
+            this.notificationService.show({ type: { style: 'error', icon: true }, content: error.error, closable: true });
             this.loading = false;
           });
     } else {
@@ -472,8 +467,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
           });
       },
         (error) => {
-          this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
-          this.notifications.push({ type: { style: 'error', icon: true }, content: error.error, closable: true })
+          this.notificationService.show({ type: { style: 'error', icon: true }, content: error.error, closable: true });
         });
   }
 
