@@ -7,7 +7,9 @@
         </div>
       </div>
       <div class="clearfix">
-        <p-messages [(value)]="msgs"></p-messages>
+        <kendo-grid>
+          <kendo-grid-messages *ngFor="msg of msgs">{{msg}} </kendo-grid-messages>
+        </kendo-grid>
       </div>
       <div class="row m-0" style="padding-bottom: 2%;">
         <div class="col-md-3">
@@ -19,10 +21,23 @@
       </div>
       <div class="row m-0" translate>
         STARTING DATE
-        <p-calendar [(ngModel)]="startDate" dateFormat="yy.mm.dd" [showIcon]="true"></p-calendar>
+        <div>
+          <kendo-datepicker [(ngModel)]="startDate" format="yyyy/MM/dd" [formatPlaceholder]="{
+          year: 'YYYY',
+          month: 'MM',
+          day: 'DD'
+        }" style="width:170px">
+          </kendo-datepicker>
+        </div>
         <div class="col-md-4" translate>
           END DATE
-          <p-calendar [(ngModel)]="vegeDate" dateFormat="yy.mm.dd" [showIcon]="true">></p-calendar>
+          <kendo-datepicker [(ngModel)]="vegeDate" format="yyyy/MM/dd" [formatPlaceholder]="{
+              year: 'YYYY',
+              month: 'MM',
+              day: 'DD'
+            }" style="width:170px">
+          </kendo-datepicker>
+
         </div>
         <div class="col-md-3">
           <button type=" button" style="width:  250px; height: 40px;" class="btn btn-info btn-sm pull-right"
@@ -35,16 +50,17 @@
       <div class="mt-3 mb-5">
         <span class="m-0 " *ngFor="let change of iTagInfosCheckBox">
           {{change.nev}}:
-          <p-inputSwitch class="p-2 pl-2" name="change.code" (click)="onClick(change.code)"
-            [(ngModel)]="change.selected">
-          </p-inputSwitch>
+          <kendo-switch (valueChange)="onClick($event)" [(ngModel)]="change.selected"></kendo-switch>
         </span>
       </div>
 
       <div class="m-0" *ngFor="let change of rendezVezerles">
         <span> Rendezés {{change+1}}: </span>
-        <p-dropdown class="p-2 mb-3" [options]=" rendezKihagy" (onChange)="iRendezCompactValaszt($event.value,change)">
-        </p-dropdown>
+
+        <kendo-dropdownlist [data]="rendezKihagy" valueField="value" textField="label" [valuePrimitive]="true"
+          (selectionChange)="iRendezCompactValaszt($event.value,change)" [defaultItem]="rendezKihagy[0]"
+          style="width:200px"></kendo-dropdownlist>
+
         <span class="mb-5 p-2">
           <input class="mb-3" *ngIf="change===0" type="checkbox" [(ngModel)]="csokkenNovekvoElso"
             (change)="toggleVisibility($event,change)" />

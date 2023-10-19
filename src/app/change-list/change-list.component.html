@@ -9,7 +9,12 @@
                 <div class="pl-4 pt-2 pull-right">
                     <span translate>RELEASE_DATE</span>:
                     <span *ngIf="changeList && (changeList != null)">
-                        <p-calendar [(ngModel)]="changeList.releaseDate" dateFormat="yy.mm.dd"></p-calendar>
+
+                        <kendo-datepicker [(ngModel)]="changeList.releaseDate" format="yyyy/MM/dd" [formatPlaceholder]="{
+                          year: 'YYYY',
+                          month: 'MM',
+                          day: 'DD'
+                        }" style="width:170px"></kendo-datepicker>
                     </span>
                     <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)">
                         <span class="fa fa-save"></span>
@@ -18,22 +23,37 @@
 
             </div>
             <div class="clearfix">
-                <p-messages [(value)]="msgs"></p-messages>
             </div>
             <div class="row">
                 <div class="pl-4">
                     <span translate>SHOWN_LANGS</span>:
-                    <p-selectButton [options]="langs" [(ngModel)]="selectedLangs" [multiple]="true"></p-selectButton>
+                    <kendo-buttongroup selection="multiple">
+                        <button *ngFor="let lang of langs" kendoButton [toggleable]="true" [(ngModel)]="selectedLangs"
+                            [selected]="selectedLangs.includes(lang.value)"
+                            (selectedChange)="selectedLangsChange($event, lang)">
+                            {{lang.label}}
+                        </button>
+                    </kendo-buttongroup>
                 </div>
                 <div class="pl-4">
                     <span translate>IMPORTANCE</span>:
-                    <p-selectButton [options]="importances" [ngModel]="selectedImportances"
-                        (ngModelChange)="selectedImportancesChange($event)" [multiple]="true"></p-selectButton>
+                    <kendo-buttongroup selection="multiple">
+                        <button *ngFor="let importance of importances" kendoButton [toggleable]="true"
+                            [selected]="selectedImportances.includes(importance.value)"
+                            (selectedChange)="selectedImportancesChange($event, importance)">
+                            {{importance.label}}
+                        </button>
+                    </kendo-buttongroup>
                 </div>
                 <div class="pl-4">
                     <span translate>TYPE</span>:
-                    <p-selectButton [options]="types" [ngModel]="selectedTypes"
-                        (ngModelChange)="selectedTypesChange($event)" [multiple]="true"></p-selectButton>
+                    <kendo-buttongroup selection="multiple">
+                        <button kendoButton *ngFor="let type of types" [toggleable]="true"
+                            [selected]="selectedTypes.includes(type.value)"
+                            (selectedChange)="selectedTypesChange($event, type)">
+                            {{type.label}}
+                        </button>
+                    </kendo-buttongroup>
                 </div>
             </div>
 
@@ -57,7 +77,8 @@
 
             <div [hidden]="!loading" class="container">
                 <div class="row justify-content-md-center">
-                    <p-progressSpinner animationDuration=".5s"></p-progressSpinner>
+
+                    <kendo-loader type="infinite-spinner"></kendo-loader>
                 </div>
             </div>
             <div *ngIf="changeList">
@@ -67,6 +88,5 @@
                 </div>
             </div>
         </main>
-
     </div>
 </div>

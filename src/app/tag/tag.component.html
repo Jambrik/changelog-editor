@@ -1,11 +1,11 @@
 <dl class="row">
   <dt class="col-lg-6">
-    {{tag.tagInfo.caption}}    
+    {{tag.tagInfo.caption}}
   </dt>
   <dd class="col-lg-6">
-    <div *ngIf="!editing" [ngSwitch]="tag.tagInfo.dataType">        
-      <span *ngSwitchCase="'boolean'">                              
-        <span [ngSwitch]="tag.value">            
+    <div *ngIf="!editing" [ngSwitch]="tag.tagInfo.dataType">
+      <span *ngSwitchCase="'boolean'">
+        <span [ngSwitch]="tag.value">
           <span *ngSwitchCase="true" translate>
             YES
           </span>
@@ -23,7 +23,7 @@
             </span>
             <span *ngFor="let value of values">
               {{value.caption}}
-              <br/>
+              <br />
             </span>
           </span>
           <span *ngSwitchDefault>
@@ -38,28 +38,31 @@
       <span *ngSwitchCase="'boolean'">
         <div *ngIf="tag.tagInfo.mandatory; then thenBlock; else elseBlock">this is ignored</div>
         <ng-template #thenBlock>
-          <p-checkbox [(ngModel)]="tag.value" binary="true" label="{{tag.tagInfo.caption}}"></p-checkbox>
+          <kendo-label [for]="caption" text={{tag.tagInfo.caption}}></kendo-label>
+          <input type="checkbox" kendoCheckBox [(ngModel)]="tag.value" #caption />{{tag.tagInfo.caption}}
         </ng-template>
         <ng-template #elseBlock>
-          <p-triStateCheckbox [(ngModel)]="tag.value" label="{{tag.tagInfo.caption}}"></p-triStateCheckbox>
+          <kendo-label [for]="caption" text={{tag.tagInfo.caption}}></kendo-label>
+          <input type="checkbox" kendoCheckBox [(ngModel)]="tag.value" #caption
+            [indeterminate]="true" />{{tag.tagInfo.caption}}
         </ng-template>
       </span>
       <span *ngSwitchCase="'string'">
-          <span [ngSwitch]="tag.tagInfo.moreOptionsAllowed">
-              <span *ngSwitchCase="true">
-                  <p-autoComplete [(ngModel)]="values" [suggestions]="allCompactValues" [multiple]="true" field="caption" [inputStyleClass]="'width100'"
-                  (completeMethod)="search($event)" autoHighlight="true" dataKey="code" minLength="0"></p-autoComplete>
-              </span>
-              <span *ngSwitchDefault>
-                <input type="text" [(ngModel)]="tag.value">
-              </span>
-            </span>        
+        <span [ngSwitch]="tag.tagInfo.moreOptionsAllowed">
+          <span *ngSwitchCase="true">
+            <kendo-multiselect [data]="allCompactValues" [(ngModel)]="values" textField="caption"
+              valueField="code"></kendo-multiselect>
+          </span>
+          <span *ngSwitchDefault>
+            <input type="text" [(ngModel)]="tag.value">
+          </span>
+        </span>
       </span>
       <span *ngSwitchCase="'number'">
-          <input type="number" [(ngModel)]="tag.value">
+        <input type="number" [(ngModel)]="tag.value">
       </span>
       <span *ngSwitchDefault>Nem meghatározható adattípus</span>
-    </div>
 
+    </div>
   </dd>
 </dl>

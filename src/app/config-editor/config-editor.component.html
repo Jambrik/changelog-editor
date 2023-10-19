@@ -1,35 +1,18 @@
 <div class="p-5">
     <div *ngIf="programs">
-        <p-table [columns]="cols" [value]="programs" [selectionMode]="'single'" [(selection)]="selectedProgram"
-            (onRowSelect)="onRowSelect($event)" [paginator]="true" rows="15" [responsive]="true" [autoLayout]="true">
-            <ng-template pTemplate="caption" translate>
-                PROGRAMS
-            </ng-template>
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                        {{col.header | translate}}
-                        <p-sortIcon [field]="col.field"></p-sortIcon>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-program let-columns="columns">
-                <tr>
-                    <td *ngFor="let col of columns">
-                        {{program[col.field]}}
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="footer">
-                <div class="ui-helper-clearfix p-1" style="width:100%"><button type="button" pButton icon="fa fa-plus"
-                        style="float:left" (click)="showDialogToAdd()" label="Add"></button></div>
-            </ng-template>
-        </p-table>
+        <kendo-grid [kendoGridBinding]="programs" [sortable]="true">
+            <kendo-grid-column-group title="{{'PROGRAMS' | translate}}" [columnMenu]="false">
+                <kendo-grid-column field="id" title="ID" width="70px;"></kendo-grid-column>
+                <kendo-grid-column field="name" title="Név"></kendo-grid-column>
+                <kendo-grid-column field="path" title="Fájl elérési útvonala"></kendo-grid-column>
+                <kendo-grid-column field="langs" title="Nyelvek"></kendo-grid-column>
+            </kendo-grid-column-group>
+        </kendo-grid>
+        <button kendoButton (click)="showDialogToAdd()">Add</button>
     </div>
 
-
-    <p-dialog header="{{'PROGRAMS_DETAILS' | translate}}" [(visible)]="displayDialog" [responsive]="true"
-        showEffect="fade" [modal]="true">
+    <kendo-dialog [(hidden)]="!displayDialog" (close)="delete()" (keydown.escape)="delete()" [draggable]="true">
+        <kendo-dialog-titlebar>{{'PROGRAMS_DETAILS' | translate}}</kendo-dialog-titlebar>
         <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="program">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="id">Id</label></div>
@@ -44,11 +27,11 @@
                 <div class="ui-grid-col-8"><input pInputText id="path" [(ngModel)]="program.path" /></div>
             </div>
         </div>
-        <p-footer>
+        <kendo-dialog-actions>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-                <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+                <button type="button" kendoButton icon="fa fa-close" (click)="delete()" label="Delete">DELETE</button>
+                <button type="button" kendoButton icon="fa fa-check" (click)="save()" label="Save">SAVE</button>
             </div>
-        </p-footer>
-    </p-dialog>
+        </kendo-dialog-actions>
+    </kendo-dialog>
 </div>

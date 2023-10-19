@@ -279,8 +279,6 @@ export class CompactComponent implements OnInit, OnChanges {
           this.alrKod = '';
           this.menuKod = '';
 
-
-
           if (item.tags === undefined) {
             item.tags = [];
           }
@@ -321,9 +319,6 @@ export class CompactComponent implements OnInit, OnChanges {
           this.wsSzoveg = '';
           this.alrSzoveg = '';
           this.menuSzoveg = '';
-
-
-
 
           for (let e = 0; e < this.actualService.iTagInfosCheckBox.length; e++) {
             if (this.actualService.iTagInfosCheckBox[e].code === this.pageCode &&
@@ -487,7 +482,7 @@ export class CompactComponent implements OnInit, OnChanges {
           }
 
           if (this.vegeDate == null) {
-            this.vegeDate = new Date('2990-12-31T00:00:00');
+            this.vegeDate = new Date('2099-12-31T00:00:00');
           }
 
 
@@ -653,6 +648,7 @@ export class CompactComponent implements OnInit, OnChanges {
   public onClick(item: string) {
     this.buildCompactChangesText(null);
     this.actualService.iTagInfosCheckBox = this.iTagInfosCheckBox;
+    console.log(item);
   }
 
 

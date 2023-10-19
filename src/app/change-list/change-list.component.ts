@@ -1,8 +1,8 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { NotificationService } from '@progress/kendo-angular-notification';
 import * as _ from 'lodash';
-import { Message } from 'primeng/api';
 import { Constants } from '../constants/constants';
 import { ConfigHelper } from '../helpers/config-helper';
 import { StringHelpers } from '../helpers/string-helpers';
@@ -41,7 +41,6 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public selectedTypes: string[] = [];
   public importances: LabelValue[] = [];
   public selectedImportances: string[] = [];
-  msgs: Message[] = [];
   public isEditor = true;
   private noVersionYetCaption: string;
   public showReleasedVersionWarning = false;
@@ -54,7 +53,8 @@ export class ChangeListComponent implements OnInit, OnChanges {
     private actualService: ActualService,
     private configService: ConfigService,
     private translateService: TranslateService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
 
   ) { }
 
@@ -354,7 +354,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         },
           (error) => {
             console.log('getChanges', error);
-            this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+            this.notificationService.show({ type: { style: 'error', icon: true }, content: error.error, closable: true });
             this.loading = false;
           });
     } else {
@@ -364,9 +364,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
         changes: []
       };
       this.changeList = _.cloneDeep(this.actualService.oriChangeList);
-
     }
-
   }
 
 
@@ -409,16 +407,33 @@ export class ChangeListComponent implements OnInit, OnChanges {
     return this.translateService.currentLang;
   }
 
-
-  public selectedTypesChange(event: string[]) {
-    console.log('selectedTypesChange', event);
-    this.selectedTypes = event;
+  public selectedTypesChange(event: string[], type) {
+    console.log('selectedTypesChange', event, type);
+    if (event) {
+      this.selectedTypes.push(type.value);
+    } else {
+      this.selectedTypes.splice(this.selectedTypes.indexOf(type.value, 0), 1);
+    }
     this.changeList = this.filter(this.actualService.oriChangeList);
   }
 
-  public selectedImportancesChange(event: string[]) {
-    console.log('selectedImportancesChange', event);
-    this.selectedImportances = event;
+  public selectedImportancesChange(event: string[], importance) {
+    console.log('selectedImportancesChange', event, importance);
+    if (event) {
+      this.selectedImportances.push(importance.value);
+    } else {
+      this.selectedImportances.splice(this.selectedImportances.indexOf(importance.value, 0), 1);
+    }
+    this.changeList = this.filter(this.actualService.oriChangeList);
+  }
+
+  public selectedLangsChange(event: string[], lang) {
+    console.log('selectedLangsChange', event, lang);
+    if (event) {
+      this.selectedLangs.push(lang.value);
+    } else {
+      this.selectedLangs.splice(this.selectedLangs.indexOf(lang.value, 0), 1);
+    }
     this.changeList = this.filter(this.actualService.oriChangeList);
   }
 
@@ -452,7 +467,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
           });
       },
         (error) => {
-          this.msgs.push({ severity: 'error', summary: 'Hiba', detail: error.error });
+          this.notificationService.show({ type: { style: 'error', icon: true }, content: error.error, closable: true });
         });
   }
 
