@@ -69,6 +69,12 @@
                         <span class="fa" translate>COMPACT_VIEW</span>
                     </a>
                 </div>
+                <div class="pl-2" style="margin-left: 170px;">
+                    <a class="btn btn-success pull-left" style="color:white" (click)="goCompactView($event)"
+                        *ngIf="isReading()">
+                        <span class="fa" translate>FUll_SCREEN</span>
+                    </a>
+                </div>
                 <div *ngIf="isNewEditing()">
                     <app-change-log-item [changeLogItem]="newChangeItem" [action]="'new'" [modId]="'null'"
                         [selectedLangs]="selectedLangs" (deleteOrAddingNew)="getChanges()"></app-change-log-item>

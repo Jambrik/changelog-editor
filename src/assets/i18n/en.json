@@ -59,5 +59,6 @@
     "COPY TO CLIPBOARD":"Copy to clipboard",
     "NORMAL VIEW": "Normal view",
     "VERSION CHANGES": "Version changes",
-    "COMPACT_VIEW": "Compact view"
+    "COMPACT_VIEW": "Compact view",
+    "FUll_SCREEN": "Full screen"
 }
