@@ -1,8 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import * as _ from 'lodash';
+import { range } from 'rxjs';
+import { concatAll, map, switchMap, toArray } from 'rxjs/operators';
 import { Constants } from '../constants/constants';
 import { ConfigHelper } from '../helpers/config-helper';
 import { StringHelpers } from '../helpers/string-helpers';
@@ -20,11 +22,13 @@ import { ConfigService } from '../services/config.service';
 import { ChangeLogAction } from '../types/types';
 
 @Component({
-  selector: 'app-change-list',
-  templateUrl: './change-list.component.html',
-  styleUrls: ['./change-list.component.scss']
+  selector: 'app-full-screen',
+  templateUrl: './full.component.html',
+  styleUrls: ['./full.component.scss']
 })
-export class ChangeListComponent implements OnInit, OnChanges {
+
+export class FullComponent implements OnInit {
+
   public programId: number;
   public program: Program;
   public version: VersionMetaData = { version: '' };
@@ -46,6 +50,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   public showReleasedVersionWarning = false;
   public iTagInfosCheckBox: ITagInfosCheckBox[];
   public iTagInfosCheckBoxAdd: string[] = [];
+  public startDate: Date;
 
   constructor(
     private route: ActivatedRoute,
@@ -163,10 +168,23 @@ export class ChangeListComponent implements OnInit, OnChanges {
         this.changeList = this.filter(this.actualService.oriChangeList);
       }
     });
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-
+    let localVersions: VersionMetaData[] = [];
+    this.changeLogService.getVersionsForProgramId(this.programId).pipe(
+      switchMap((versions) => {
+        console.log(versions);
+        localVersions = versions;
+        return range(0, versions.length);
+      }),
+      map((i) =>
+        this.changeLogService.getChangeLogs(this.programId, localVersions[i].version),
+      ),
+      concatAll(),
+      toArray(),
+    ).subscribe((result) => {
+      console.log(result);
+      //a result-ban vannak a szükséges adataid, konzolban látod, hogy hogyan használhatod fel
+    });
 
   }
 
@@ -493,27 +511,13 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.actualService.actualTagInfos = resultList;
   }
 
-  public goCompactView(e: Event) {
-    this.actualService.actualChangeList = this.changeList;
-    this.router.navigate(['/compact', this.programId, this.versionNumber],
-      {
-        queryParams: {
-          lang: this.getActualLang(),
-          filter: this.filterText
-        }
-      });
-  }
+  public getLastVersion(program: Program): string {
+    if (program.versions && (program.versions.length > 0)) {
+      program.versions.sort(ConfigHelper.versionSorter);
+      return program.versions[0].version;
+    } else {
+      return 'none';
+    }
 
-  public goFullScreen(e: Event) {
-    this.actualService.actualChangeList = this.changeList;
-    this.router.navigate(['/full', this.programId, this.versionNumber],
-      {
-        queryParams: {
-          lang: this.getActualLang(),
-          filter: this.filterText
-        }
-      });
   }
 }
-
-

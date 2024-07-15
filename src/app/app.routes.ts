@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { ChangeListComponent } from './change-list/change-list.component';
 import { CompactComponent } from './compact/compact.component';
 import { ConfigEditorComponent } from './config-editor/config-editor.component';
-import { FullScreenComponent } from './full-screen/full-screen.component';
+import { FullComponent } from './full/full.component';
 import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
 import { ProgramListComponent } from './program-list/program-list.component';
 
@@ -14,7 +14,7 @@ export const ROUTES: Routes = [
   { path: 'compact/:program-id/:version', component: CompactComponent },
   { path: 'config-editor', component: ConfigEditorComponent },
   { path: 'new-version/:program-id', component: NewVersionCreatationComponent },
-  { path: 'full-screen/:program-id/:version', component: FullScreenComponent }
+  { path: 'full/:program-id/:version', component: FullComponent }
   /*{ path: 'about', component: AboutComponent },
   { path: 'detail', loadChildren: './+detail#DetailModule'},
   { path: 'barrel', loadChildren: './+barrel#BarrelModule'},

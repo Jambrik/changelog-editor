@@ -12,7 +12,9 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { EditorModule } from '@progress/kendo-angular-editor';
+import { GridModule } from '@progress/kendo-angular-grid';
 import { IndicatorsModule } from '@progress/kendo-angular-indicators';
+import { InputsModule } from '@progress/kendo-angular-inputs';
 import { NotificationModule } from '@progress/kendo-angular-notification';
 import { MessageService } from 'primeng/api';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -35,6 +37,7 @@ import { ChangeListComponent } from './change-list/change-list.component';
 import { ChangeLogItemComponent } from './change-log-item/change-log-item.component';
 import { CompactComponent } from './compact/compact.component';
 import { ConfigEditorComponent } from './config-editor/config-editor.component';
+import { FullComponent } from './full/full.component';
 import { LeftNavbarComponent } from './left-navbar/left-navbar.component';
 import { NewVersionCreatationComponent } from './new-version-creatation/new-version-creatation.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
@@ -46,8 +49,6 @@ import { GoogleTranslateService } from './services/google-translate.service';
 import { TagComponent } from './tag/tag.component';
 import { TagsComponent } from './tags/tags.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
-import { InputsModule } from '@progress/kendo-angular-inputs';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 
 
@@ -74,7 +75,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SafeHtmlPipe,
     NewVersionCreatationComponent,
     TagsComponent,
-    TagComponent
+    TagComponent,
+    FullComponent,
   ],
   imports: [
     BrowserModule,
