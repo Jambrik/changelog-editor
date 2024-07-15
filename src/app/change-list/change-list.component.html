@@ -70,7 +70,8 @@
                     </a>
                 </div>
                 <div class="pl-2" style="margin-left: 170px;">
-                    <a class="btn btn-success pull-left" style="color:white" *ngIf="isReading()">
+                    <a class="btn btn-success pull-left" style="color:white" (click)="goFullScreen($event)"
+                        *ngIf="isReading()">
                         <span class="fa" translate>FUll_SCREEN</span>
                     </a>
                 </div>

@@ -503,6 +503,17 @@ export class ChangeListComponent implements OnInit, OnChanges {
         }
       });
   }
+
+  public goFullScreen(e: Event) {
+    this.actualService.actualChangeList = this.changeList;
+    this.router.navigate(['/full-screen', this.programId, this.versionNumber],
+      {
+        queryParams: {
+          lang: this.getActualLang(),
+          filter: this.filterText
+        }
+      });
+  }
 }
 
 
