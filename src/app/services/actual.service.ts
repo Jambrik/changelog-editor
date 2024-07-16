@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FullViewChangeList } from '../full/full.component';
 import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
 import { RendezCompact } from '../models/RendezCompact';
@@ -25,6 +26,7 @@ export class ActualService {
   private _actualRendezKihagy: RendezCompact[];
   private _actualRendezValasztKiir: LabelValue[];
   private _actualRendezKihagyKiir: LabelValue[];
+  private _oriFullViewList: FullViewChangeList[];
   constructor(private changeLogService: ChangeLogService) {
 
   }
@@ -141,6 +143,14 @@ export class ActualService {
 
   set actualRendezKihagyKiir(value: LabelValue[]) {
     this._actualRendezKihagyKiir = value;
+  }
+
+  get oriFullViewList(): FullViewChangeList[] {
+    return this._oriFullViewList;
+  }
+
+  set oriFullViewList(value: FullViewChangeList[]) {
+    this._oriFullViewList = value;
   }
 
 }

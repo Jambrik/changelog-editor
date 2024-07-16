@@ -1,48 +1,6 @@
-<!-- <div class="container-fluid">
-  <div class="row">
-    <app-left-navbar [viewMode]="'FULL'"></app-left-navbar>
-    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-      <div class="pb-5">
-        <div class="pl-5 pt-4 pull-right">
-        </div>
-      </div>
-      <div class="row m-0" style="padding-bottom: 2%;">
-        <div class="col-md-3">
-          <a href="#" class="btn btn-success" *ngIf="program" href="/"
-            [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
-            NORMAL VIEW
-          </a>
-        </div>
-      </div>
-    </main>
-  </div>
-</div> -->
-
 <div class="container-fluid">
   <div class="row">
-    <!--     <app-left-navbar [viewMode]="'FULL'"></app-left-navbar> -->
     <main role="main" style="width: 100%;">
-      <div class="pb-4">
-        <div class="pl-2 pull-left" style="font-size: 32pt">
-          {{'VERSION' | translate}}: {{printVersion()}}
-        </div>
-        <div class="pl-4 pt-2 pull-right">
-          <span translate>RELEASE_DATE</span>:
-          <span *ngIf="changeList && (changeList != null)">
-
-            <kendo-datepicker [(ngModel)]="changeList.releaseDate" format="yyyy/MM/dd" [formatPlaceholder]="{
-                        year: 'YYYY',
-                        month: 'MM',
-                        day: 'DD'
-                      }" style="width:170px"></kendo-datepicker>
-          </span>
-          <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)">
-            <span class="fa fa-save"></span>
-          </a>
-        </div>
-      </div>
-      <div class="clearfix">
-      </div>
       <div class="row">
         <div class="pl-4">
           <span translate>SHOWN_LANGS</span>:
@@ -73,41 +31,9 @@
           </kendo-buttongroup>
         </div>
       </div>
-
-      <!--       <div class="clearfix">
-        <a href="/" class="btn btn-primary pull-right"
-          [routerLink]="['/change-list', programId, versionNumber, 'new', 'null']"
-          [queryParams]="{lang: getActualLang()}" *ngIf="isReading()">
-          <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
-        </a>
-        <div class="pl-2">
-          <a class="btn btn-success pull-left" style="color:white" (click)="goCompactView($event)" *ngIf="isReading()">
-            <span class="fa" translate>COMPACT_VIEW</span>
-          </a>
-        </div>
-        <div class="pl-2" style="margin-left: 170px;">
-          <a class="btn btn-success pull-left" style="color:white" (click)="goFullScreen($event)" *ngIf="isReading()">
-            <span class="fa" translate>FUll_SCREEN</span>
-          </a>
-        </div>
-        <div *ngIf="isNewEditing()">
-          <app-change-log-item [changeLogItem]="newChangeItem" [action]="'new'" [modId]="'null'"
-            [selectedLangs]="selectedLangs" (deleteOrAddingNew)="getChanges()"></app-change-log-item>
-        </div>
-      </div> -->
-
-      <div class="row m-0" style="padding-bottom: 0%;">
-        <div class="col-md-3">
-          <a href="#" class="btn btn-success" *ngIf="program" href="/"
-            [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
-            NORMAL VIEW
-          </a>
-        </div>
-      </div>
-
-      <!-- <div class="row m-0" translate>
-        STARTING DATE
-        <div>
+      <div class="row" translate>
+        <div class="pl-4" translate>
+          STARTING DATE
           <kendo-datepicker [(ngModel)]="startDate" format="yyyy/MM/dd" [formatPlaceholder]="{
           year: 'YYYY',
           month: 'MM',
@@ -123,7 +49,6 @@
               day: 'DD'
             }" style="width:170px">
           </kendo-datepicker>
-
         </div>
         <div class="col-md-3">
           <button type=" button" style="width:  250px; height: 40px;" class="btn btn-info btn-sm pull-right"
@@ -133,66 +58,28 @@
         </div>
       </div>
 
-      <div class="mt-3 mb-5">
-        <span class="m-0 " *ngFor="let change of iTagInfosCheckBox">
-          {{change.nev}}:
-          <kendo-switch (valueChange)="onClick($event)" [(ngModel)]="change.selected"></kendo-switch>
-        </span>
+      <div class="row m-0" style="padding-bottom: 0%;">
+        <div class="pl-4">
+          <a href="#" class="btn btn-success" *ngIf="program" href="/"
+            [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
+            NORMAL VIEW
+          </a>
+        </div>
       </div>
-
-      <div class="m-0" *ngFor="let change of rendezVezerles">
-        <span> Rendezés {{change+1}}: </span>
-
-        <kendo-dropdownlist [data]="rendezKihagy" valueField="value" textField="label" [valuePrimitive]="true"
-          (selectionChange)="iRendezCompactValaszt($event.value,change)" [defaultItem]="rendezKihagy[0]"
-          style="width:200px"></kendo-dropdownlist>
-
-        <span class="mb-5 p-2">
-          <input class="mb-3" *ngIf="change===0" type="checkbox" [(ngModel)]="csokkenNovekvoElso"
-            (change)="toggleVisibility($event,change)" />
-          <input class="mb-3" *ngIf="change===1" type="checkbox" [(ngModel)]="csokkenNovekvoMasodik"
-            (change)="toggleVisibility($event,change)" />
-          <input class="mb-3" *ngIf="change===2" type="checkbox" [(ngModel)]="csokkenNovekvoHarmadik"
-            (change)="toggleVisibility($event,change)" />
-          <input class="mb-3" *ngIf="change===3" type="checkbox" [(ngModel)]="csokkenNovekvoNegyedik"
-            (change)="toggleVisibility($event,change)" />
-          <input class="mb-3" *ngIf="change===4" type="checkbox" [(ngModel)]="csokkenNovekvoOtodik"
-            (change)="toggleVisibility($event,change)" />
-          <input *ngIf="change===5" type="checkbox" [(ngModel)]="csokkenNovekvoHatodik"
-            (change)="toggleVisibility($event,change)" />
-          <input *ngIf="change===6" type="checkbox" [(ngModel)]="csokkenNovekvoHetedik"
-            (change)="toggleVisibility($event,change)" />
-          <span style="color: royalblue" *ngIf="change===0 && csokkenNovekvoElso || change===1 && csokkenNovekvoMasodik || 
-                        change===2 && csokkenNovekvoHarmadik ||change===3 && csokkenNovekvoNegyedik ||
-                         change===4 && csokkenNovekvoOtodik || change===5 && csokkenNovekvoHatodik || 
-                         change===6 && csokkenNovekvoHetedik"> Növekvő</span>
-          <span style="color: chocolate" *ngIf="change===0 && !csokkenNovekvoElso || change===1 && !csokkenNovekvoMasodik || 
-                change===2 && !csokkenNovekvoHarmadik || change===3 && !csokkenNovekvoNegyedik || 
-                change===4 && !csokkenNovekvoOtodik || change===5 && !csokkenNovekvoHatodik || 
-                change===6 && !csokkenNovekvoHetedik"> Csökkenő</span>
-        </span>
-        <span class="p-1">
-          <button *ngIf="this.torlesHozzadasVezerles===change" class="row m-0 btn btn-primary" type=" button"
-            (click)='rendezesTorlese($event,change)'>-</button>
-        </span>
-        <span class="p-1">
-          <button *ngIf="this.torlesHozzadasVezerles===change" class="row m-0 btn btn-primary" type="button"
-            (click)='rendezesHozzaadas($event.value,change)'>+</button>
-        </span>
-      </div> -->
-
       <div [hidden]="!loading" class="container">
         <div class="row justify-content-md-center">
 
           <kendo-loader type="infinite-spinner"></kendo-loader>
         </div>
       </div>
-      <div *ngIf="changeList">
-        <div *ngFor="let change of changeList.changes">
-          <app-change-log-item [changeLogItem]="change" [action]="action" [modId]="id" [selectedLangs]="selectedLangs"
-            (deleteOrAddingNew)="getChanges()"></app-change-log-item>
-        </div>
-      </div>
     </main>
+  </div>
+</div>
+
+<div *ngFor="let elem of sajatTomb">
+  <span class="pl-4" style="font-size: 32pt">Verzió: {{elem.version}}</span>
+  <div *ngFor="let elem2 of elem.changes">
+    <app-change-log-item [changeLogItem]="elem2" [selectedLangs]="selectedLangs" [action]="action" [modId]="id"
+      (deleteOrAddingNew)="getChanges()"></app-change-log-item>
   </div>
 </div>
