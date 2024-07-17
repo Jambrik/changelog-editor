@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
+import { PageChangeEvent } from '@progress/kendo-angular-pager';
 import * as _ from 'lodash';
 import { range } from 'rxjs';
 import { concatAll, map, switchMap, toArray } from 'rxjs/operators';
@@ -27,6 +28,11 @@ export interface FullViewChangeList {
   version: string;
   changes: ChangeLogItem[];
   releaseDate?: Date;
+}
+
+export interface DisplayableSajatTomb {
+  change: ChangeLogItem;
+  version: string;
 }
 
 @Component({
@@ -102,6 +108,12 @@ export class FullComponent implements OnInit {
   public rendezVezerles: any[] = [0];
   public rendezKihagy: LabelValue[] = [];
   public sajatTomb: FullViewChangeList[];
+  public sajatTomb2: DisplayableSajatTomb[] = [];
+  public pagedSajatTomb2: DisplayableSajatTomb[] = [];
+  public contentId = "content-1";
+  public total: number;
+  public skip = 0;
+  public pageSize = 20;
 
   constructor(
     private route: ActivatedRoute,
@@ -140,7 +152,31 @@ export class FullComponent implements OnInit {
       ).subscribe((result) => {
         this.sajatTomb = result;
         this.actualService.oriFullViewList = result;
-        //a result-ban vannak a szükséges adataid, konzolban látod, hogy hogyan használhatod fel
+
+        let currentVersion: string;
+        let displayableSajatTombElem: DisplayableSajatTomb;
+        this.sajatTomb.forEach((elem) => {
+          elem.changes.forEach((change) => {
+            if (currentVersion === elem.version) {
+              displayableSajatTombElem = {
+                change: change,
+                version: null,
+              };
+              this.sajatTomb2.push(displayableSajatTombElem);
+            } else {
+              currentVersion = elem.version;
+              displayableSajatTombElem = {
+                change: change,
+                version: elem.version,
+              }
+            }
+            this.sajatTomb2.push(displayableSajatTombElem);
+          })
+          //a result-ban vannak a szükséges adataid, konzolban látod, hogy hogyan használhatod fel
+        });
+        this.total = this.sajatTomb2.length;
+        this.actualService.oripagedSajatTomb2 = this.sajatTomb2;
+        this.pageData();
       });
 
       const versionNumber: string = params['version'];
@@ -186,7 +222,7 @@ export class FullComponent implements OnInit {
             /* this.buildCompactChangesText(null); */
             // First of all we have get the versions
 
-            this.changeLogService.getVersionsForProgramId(programId)
+            /* this.changeLogService.getVersionsForProgramId(programId)
               .subscribe((versions) => {
                 versions.sort(ConfigHelper.versionSorter);
                 this.actualService.actualVersions = versions;
@@ -211,7 +247,7 @@ export class FullComponent implements OnInit {
                   };
                   this.changeList = this.actualService.oriChangeList;
                 }
-              });
+              }); */
           });
       } else if ((this.version != null) && (versionNumber !== this.version.version)) {
         this.version = ConfigHelper.getVersion(this.actualService.actualVersions, versionNumber);
@@ -304,30 +340,37 @@ export class FullComponent implements OnInit {
 
   }
 
-  private filter(inputChangeList: VersionChangeLog): VersionChangeLog {
-    const changeList = {
-      releaseDate: inputChangeList.releaseDate,
-      version: inputChangeList.version,
-      changes: []
-    };
+  private filter(inputChangeList: DisplayableSajatTomb[]): DisplayableSajatTomb[] {
+    let changes: DisplayableSajatTomb[] = [];
 
-    inputChangeList.changes.forEach(change => {
-      console.log('change.importance', change.importance);
-      if ((this.selectedTypes.indexOf(change.type) > -1) &&
-        ((!change.importance && (this.selectedImportances.indexOf(Constants.NORMAL) > -1)) ||
-          (this.selectedImportances.indexOf(change.importance) > -1))) {
+    /*
+    inputChangeList: 
+      changes[],
+      version,
+      stb...
+
+    inputChangeList[]:
+      change,
+      version
+    */
+
+    inputChangeList.forEach(change => {
+      console.log('change.importance', change.change.importance);
+      if ((this.selectedTypes.indexOf(change.change.type) > -1) &&
+        ((!change.change.importance && (this.selectedImportances.indexOf(Constants.NORMAL) > -1)) ||
+          (this.selectedImportances.indexOf(change.change.importance) > -1))) {
         let found = false;
-        const newChange: ChangeLogItem = _.cloneDeep(change);
-        if (!newChange.importance || (newChange.importance == null)) {
-          newChange.importance = 'normal';
+        const newChange: DisplayableSajatTomb = _.cloneDeep(change);
+        if (!newChange.change.importance || (newChange.change.importance == null)) {
+          newChange.change.importance = 'normal';
         }
         if ((this.filterText) && (this.filterText != null) && (this.filterText !== '')) {
-          if (newChange.ticketNumber && (newChange.ticketNumber != null) && (newChange.ticketNumber !== '')) {
-            const bs = StringHelpers.findAndGreen(newChange.ticketNumber, this.filterText, true);
+          if (newChange.change.ticketNumber && (newChange.change.ticketNumber != null) && (newChange.change.ticketNumber !== '')) {
+            const bs = StringHelpers.findAndGreen(newChange.change.ticketNumber, this.filterText, true);
             found = bs.bool;
 
             if (found) {
-              newChange.ticketNumber = bs.str;
+              newChange.change.ticketNumber = bs.str;
             }
           }
           if (!found) {
@@ -338,18 +381,18 @@ export class FullComponent implements OnInit {
         }
 
         if (found) {
-          changeList.changes.push(newChange);
+          changes.push(newChange);
         }
       }
     });
 
-    return changeList;
+    return changes;
   }
 
   refilter() {
     if (this.action === 'mod') {
-      this.changeList.changes.forEach(change => {
-        if (change.id === this.id) {
+      this.sajatTomb2.forEach(change => {
+        if (change.change.id === this.id) {
           this.actualService.oriChangeList.changes.forEach(oriChange => {
             if (oriChange.id === this.id) {
               const descriptions = [];
@@ -361,7 +404,7 @@ export class FullComponent implements OnInit {
                   }
                 );
               });
-              change.descriptions = descriptions;
+              change.change.descriptions = descriptions;
             }
           });
           this.filterDescription(change);
@@ -370,8 +413,8 @@ export class FullComponent implements OnInit {
     } else if (this.action === 'read') {
 
 
-      this.changeList.changes.forEach(change => {
-        if (change.id === this.oldId) {
+      this.sajatTomb2.forEach(change => {
+        if (change.change.id === this.oldId) {
           this.filterDescription(change);
         }
       });
@@ -381,10 +424,10 @@ export class FullComponent implements OnInit {
 
   }
 
-  filterDescription(change: ChangeLogItem): boolean {
+  filterDescription(change: DisplayableSajatTomb): boolean {
     let found = false;
     if (this.filterText) {
-      change.descriptions.forEach(description => {
+      change.change.descriptions.forEach(description => {
         if (!found) {
           const bs = StringHelpers.findAndGreen(description.text, this.filterText, this.action === 'read');
           found = bs.bool;
@@ -424,9 +467,7 @@ export class FullComponent implements OnInit {
             }
           });
 
-          this.actualService.oriChangeList = changeList;
-
-          this.changeList = this.filter(this.actualService.oriChangeList);
+          this.pagedSajatTomb2 = this.filter(this.actualService.oripagedSajatTomb2);
           this.loading = false;
         },
           (error) => {
@@ -491,7 +532,13 @@ export class FullComponent implements OnInit {
     } else {
       this.selectedTypes.splice(this.selectedTypes.indexOf(type.value, 0), 1);
     }
-    this.changeList = this.filter(this.actualService.oriChangeList);
+    this.pagedSajatTomb2 = this.filter(this.actualService.oripagedSajatTomb2);
+    /* let tempChangeList: VersionChangeLog[] = [];
+    this.actualService.oriFullViewList.forEach((sajatElem) => {
+      tempChangeList.push(this.filter(sajatElem));
+    });
+
+    this.sajatTomb = tempChangeList; */
   }
 
   public selectedImportancesChange(event: string[], importance) {
@@ -501,13 +548,14 @@ export class FullComponent implements OnInit {
     } else {
       this.selectedImportances.splice(this.selectedImportances.indexOf(importance.value, 0), 1);
     }
+    this.pagedSajatTomb2 = this.filter(this.actualService.oripagedSajatTomb2);
 
-    let tempChangeList: VersionChangeLog[] = [];
+    /* let tempChangeList: VersionChangeLog[] = [];
     this.actualService.oriFullViewList.forEach((sajatElem) => {
       tempChangeList.push(this.filter(sajatElem));
     });
 
-    this.sajatTomb = tempChangeList;
+    this.sajatTomb = tempChangeList; */
   }
 
   public selectedLangsChange(event: string[], lang) {
@@ -517,13 +565,14 @@ export class FullComponent implements OnInit {
     } else {
       this.selectedLangs.splice(this.selectedLangs.indexOf(lang.value, 0), 1);
     }
+    this.pagedSajatTomb2 = this.filter(this.actualService.oripagedSajatTomb2);
 
-    let tempChangeList: VersionChangeLog[] = [];
-    this.sajatTomb.forEach((sajatElem) => {
+    /* let tempChangeList: VersionChangeLog[] = [];
+    this.actualService.oriFullViewList.forEach((sajatElem) => {
       tempChangeList.push(this.filter(sajatElem));
     });
 
-    this.sajatTomb = tempChangeList;
+    this.sajatTomb = tempChangeList; */
     // changeList: 
     // sajatTomb: changeList[]
     // forEach((sajatElem))  -- sajatElem: 
@@ -986,5 +1035,18 @@ export class FullComponent implements OnInit {
         this.tableAdatokRendezesNelkul.push(megMarad[index]);
       }
     }
+  }
+
+  public onPageChange(e: PageChangeEvent): void {
+    this.skip = e.skip;
+    this.pageSize = e.take;
+    this.pageData();
+  }
+
+  private pageData(): void {
+    this.pagedSajatTomb2 = this.sajatTomb2.slice(
+      this.skip,
+      this.skip + this.pageSize
+    );
   }
 }

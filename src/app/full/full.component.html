@@ -59,7 +59,7 @@
       </div>
 
       <div class="row m-0" style="padding-bottom: 0%;">
-        <div class="pl-4">
+        <div class="pl-4" style="padding: 10px;">
           <a href="#" class="btn btn-success" *ngIf="program" href="/"
             [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
             NORMAL VIEW
@@ -76,10 +76,23 @@
   </div>
 </div>
 
-<div *ngFor="let elem of sajatTomb">
-  <span class="pl-4" style="font-size: 32pt">Verzió: {{elem.version}}</span>
+<!-- <div *ngFor="let elem of sajatTomb">
+  <div style="background-color: lightgrey;">
+    <span class="pl-4" style="font-size: 32pt">Verzió: {{elem.version}}</span>
+  </div>
   <div *ngFor="let elem2 of elem.changes">
     <app-change-log-item [changeLogItem]="elem2" [selectedLangs]="selectedLangs" [action]="action" [modId]="id"
       (deleteOrAddingNew)="getChanges()"></app-change-log-item>
   </div>
+</div> -->
+
+<div *ngFor="let elem of pagedSajatTomb2">
+  <div style="background-color: lightgrey;">
+    <span class="pl-4" style="font-size: 32pt" *ngIf="elem.version">Verzió: {{elem.version}}</span>
+  </div>
+  <app-change-log-item [changeLogItem]="elem.change" [selectedLangs]="selectedLangs" [action]="action" [modId]="id"
+    (deleteOrAddingNew)="getChanges()"></app-change-log-item>
 </div>
+<kendo-datapager [attr.aria-controls]="contentId" [style.width.%]="100" [pageSize]="pageSize" [skip]="skip"
+  [total]="total" (pageChange)="onPageChange($event)">
+</kendo-datapager>

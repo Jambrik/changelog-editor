@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FullViewChangeList } from '../full/full.component';
+import { DisplayableSajatTomb, FullViewChangeList } from '../full/full.component';
 import { LabelValue } from '../models/LableValue';
 import { Program } from '../models/Program';
 import { RendezCompact } from '../models/RendezCompact';
@@ -27,6 +27,7 @@ export class ActualService {
   private _actualRendezValasztKiir: LabelValue[];
   private _actualRendezKihagyKiir: LabelValue[];
   private _oriFullViewList: FullViewChangeList[];
+  private _oripagedSajatTomb2: DisplayableSajatTomb[];
   constructor(private changeLogService: ChangeLogService) {
 
   }
@@ -151,6 +152,14 @@ export class ActualService {
 
   set oriFullViewList(value: FullViewChangeList[]) {
     this._oriFullViewList = value;
+  }
+
+  get oripagedSajatTomb2(): DisplayableSajatTomb[] {
+    return this._oripagedSajatTomb2;
+  }
+
+  set oripagedSajatTomb2(value: DisplayableSajatTomb[]) {
+    this._oripagedSajatTomb2 = value;
   }
 
 }

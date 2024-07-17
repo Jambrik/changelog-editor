@@ -49,6 +49,8 @@ import { GoogleTranslateService } from './services/google-translate.service';
 import { TagComponent } from './tag/tag.component';
 import { TagsComponent } from './tags/tags.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
+import { PagerModule } from '@progress/kendo-angular-pager';
+
 
 
 
@@ -116,7 +118,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NotificationModule,
     DialogsModule,
     InputsModule,
-    GridModule
+    GridModule,
+    PagerModule
   ],
   providers: [ConfigService, ActualService, ChangeLogService, MessageService, GoogleTranslateService, DatePipe],
   bootstrap: [AppComponent]
