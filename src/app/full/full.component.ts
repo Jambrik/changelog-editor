@@ -109,11 +109,12 @@ export class FullComponent implements OnInit {
   public rendezKihagy: LabelValue[] = [];
   public sajatTomb: FullViewChangeList[];
   public sajatTomb2: DisplayableSajatTomb[] = [];
+  public filteredDisplayedTomb: DisplayableSajatTomb[] = [];
   public pagedSajatTomb2: DisplayableSajatTomb[] = [];
   public contentId = "content-1";
   public total: number;
   public skip = 0;
-  public pageSize = 20;
+  public pageSize = 5;
 
   constructor(
     private route: ActivatedRoute,
@@ -176,6 +177,7 @@ export class FullComponent implements OnInit {
         });
         this.total = this.sajatTomb2.length;
         this.actualService.oripagedSajatTomb2 = this.sajatTomb2;
+        this.filteredDisplayedTomb = this.sajatTomb2;
         this.pageData();
       });
 
@@ -532,7 +534,10 @@ export class FullComponent implements OnInit {
     } else {
       this.selectedTypes.splice(this.selectedTypes.indexOf(type.value, 0), 1);
     }
-    this.pagedSajatTomb2 = this.filter(this.actualService.oripagedSajatTomb2);
+    this.filteredDisplayedTomb = this.filter(this.actualService.oripagedSajatTomb2);
+    this.total = this.filteredDisplayedTomb.length;
+    this.skip = 0;
+    this.pageData();
     /* let tempChangeList: VersionChangeLog[] = [];
     this.actualService.oriFullViewList.forEach((sajatElem) => {
       tempChangeList.push(this.filter(sajatElem));
@@ -548,8 +553,10 @@ export class FullComponent implements OnInit {
     } else {
       this.selectedImportances.splice(this.selectedImportances.indexOf(importance.value, 0), 1);
     }
-    this.pagedSajatTomb2 = this.filter(this.actualService.oripagedSajatTomb2);
-
+    this.filteredDisplayedTomb = this.filter(this.actualService.oripagedSajatTomb2);
+    this.total = this.filteredDisplayedTomb.length;
+    this.skip = 0;
+    this.pageData();
     /* let tempChangeList: VersionChangeLog[] = [];
     this.actualService.oriFullViewList.forEach((sajatElem) => {
       tempChangeList.push(this.filter(sajatElem));
@@ -565,8 +572,10 @@ export class FullComponent implements OnInit {
     } else {
       this.selectedLangs.splice(this.selectedLangs.indexOf(lang.value, 0), 1);
     }
-    this.pagedSajatTomb2 = this.filter(this.actualService.oripagedSajatTomb2);
-
+    this.filteredDisplayedTomb = this.filter(this.actualService.oripagedSajatTomb2);
+    this.total = this.filteredDisplayedTomb.length;
+    this.skip = 0;
+    this.pageData();
     /* let tempChangeList: VersionChangeLog[] = [];
     this.actualService.oriFullViewList.forEach((sajatElem) => {
       tempChangeList.push(this.filter(sajatElem));
@@ -1044,7 +1053,7 @@ export class FullComponent implements OnInit {
   }
 
   private pageData(): void {
-    this.pagedSajatTomb2 = this.sajatTomb2.slice(
+    this.pagedSajatTomb2 = this.filteredDisplayedTomb.slice(
       this.skip,
       this.skip + this.pageSize
     );
