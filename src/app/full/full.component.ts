@@ -134,7 +134,6 @@ export class FullComponent implements OnInit {
     this.loadTypes();
     this.loadImportance();
     this.loadCaptionTranslations();
-    // this.taginfosBox();
     // Because we load always the same component, the init run only once. So we subscribe the router params changes:
     this.route.params.subscribe(params => {
       const programId = params['program-id'];
@@ -357,7 +356,7 @@ export class FullComponent implements OnInit {
     */
 
     inputChangeList.forEach(change => {
-      console.log('change.importance', change.change.importance);
+
       if ((this.selectedTypes.indexOf(change.change.type) > -1) &&
         ((!change.change.importance && (this.selectedImportances.indexOf(Constants.NORMAL) > -1)) ||
           (this.selectedImportances.indexOf(change.change.importance) > -1))) {
@@ -383,7 +382,12 @@ export class FullComponent implements OnInit {
         }
 
         if (found) {
-          changes.push(newChange);
+          found = newChange.change.crd && (new Date(newChange.change.crd) >= new Date(this.startDate)) && (new Date(newChange.change.crd) <= new Date(this.vegeDate));
+
+          if (found) {
+            changes.push(newChange);
+          }
+
         }
       }
     });
@@ -576,15 +580,13 @@ export class FullComponent implements OnInit {
     this.total = this.filteredDisplayedTomb.length;
     this.skip = 0;
     this.pageData();
-    /* let tempChangeList: VersionChangeLog[] = [];
-    this.actualService.oriFullViewList.forEach((sajatElem) => {
-      tempChangeList.push(this.filter(sajatElem));
-    });
+  }
 
-    this.sajatTomb = tempChangeList; */
-    // changeList: 
-    // sajatTomb: changeList[]
-    // forEach((sajatElem))  -- sajatElem: 
+  public filterByDates(event: Event) {
+    this.filteredDisplayedTomb = this.filter(this.actualService.oripagedSajatTomb2);
+    this.total = this.filteredDisplayedTomb.length;
+    this.skip = 0;
+    this.pageData();
   }
 
   public printVersion() {
@@ -653,385 +655,6 @@ export class FullComponent implements OnInit {
 
   }
 
-  public buildCompactChangesText(event: string): void {
-    this.taginfosBox();
-    const lang = this.translateService.currentLang;
-    let text = '';
-    let szoveg = '';
-    let szoveg_ossze = '';
-    let elso_date = '';
-    let utolso_date = '';
-    let tableAdatok: any = '';
-    this.tableAdatok = [];
-    const importance = '';
-
-    for (const item of this.actualService.actualChangeList.changes) {
-      for (const description of item.descriptions) {
-        if (description.lang === lang) {
-          this.pageCode = '';
-          this.techCode = '';
-          this.workCode = '';
-          this.wS = '';
-          this.alrKod = '';
-          this.menuKod = '';
-
-          if (item.tags === undefined) {
-            item.tags = [];
-          }
-
-          if (item.tags) {
-            for (let i = 0; i < item.tags.length; i++) {
-
-              if (item.tags[i].code === 'PAGE') {
-                this.pageCode = item.tags[i].code;
-              }
-              if (item.tags[i].code === 'TECHNICAL_CHANGE') {
-                this.techCode = item.tags[i].code;
-              }
-              if (item.tags[i].code === 'WORK_HOURS') {
-                this.workCode = item.tags[i].code;
-              }
-              if (item.tags[i].code === 'WS') {
-                this.wS = item.tags[i].code;
-              }
-              if (item.tags[i].code === 'ALRKOD') {
-                this.alrKod = item.tags[i].code;
-              }
-              if (item.tags[i].code === 'MENUKOD') {
-                this.menuKod = item.tags[i].code;
-              }
-            }
-          }
-
-          this.page = false;
-          this.tech = false;
-          this.work = false;
-          this.w = false;
-          this.alr = false;
-          this.men = false;
-          this.pageSzoveg = '';
-          this.techSzoveg = '';
-          this.workSzoveg = '';
-          this.wsSzoveg = '';
-          this.alrSzoveg = '';
-          this.menuSzoveg = '';
-
-          for (let e = 0; e < this.actualService.iTagInfosCheckBox.length; e++) {
-            if (this.actualService.iTagInfosCheckBox[e].code === this.pageCode &&
-              (this.actualService.iTagInfosCheckBox[e].selected)) {
-              this.page = true;
-
-            }
-
-            if (this.actualService.iTagInfosCheckBox[e].code === this.techCode &&
-              (this.actualService.iTagInfosCheckBox[e].selected)) {
-              this.tech = true;
-            }
-
-            if (this.actualService.iTagInfosCheckBox[e].code === this.workCode &&
-              (this.actualService.iTagInfosCheckBox[e].selected)) {
-              this.work = true;
-            }
-
-            if (this.actualService.iTagInfosCheckBox[e].code === this.wS &&
-              (this.actualService.iTagInfosCheckBox[e].selected)) {
-              this.w = true;
-            }
-            if (this.actualService.iTagInfosCheckBox[e].code === this.alrKod &&
-              (this.actualService.iTagInfosCheckBox[e].selected)) {
-              this.alr = true;
-            }
-            if (this.actualService.iTagInfosCheckBox[e].code === this.menuKod &&
-              (this.actualService.iTagInfosCheckBox[e].selected)) {
-              this.men = true;
-            }
-
-
-
-          }
-
-
-          if (!this.actualService.actualTagInfos) {
-            this.setActualTaginfosAdd();
-          }
-
-          this.actualService.actualTagInfos.forEach(change => {
-            change.captions.forEach(c => {
-              item.tags.forEach(code => {
-
-                if (code.value === undefined) {
-                  code.value = '';
-                }
-
-                if (code.code === change.code && description.lang === c.lang && code.code === 'PAGE') {
-                  for (let index = 0; index < change.setOfValues.length; index++) {
-                    const element = change.setOfValues[index].code;
-                    for (let codeValuesIndex = 0; codeValuesIndex < code.values.length; codeValuesIndex++) {
-                      if (element.toString() === code.values[codeValuesIndex].toString()) {
-                        for (let i = 0; i < change.setOfValues.length; i++) {
-
-                          const e = change.setOfValues[i].code;
-
-                          if (e === [element].toString()) {
-                            for (let index2 = 0; index2 < change.setOfValues[i].captions.length; index2++) {
-                              const element2 = change.setOfValues[i].captions[index2].lang;
-                              if (element2 === description.lang) {
-                                code.values[codeValuesIndex] = change.setOfValues[i].captions[index2].text;
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-
-                  }
-
-                  /* console.log('code.values:' + code.values); */
-                  this.pageSzoveg = code.values + '\n';
-                }
-                if (code.code === change.code && description.lang === c.lang && code.code === 'TECHNICAL_CHANGE') {
-                  if (code.value) {
-                    code.value = 'Van';
-                  } else if (!code.value) {
-                    code.value = 'Nincs';
-                  }
-                  this.techSzoveg = code.value + '\n';
-                }
-
-                if (code.code === change.code && description.lang === c.lang && code.code === 'WORK_HOURS') {
-                  this.workSzoveg = code.value + '\n';
-                }
-
-                if (code.code === change.code && description.lang === c.lang && code.code === 'WS') {
-                  for (let index = 0; index < change.setOfValues.length; index++) {
-                    const element = change.setOfValues[index].code;
-                    if (code.values.toString() === element.toString()) {
-                      code.values = [change.setOfValues[index].captions[0].text];
-                    }
-                  }
-                  this.wsSzoveg = code.values + '\n';
-                }
-
-                if (code.code === change.code && description.lang === c.lang && code.code === 'ALRKOD') {
-                  for (let index = 0; index < change.setOfValues.length; index++) {
-                    const element = change.setOfValues[index].code;
-
-                    if (code.values.toString() === element.toString()) {
-                      code.values = [change.setOfValues[index].captions[0].text];
-                    }
-                  }
-                  this.alrSzoveg = code.values + '\n';
-                }
-
-                if (code.code === change.code && description.lang === c.lang && code.code === 'MENUKOD') {
-                  if (change.setOfValues !== undefined) {
-                    for (let index = 0; index < change.setOfValues.length; index++) {
-                      const element = change.setOfValues[index].code;
-                      if (code.values.toString() === element.toString()) {
-                        code.values = [change.setOfValues[index].captions[0].text];
-                      }
-                    }
-                  }
-                  this.menuSzoveg = code.value + '\n';
-                }
-
-
-              });
-
-
-            });
-
-          });
-
-          if (!this.page) {
-            this.pageSzoveg = '';
-          }
-          if (!this.tech) {
-            this.techSzoveg = '';
-          }
-          if (!this.work) {
-            this.workSzoveg = '';
-          }
-
-          if (!this.w) {
-            this.wsSzoveg = '';
-          }
-
-          if (!this.alr) {
-            this.alrSzoveg = '';
-          }
-
-          if (!this.men) {
-            this.menuSzoveg = '';
-          }
-
-
-
-          if (item.crd === undefined) {
-            item.crd = new Date('1990-01-01T00:00:00');
-          }
-
-          elso_date = this.datePipe.transform(item.crd, 'yyyy.MM.dd');
-
-          if (this.startDate == null) {
-            this.startDate = new Date('1990-01-01T00:00:00');
-          }
-
-          if (this.vegeDate == null) {
-            this.vegeDate = new Date('2099-12-31T00:00:00');
-          }
-
-
-          if ((new Date(item.crd) >= new Date(this.startDate)) && (new Date(item.crd) <= new Date(this.vegeDate))) {
-            this.types = [];
-            this.translateService.get([item.type, item.type])
-              .subscribe((t) => {
-                if (t.bugfix) {
-                  szoveg = t.bugfix;
-                }
-
-                if (t.feature) {
-                  szoveg = t.feature;
-                }
-
-              });
-
-
-            this.importances = [];
-            this.translateService.get([item.importance])
-              .subscribe((t) => {
-                if (t.low) {
-                  this.importances.push({ value: Constants.LOW, label: t.low });
-                }
-
-                if (t.normal) {
-                  this.importances.push({ value: Constants.NORMAL, label: t.normal });
-                }
-
-                if (t.high) {
-                  this.importances.push({ value: Constants.HIGH, label: t.high });
-                }
-              });
-
-
-            if (item.ticketNumber == null) {
-              item.ticketNumber = '';
-              szoveg_ossze = szoveg;
-            } else {
-              szoveg_ossze = szoveg;
-            }
-
-            if (item.ticketNumber !== '') {
-              item.ticketNumber = item.ticketNumber + '\r';
-            } else {
-              item.ticketNumber = item.ticketNumber;
-            }
-
-            if (elso_date === utolso_date) {
-              text = text + item.ticketNumber + this.pageSzoveg + this.techSzoveg + this.workSzoveg + this.wsSzoveg + this.alrSzoveg
-                + szoveg_ossze + this.menuSzoveg + '\n' + description.text + '\n' + '\r';
-            } else {
-              text = text + '----------- ' + this.datePipe.transform(item.crd, 'yyyy.MM.dd') +
-                ' -----------' + '\r' + item.ticketNumber + this.pageSzoveg + this.techSzoveg + this.workSzoveg + this.wsSzoveg
-                + this.alrSzoveg + this.menuSzoveg
-                + szoveg_ossze + '\n' + description.text + '\n' + '\r';
-            }
-
-
-            tableAdatok = {
-              date: elso_date,
-              ticketNumber: item.ticketNumber.replace(/<[^>]*>/g, ''),
-              page: this.pageSzoveg.replace(/<[^>]*>/g, ''),
-              technical_change: this.techSzoveg.replace(/<[^>]*>/g, ''),
-              work_hours: this.workSzoveg.replace(/<[^>]*>/g, ''),
-              ws: this.wsSzoveg.replace(/<[^>]*>/g, ''),
-              alrkod: this.alrSzoveg.replace(/<[^>]*>/g, ''),
-              type: szoveg_ossze.replace(/<[^>]*>/g, ''),
-              menukod: this.menuSzoveg.replace(/<[^>]*>/g, ''),
-              text: description.text.replace(/<[^>]*>/g, ''),
-              importance: this.importances[0].label.replace(/<[^>]*>/g, ''),
-
-            };
-            this.tableAdatok.push(tableAdatok);
-
-
-            utolso_date = this.datePipe.transform(item.crd, 'yyyy.MM.dd');
-          }
-        }
-      }
-
-      if (item.ticketNumber) {
-        item.ticketNumber = item.ticketNumber.replace('\r', '');
-      }
-    }
-
-    this.text = text;
-
-  }
-
-  public taginfosBox() {
-    if (this.actualService.actualProgram.tagInfos === undefined) {
-      this.actualService.actualProgram.tagInfos = [];
-    }
-
-    if (!this.iTagInfosCheckBox) {
-      this.iTagInfosCheckBox = [];
-      for (let i = 0; i < this.actualService.actualProgram.tagInfos.length; i++) {
-
-        if (this.actualService.actualProgram.tagInfos[i].code === 'PAGE') {
-          this.elementNev = 'Érinett oldalak';
-        } else if (this.actualService.actualProgram.tagInfos[i].code === 'TECHNICAL_CHANGE') {
-          this.elementNev = 'Technikai változás';
-        } else if (this.actualService.actualProgram.tagInfos[i].code === 'WORK_HOURS') {
-          this.elementNev = 'Munkaóra';
-        } else if (this.actualService.actualProgram.tagInfos[i].code === 'WS') {
-          this.elementNev = 'ws';
-        } else if (this.actualService.actualProgram.tagInfos[i].code === 'ALRKOD') {
-          this.elementNev = 'Alrendszer kód';
-        } else if (this.actualService.actualProgram.tagInfos[i].code === 'MENUKOD') {
-          this.elementNev = 'Menü kód';
-        } else {
-          this.elementNev = this.actualService.actualProgram.tagInfos[i].code;
-        }
-
-
-        const iTagInfosCheckBoxConst = {
-          code: this.actualService.actualProgram.tagInfos[i].code,
-          id: i,
-          selected: true,
-          nev: this.elementNev
-
-        };
-        this.iTagInfosCheckBox.push(iTagInfosCheckBoxConst);
-      }
-
-      this.actualService.iTagInfosCheckBox = this.iTagInfosCheckBox;
-    }
-
-  }
-
-  private setActualTaginfosAdd() {
-    const resultList: TagInfoImpl[] = [];
-    const program: Program = this.actualService.actualProgram;
-    const tagInfos = program.tagInfos;
-    program.tagInfos.forEach((x) => console.log('taginfo:' + x.captions.forEach((y) => console.log('caption:' + y.text))));
-    if (tagInfos) {
-      for (const tagInfo of tagInfos) {
-        const tio = new TagInfoImpl(
-          tagInfo.code,
-          tagInfo.captions,
-          tagInfo.fix,
-          tagInfo.moreOptionsAllowed,
-          tagInfo.mandatory,
-          tagInfo.dataType,
-          tagInfo.setOfValues,
-          this.translateService
-        );
-        resultList.push(tio);
-      }
-    }
-    this.actualService.actualTagInfos = resultList;
-  }
 
   public sorrendNelkulOszlopok(kiValaszt: RendezCompact[], megMarad: RendezCompact[]) {
     this.tableAdatokRendezesNelkul = [];
