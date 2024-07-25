@@ -681,4 +681,12 @@ export class FullComponent implements OnInit {
       this.skip + this.pageSize
     );
   }
+
+  public get actualProgramName(): string {
+    if (this.actualService.actualProgram) {
+      return this.actualService.actualProgram.name;
+    } else {
+      return undefined;
+    }
+  }
 }

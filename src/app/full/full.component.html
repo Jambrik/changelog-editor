@@ -1,5 +1,10 @@
 <div class="container-fluid">
   <div class="row">
+    <div *ngIf="actualProgramName" class="col-md-4">
+      <h2>
+        {{actualProgramName}}
+      </h2>
+    </div>
     <main role="main" style="width: 100%;">
       <div class="row">
         <div class="pl-4">
@@ -75,17 +80,6 @@
     </main>
   </div>
 </div>
-
-<!-- <div *ngFor="let elem of sajatTomb">
-  <div style="background-color: lightgrey;">
-    <span class="pl-4" style="font-size: 32pt">Verzió: {{elem.version}}</span>
-  </div>
-  <div *ngFor="let elem2 of elem.changes">
-    <app-change-log-item [changeLogItem]="elem2" [selectedLangs]="selectedLangs" [action]="action" [modId]="id"
-      (deleteOrAddingNew)="getChanges()"></app-change-log-item>
-  </div>
-</div> -->
-
 <div *ngFor="let elem of pagedSajatTomb2">
   <div style="background-color: lightgrey;">
     <span class="pl-4" style="font-size: 32pt" *ngIf="elem.version">Verzió: {{elem.version}}</span>
