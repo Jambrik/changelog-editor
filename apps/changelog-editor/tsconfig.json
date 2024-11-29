@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "useDefineForClassFields": false
+  },
+  "extends": "../../tsconfig.base.json"
+}

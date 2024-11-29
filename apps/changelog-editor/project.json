@@ -1,0 +1,129 @@
+{
+  "name": "hu.libra.commons.changelog.editor",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/changelog-editor/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist",
+        "index": "apps/changelog-editor/src/index.html",
+        "main": "apps/changelog-editor/src/main.ts",
+        "tsConfig": "apps/changelog-editor/src/tsconfig.app.json",
+        "polyfills": "apps/changelog-editor/src/polyfills.ts",
+        "assets": [
+          "apps/changelog-editor/src/assets",
+          "apps/changelog-editor/src/favicon.png"
+        ],
+        "styles": [
+          {
+            "input": "node_modules/@progress/kendo-theme-default/dist/all.css",
+            "inject": true
+          },
+          "node_modules/primeicons/primeicons.css",
+          "node_modules/primeng/resources/themes/nova/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "node_modules/font-awesome/css/font-awesome.min.css",
+          "node_modules/quill/dist/quill.core.css",
+          "node_modules/quill/dist/quill.snow.css",
+          "apps/changelog-editor/src/styles.scss"
+        ],
+        "scripts": [
+          "node_modules/chart.js/dist/Chart.js",
+          "node_modules/quill/dist/quill.js"
+        ],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/changelog-editor/src/environments/environment.ts",
+              "with": "apps/changelog-editor/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "",
+      "outputs": [
+        "{options.outputPath}"
+      ]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "buildTarget": "hu.libra.commons.changelog.editor:build",
+        "proxyConfig": "proxy.config.json"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "hu.libra.commons.changelog.editor:build:production"
+        },
+        "development": {
+          "buildTarget": "hu.libra.commons.changelog.editor:build:development"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "hu.libra.commons.changelog.editor:build"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "apps/changelog-editor/src/test.ts",
+        "karmaConfig": "apps/changelog-editor/karma.conf.js",
+        "polyfills": "apps/changelog-editor/src/polyfills.ts",
+        "tsConfig": "apps/changelog-editor/src/tsconfig.spec.json",
+        "scripts": [
+          "node_modules/quill/dist/quill.js"
+        ],
+        "styles": [
+          {
+            "input": "node_modules/@progress/kendo-theme-default/dist/all.css",
+            "inject": true
+          },
+          "node_modules/quill/dist/quill.core.css",
+          "node_modules/quill/dist/quill.snow.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "node_modules/primeng/resources/themes/omega/theme.css",
+          "node_modules/font-awesome/css/font-awesome.min.css",
+          "apps/changelog-editor/src/styles.scss"
+        ],
+        "assets": [
+          "apps/changelog-editor/src/assets",
+          "apps/changelog-editor/src/favicon.png"
+        ]
+      }
+    }
+  }
+}

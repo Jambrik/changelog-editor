@@ -1,0 +1,15 @@
+{
+  "name": "hu.libra.commons.changelog.editor-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/e2e",
+  "projectType": "application",
+  "targets": {
+    "apps/e2e": {
+      "executor": "@angular-devkit/build-angular:protractor",
+      "options": {
+        "protractorConfig": "./protractor.conf.js",
+        "devServerTarget": "hu.libra.commons.changelog.editor:serve"
+      }
+    }
+  }
+}

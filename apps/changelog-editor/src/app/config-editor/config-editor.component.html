@@ -1,0 +1,41 @@
+<div class="p-5">
+  @if (programs) {
+    <div>
+      <kendo-grid [kendoGridBinding]="programs" [sortable]="true">
+        <kendo-grid-column-group title="{{'PROGRAMS' | translate}}" [columnMenu]="false">
+          <kendo-grid-column field="id" title="ID" width="70px;"></kendo-grid-column>
+          <kendo-grid-column field="name" title="Név"></kendo-grid-column>
+          <kendo-grid-column field="path" title="Fájl elérési útvonala"></kendo-grid-column>
+          <kendo-grid-column field="langs" title="Nyelvek"></kendo-grid-column>
+        </kendo-grid-column-group>
+      </kendo-grid>
+      <button kendoButton (click)="showDialogToAdd()">Add</button>
+    </div>
+  }
+
+  <kendo-dialog [hidden]="!displayDialog" (close)="delete()" (keydown.escape)="delete()" [draggable]="true">
+    <kendo-dialog-titlebar>{{'PROGRAMS_DETAILS' | translate}}</kendo-dialog-titlebar>
+    @if (program) {
+      <div class="ui-grid ui-grid-responsive ui-fluid">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="id">Id</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="id" [(ngModel)]="program.id" /></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="name">Year</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="program.name" /></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-4"><label for="path">Brand</label></div>
+          <div class="ui-grid-col-8"><input pInputText id="path" [(ngModel)]="program.path" /></div>
+        </div>
+      </div>
+    }
+    <kendo-dialog-actions>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" kendoButton icon="fa fa-close" (click)="delete()" label="Delete">DELETE</button>
+        <button type="button" kendoButton icon="fa fa-check" (click)="save()" label="Save">SAVE</button>
+      </div>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+</div>

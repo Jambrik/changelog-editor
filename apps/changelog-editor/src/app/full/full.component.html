@@ -1,0 +1,106 @@
+<div class="container-fluid">
+  <div class="row">
+    @if (actualProgramName) {
+      <div class="col-md-4">
+        <h2>
+          {{actualProgramName}}
+        </h2>
+      </div>
+    }
+    <main role="main" style="width: 100%;">
+      <div class="row">
+        <div class="pl-4">
+          <span translate>SHOWN_LANGS</span>:
+          <kendo-buttongroup selection="multiple">
+            @for (lang of langs; track lang) {
+              <button kendoButton [toggleable]="true" [(ngModel)]="selectedLangs"
+                [selected]="selectedLangs.includes(lang.value)" (selectedChange)="selectedLangsChange($event, lang)">
+                {{lang.label}}
+              </button>
+            }
+          </kendo-buttongroup>
+        </div>
+        <div class="pl-4">
+          <span translate>IMPORTANCE</span>:
+          <kendo-buttongroup selection="multiple">
+            @for (importance of importances; track importance) {
+              <button kendoButton [toggleable]="true"
+                [selected]="selectedImportances.includes(importance.value)"
+                (selectedChange)="selectedImportancesChange($event, importance)">
+                {{importance.label}}
+              </button>
+            }
+          </kendo-buttongroup>
+        </div>
+        <div class="pl-4">
+          <span translate>TYPE</span>:
+          <kendo-buttongroup selection="multiple">
+            @for (type of types; track type) {
+              <button kendoButton [toggleable]="true"
+                [selected]="selectedTypes.includes(type.value)" (selectedChange)="selectedTypesChange($event, type)">
+                {{type.label}}
+              </button>
+            }
+          </kendo-buttongroup>
+        </div>
+      </div>
+      <div class="row" translate>
+        <div class="pl-4" translate>
+          STARTING DATE
+          <kendo-datepicker [(ngModel)]="startDate" format="yyyy/MM/dd" [formatPlaceholder]="{
+          year: 'YYYY',
+          month: 'MM',
+          day: 'DD'
+        }" style="width:170px">
+          </kendo-datepicker>
+        </div>
+        <div class="col-md-4" translate>
+          END DATE
+          <kendo-datepicker [(ngModel)]="vegeDate" format="yyyy/MM/dd" [formatPlaceholder]="{
+              year: 'YYYY',
+              month: 'MM',
+              day: 'DD'
+            }" style="width:170px">
+          </kendo-datepicker>
+        </div>
+        <div class="col-md-3">
+          <button type=" button" style="width:  250px; height: 40px;" class="btn btn-info btn-sm pull-right"
+            (click)="filterByDates($event)" translate>
+            FILTRATION
+          </button>
+        </div>
+      </div>
+
+      <div class="row m-0" style="padding-bottom: 0%;">
+        <div class="pl-4" style="padding: 10px;">
+          @if (program) {
+            <a href="#" class="btn btn-success" href="/"
+              [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']" translate>
+              NORMAL VIEW
+            </a>
+          }
+        </div>
+      </div>
+      <div [hidden]="!loading" class="container">
+        <div class="row justify-content-md-center">
+
+          <kendo-loader type="infinite-spinner"></kendo-loader>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+@for (elem of pagedSajatTomb2; track elem) {
+  <div>
+    <div style="background-color: lightgrey;">
+      @if (elem.version) {
+        <span class="pl-4" style="font-size: 32pt">Verzió: {{elem.version}}</span>
+      }
+    </div>
+    <app-change-log-item [changeLogItem]="elem.change" [selectedLangs]="selectedLangs" [action]="action" [modId]="id"
+    (deleteOrAddingNew)="getChanges()"></app-change-log-item>
+  </div>
+}
+<kendo-datapager [attr.aria-controls]="contentId" [style.width.%]="100" [pageSize]="pageSize" [skip]="skip"
+  [total]="total" (pageChange)="onPageChange($event)">
+</kendo-datapager>

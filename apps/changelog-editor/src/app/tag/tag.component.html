@@ -1,0 +1,113 @@
+<dl class="row">
+  <dt class="col-lg-6">
+    {{tag.tagInfo.caption}}
+  </dt>
+  <dd class="col-lg-6">
+    @if (!editing) {
+      <div>
+        @switch (tag.tagInfo.dataType) {
+          @case ('boolean') {
+            <span>
+              <span>
+                @switch (tag.value) {
+                  @case (true) {
+                    <span translate>
+                      YES
+                    </span>
+                  }
+                  @case (false) {
+                    <span translate>
+                      NO
+                    </span>
+                  }
+                  @default {
+                    <span>N. A.</span>
+                  }
+                }
+              </span>
+            </span>
+          }
+          @case ('string') {
+            <span>
+              <span>
+                @switch (tag.tagInfo.moreOptionsAllowed) {
+                  @case (true) {
+                    <span>
+                      @if (values.length == 0) {
+                        <span>
+                          N.A.
+                        </span>
+                      }
+                      @for (value of values; track value) {
+                        <span>
+                          {{value.caption}}
+                          <br />
+                        </span>
+                      }
+                    </span>
+                  }
+                  @default {
+                    <span>
+                      {{tag.value}}
+                    </span>
+                  }
+                }
+              </span>
+            </span>
+          }
+          @case ('number') {
+            <span>{{tag.value}}</span>
+          }
+          @default {
+            <span>Nem meghatározható adattípus</span>
+          }
+        }
+      </div>
+    }
+    @if (editing) {
+      <div>
+        @switch (tag.tagInfo.dataType) {
+          @case ('boolean') {
+            <span>
+              @if (tag.tagInfo.mandatory) {
+                <kendo-label [for]="caption" text={{tag.tagInfo.caption}}></kendo-label>
+                <input type="checkbox" kendoCheckBox [(ngModel)]="tag.value" #caption />{{tag.tagInfo.caption}}
+              } @else {
+                <kendo-label [for]="caption" text={{tag.tagInfo.caption}}></kendo-label>
+                <input type="checkbox" kendoCheckBox [(ngModel)]="tag.value" #caption
+                  [indeterminate]="true" />{{tag.tagInfo.caption}}
+                }
+              </span>
+            }
+            @case ('string') {
+              <span>
+                <span>
+                  @switch (tag.tagInfo.moreOptionsAllowed) {
+                    @case (true) {
+                      <span>
+                        <kendo-multiselect [data]="allCompactValues" [(ngModel)]="values" textField="caption"
+                        valueField="code"></kendo-multiselect>
+                      </span>
+                    }
+                    @default {
+                      <span>
+                        <input type="text" [(ngModel)]="tag.value">
+                      </span>
+                    }
+                  }
+                </span>
+              </span>
+            }
+            @case ('number') {
+              <span>
+                <input type="number" [(ngModel)]="tag.value">
+              </span>
+            }
+            @default {
+              <span>Nem meghatározható adattípus</span>
+            }
+          }
+        </div>
+      }
+    </dd>
+  </dl>

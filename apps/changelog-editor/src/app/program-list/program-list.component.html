@@ -1,0 +1,36 @@
+<div class="p-5">
+  <h1 translate>PROGRAMS</h1>
+  <div class="row">
+    @for (program of programs; track program) {
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-block">
+            <h4 class="card-title">{{program.name}}</h4>
+            <p class="card-text">
+              <b>
+                <span translate>
+                  FILE_PATH
+                </span>:
+              </b> {{program.path}}</p>
+              <a href="#" class="btn btn-primary" href="/" [routerLink]="['/change-list', program.id, getLastVersion(program), 'read', 'none']"
+              [queryParams]="{lang: getActualLang()}" translate>OPEN</a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="card card-plus">
+          <div class="card-block">
+            <h4 class="card-title" translate>ADD</h4>
+            <p class="card-text" translate>
+              NEW_PROGRAM_ADDING
+            </p>
+            <a href="#" class="btn btn-primary" translate>CREATE</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
