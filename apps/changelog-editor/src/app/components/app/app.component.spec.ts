@@ -1,10 +1,10 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    imports: [AppComponent],
-}).compileComponents();
+      imports: [AppComponent],
+    }).compileComponents();
   }));
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);

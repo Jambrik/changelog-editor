@@ -1,6 +1,6 @@
 import { Component, HostBinding, HostListener } from '@angular/core';
-import { TopNavbarComponent } from '../../top-navbar/top-navbar.component';
 import { RouterOutlet } from '@angular/router';
+import { TopNavbarComponent } from '@changelog-editor/feature/top-navbar';
 
 @Component({
   selector: 'app-root',

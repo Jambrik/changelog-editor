@@ -10,11 +10,15 @@
         "outputPath": "dist",
         "index": "apps/changelog-editor/src/index.html",
         "main": "apps/changelog-editor/src/main.ts",
-        "tsConfig": "apps/changelog-editor/src/tsconfig.app.json",
+        "tsConfig": "apps/changelog-editor/tsconfig.app.json",
         "polyfills": "apps/changelog-editor/src/polyfills.ts",
         "assets": [
-          "apps/changelog-editor/src/assets",
-          "apps/changelog-editor/src/favicon.png"
+          "apps/changelog-editor/src/favicon.png",
+          {
+            "input": "assets",
+            "glob": "**/*",
+            "output": "assets"
+          }
         ],
         "styles": [
           {
@@ -89,7 +93,8 @@
         "development": {
           "buildTarget": "hu.libra.commons.changelog.editor:build:development"
         }
-      }
+      },
+      "defaultConfiguration": "development"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -103,7 +108,7 @@
         "main": "apps/changelog-editor/src/test.ts",
         "karmaConfig": "apps/changelog-editor/karma.conf.js",
         "polyfills": "apps/changelog-editor/src/polyfills.ts",
-        "tsConfig": "apps/changelog-editor/src/tsconfig.spec.json",
+        "tsConfig": "apps/changelog-editor/tsconfig.spec.json",
         "scripts": [
           "node_modules/quill/dist/quill.js"
         ],
@@ -120,8 +125,12 @@
           "apps/changelog-editor/src/styles.scss"
         ],
         "assets": [
-          "apps/changelog-editor/src/assets",
-          "apps/changelog-editor/src/favicon.png"
+          "apps/changelog-editor/src/favicon.png",
+          {
+            "input": "assets",
+            "glob": "**/*",
+            "output": "assets"
+          }
         ]
       }
     }

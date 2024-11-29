@@ -66,3 +66,4 @@ typings/
 
 .nx/cache
 .nx/workspace-data
+.angular

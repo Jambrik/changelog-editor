@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": ["node"],
+    "target": "ES2022"
+  },
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "strictInjectionParameters": true,
+    "enableResourceInlining": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["setup-jest.ts", "**/*.spec.ts", "**/*.test.ts"]
+}
