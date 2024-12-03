@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TagImpl } from '../../../../../util/models/src/lib/TagImpl';
 import { TagComponent } from '@changelog-editor/feature/tag';
+import { TagImpl } from '@changelog-editor/util/models';
 
 
 

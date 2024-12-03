@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CodeCaption } from '../../../../../util/models/src/lib/CodeCaption';
-import { TagImpl } from '../../../../../util/models/src/lib/TagImpl';
 import { FormsModule } from '@angular/forms';
+import { TagImpl, CodeCaption } from '@changelog-editor/util/models';
 import { MultiSelectModule } from '@progress/kendo-angular-dropdowns';
 import { LabelModule } from '@progress/kendo-angular-label';
 

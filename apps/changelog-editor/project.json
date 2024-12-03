@@ -125,7 +125,7 @@
           "apps/changelog-editor/src/styles.scss"
         ],
         "assets": [
-          "apps/changelog-editor/src/favicon.png",
+          "apps/changelog-editor/src/favicon.ico",
           {
             "input": "assets",
             "glob": "**/*",

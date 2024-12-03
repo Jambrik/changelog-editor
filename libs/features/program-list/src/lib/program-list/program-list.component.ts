@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ConfigHelper } from '@changelog-editor/util/helpers';
 import { Program } from '@changelog-editor/util/models';
-import { ConfigService, ActualService } from '@changelog-editor/util/services';
+import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/util/services';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -13,8 +13,9 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [
     FormsModule,
-    RouterLink
-  ]
+    RouterLink,
+  ],
+  providers: [ConfigService, ActualService, ChangeLogService]
 })
 export class ProgramListComponent implements OnInit {
   public programs: Program[];

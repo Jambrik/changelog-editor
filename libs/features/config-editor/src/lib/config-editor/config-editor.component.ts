@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { cloneDeep } from 'lodash';
-import { ProgramImpl } from '../../../../../util/models/src/lib/ProgramImpl';
-import { ConfigService } from '../../../../../util/services/src/lib/config.service';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { ActualService } from '../../../../../util/services/src/lib/actual.service';
-import { ChangeLogService } from '../../../../../util/services/src/lib/change-log.service';
 import { GridModule } from '@progress/kendo-angular-grid';
+import { ProgramImpl } from '@changelog-editor/util/models';
+import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/util/services';
 
 @Component({
   selector: 'app-config-editor',

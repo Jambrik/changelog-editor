@@ -1,17 +1,16 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ConfigHelper } from '@changelog-editor/util/helpers';
+import { Program } from '@changelog-editor/util/models';
+import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/util/services';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
-import { ConfigHelper } from '../../../../../util/helpers/src/lib/config-helper';
-import { Program } from '../../../../../util/models/src/lib/Program';
-import { ActualService } from '../../../../../util/services/src/lib/actual.service';
-import { ConfigService } from '../../../../../util/services/src/lib/config.service';
-import { ChangeLogService } from '../../../../../util/services/src/lib/change-log.service';
+
 
 @Component({
   selector: 'app-top-navbar',

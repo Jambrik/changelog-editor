@@ -3,26 +3,15 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
-import { Constants } from '../../../../../util/constants/src/lib/constants';
-import { ConfigHelper } from '../../../../../util/helpers/src/lib/config-helper';
-import { ChangeLogItem } from '../../../../../util/models/src/lib/ChangeLogItem';
-import { I18n } from '../../../../../util/models/src/lib/I18N';
-import { LabelValue } from '../../../../../util/models/src/lib/LableValue';
-import { Program } from '../../../../../util/models/src/lib/Program';
-import { RendezCompact } from '../../../../../util/models/src/lib/RendezCompact';
-import { TagImpl } from '../../../../../util/models/src/lib/TagImpl';
-import { TagInfoImpl } from '../../../../../util/models/src/lib/TagInfoImpl';
-import { ITagInfosCheckBox } from '../../../../../util/models/src/lib/TagInfosCheckBox';
-import { VersionChangeLog } from '../../../../../util/models/src/lib/VersionChangeLog';
-import { VersionMetaData } from '../../../../../util/models/src/lib/VersionMetaData';
-import { ActualService } from '../../../../../util/services/src/lib/actual.service';
-import { ChangeLogService } from '../../../../../util/services/src/lib/change-log.service';
-import { ConfigService } from '../../../../../util/services/src/lib/config.service';
-import { LeftNavbarComponent } from '../../../../left-navbar/src/lib/left-navbar/left-navbar.component';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
 import { FormsModule } from '@angular/forms';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
+import { LeftNavbarComponent } from '@changelog-editor/feature/left-navbar';
+import { Constants } from '@changelog-editor/util/constants';
+import { ConfigHelper } from '@changelog-editor/util/helpers';
+import { ITagInfosCheckBox, VersionChangeLog, VersionMetaData, ChangeLogItem, LabelValue, TagImpl, I18n, RendezCompact, TagInfoImpl, Program } from '@changelog-editor/util/models';
+import { ActualService, ChangeLogService, ConfigService } from '@changelog-editor/util/services';
 
 @Component({
   selector: 'app-compact',
