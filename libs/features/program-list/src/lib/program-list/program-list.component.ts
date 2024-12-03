@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ConfigHelper } from '@changelog-editor/util/helpers';
 import { Program } from '@changelog-editor/util/models';
 import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/util/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-program-list',
@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
   imports: [
     FormsModule,
     RouterLink,
+    TranslateModule
   ],
   providers: [ConfigService, ActualService, ChangeLogService]
 })

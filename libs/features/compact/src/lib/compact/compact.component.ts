@@ -1,7 +1,7 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
@@ -25,8 +25,10 @@ import { ActualService, ChangeLogService, ConfigService } from '@changelog-edito
     FormsModule,
     CommonModule,
     DropDownListModule,
-    RouterLink
-  ]
+    RouterLink,
+    TranslateModule
+  ],
+  providers: [ChangeLogService, ActualService, ConfigService]
 })
 
 

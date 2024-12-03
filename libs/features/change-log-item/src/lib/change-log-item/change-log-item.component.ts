@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Constants } from '@changelog-editor/util/constants';
 import { ChangeLogItem, LabelValue, I18n, TagImpl, Tag, Program, VersionMetaData, User } from '@changelog-editor/util/models';
-import { ActualService, ChangeLogService, GoogleTranslateService } from '@changelog-editor/util/services';
+import { ActualService, ChangeLogService, ConfigService, GoogleTranslateService } from '@changelog-editor/util/services';
 import { ChangeLogAction } from '@changelog-editor/util/types';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { ButtonGroupModule, ButtonModule } from '@progress/kendo-angular-buttons';
@@ -33,7 +33,8 @@ import { SafeHtmlPipe } from '@changelog-editor/util/pipes';
     TagsComponent,
     FormsModule,
     SafeHtmlPipe
-  ]
+  ],
+  providers: [ChangeLogService, ActualService, ConfigService]
 })
 export class ChangeLogItemComponent implements OnInit, OnChanges {
 

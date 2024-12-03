@@ -9,13 +9,13 @@
         <div class="pl-4 pt-2 pull-right">
           <span translate>RELEASE_DATE</span>:
           @if (changeList && (changeList != null)) {
-            <span>
-                        <kendo-datepicker [(ngModel)]="changeList.releaseDate" format="yyyy/MM/dd" [formatPlaceholder]="{
-                          year: 'YYYY',
-                          month: 'MM',
-                          day: 'DD'
-                        }" style="width:170px"></kendo-datepicker>
-            </span>
+          <span>
+            <kendo-datepicker [(ngModel)]="changeList.releaseDate" format="yyyy/MM/dd" [formatPlaceholder]="{
+              year: 'YYYY',
+              month: 'MM',
+              day: 'DD'
+            }" style="width:170px" name="releaseDate"></kendo-datepicker>
+          </span>
           }
           <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)">
             <span class="fa fa-save"></span>
@@ -29,11 +29,10 @@
           <span translate>SHOWN_LANGS</span>:
           <kendo-buttongroup selection="multiple">
             @for (lang of langs; track lang) {
-              <button kendoButton [toggleable]="true" [(ngModel)]="selectedLangs"
-                [selected]="selectedLangs.includes(lang.value)"
-                (selectedChange)="selectedLangsChange($event, lang)">
-                {{lang.label}}
-              </button>
+            <button kendoButton [toggleable]="true" [(ngModel)]="selectedLangs"
+              [selected]="selectedLangs.includes(lang.value)" (selectedChange)="selectedLangsChange($event, lang)">
+              {{lang.label}}
+            </button>
             }
           </kendo-buttongroup>
         </div>
@@ -41,11 +40,10 @@
           <span translate>IMPORTANCE</span>:
           <kendo-buttongroup selection="multiple">
             @for (importance of importances; track importance) {
-              <button kendoButton [toggleable]="true"
-                [selected]="selectedImportances.includes(importance.value)"
-                (selectedChange)="selectedImportancesChange($event, importance)">
-                {{importance.label}}
-              </button>
+            <button kendoButton [toggleable]="true" [selected]="selectedImportances.includes(importance.value)"
+              (selectedChange)="selectedImportancesChange($event, importance)">
+              {{importance.label}}
+            </button>
             }
           </kendo-buttongroup>
         </div>
@@ -53,11 +51,10 @@
           <span translate>TYPE</span>:
           <kendo-buttongroup selection="multiple">
             @for (type of types; track type) {
-              <button kendoButton [toggleable]="true"
-                [selected]="selectedTypes.includes(type.value)"
-                (selectedChange)="selectedTypesChange($event, type)">
-                {{type.label}}
-              </button>
+            <button kendoButton [toggleable]="true" [selected]="selectedTypes.includes(type.value)"
+              (selectedChange)="selectedTypesChange($event, type)">
+              {{type.label}}
+            </button>
             }
           </kendo-buttongroup>
         </div>
@@ -65,33 +62,31 @@
 
       <div class="clearfix">
         @if (isReading()) {
-          <a href="/" class="btn btn-primary pull-right"
-            [routerLink]="['/change-list', programId, versionNumber, 'new', 'null']"
-            [queryParams]="{lang: getActualLang()}">
-            <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
-          </a>
+        <a href="/" class="btn btn-primary pull-right"
+          [routerLink]="['/change-list', programId, versionNumber, 'new', 'null']"
+          [queryParams]="{lang: getActualLang()}">
+          <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
+        </a>
         }
         <div class="pl-2">
           @if (isReading()) {
-            <a class="btn btn-success pull-left" style="color:white" (click)="goCompactView($event)"
-              >
-              <span class="fa" translate>COMPACT_VIEW</span>
-            </a>
+          <a class="btn btn-success pull-left" style="color:white" (click)="goCompactView($event)">
+            <span class="fa" translate>COMPACT_VIEW</span>
+          </a>
           }
         </div>
         <div class="pl-2" style="margin-left: 170px;">
           @if (isReading()) {
-            <a class="btn btn-success pull-left" style="color:white" (click)="goFullScreen($event)"
-              >
-              <span class="fa" translate>FUll_SCREEN</span>
-            </a>
+          <a class="btn btn-success pull-left" style="color:white" (click)="goFullScreen($event)">
+            <span class="fa" translate>FUll_SCREEN</span>
+          </a>
           }
         </div>
         @if (isNewEditing()) {
-          <div>
-            <app-change-log-item [changeLogItem]="newChangeItem" [action]="'new'" [modId]="'null'"
+        <div>
+          <app-change-log-item [changeLogItem]="newChangeItem" [action]="'new'" [modId]="'null'"
             [selectedLangs]="selectedLangs" (deleteOrAddingNew)="getChanges()"></app-change-log-item>
-          </div>
+        </div>
         }
       </div>
 
@@ -102,14 +97,14 @@
         </div>
       </div>
       @if (changeList) {
+      <div>
+        @for (change of changeList.changes; track change) {
         <div>
-          @for (change of changeList.changes; track change) {
-            <div>
-              <app-change-log-item [changeLogItem]="change" [action]="action" [modId]="id"
-              [selectedLangs]="selectedLangs" (deleteOrAddingNew)="getChanges()"></app-change-log-item>
-            </div>
-          }
+          <app-change-log-item [changeLogItem]="change" [action]="action" [modId]="id" [selectedLangs]="selectedLangs"
+            (deleteOrAddingNew)="getChanges()"></app-change-log-item>
         </div>
+        }
+      </div>
       }
     </main>
   </div>

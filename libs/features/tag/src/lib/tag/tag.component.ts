@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TagImpl, CodeCaption } from '@changelog-editor/util/models';
+import { TranslateModule } from '@ngx-translate/core';
 import { MultiSelectModule } from '@progress/kendo-angular-dropdowns';
 import { LabelModule } from '@progress/kendo-angular-label';
 
@@ -13,6 +14,7 @@ import { LabelModule } from '@progress/kendo-angular-label';
     FormsModule,
     MultiSelectModule,
     LabelModule,
+    TranslateModule
   ]
 })
 export class TagComponent implements OnInit {

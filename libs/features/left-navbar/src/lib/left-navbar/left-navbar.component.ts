@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { VersionMetaData } from '@changelog-editor/util/models';
 import { ActualService } from '@changelog-editor/util/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-left-navbar',
@@ -14,7 +14,8 @@ import { TranslateService } from '@ngx-translate/core';
   imports: [
     DatePipe,
     FormsModule,
-    RouterLink
+    RouterLink,
+    TranslateModule
   ]
 })
 export class LeftNavbarComponent implements OnInit {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SharedModule } from '@progress/kendo-angular-inputs';
 import { FormsModule } from '@angular/forms';
 import { LeftNavbarComponent } from '@changelog-editor/feature/left-navbar';
@@ -16,8 +16,10 @@ import { ActualService, ConfigService, ChangeLogService } from '@changelog-edito
   imports: [
     SharedModule,
     FormsModule,
-    LeftNavbarComponent
-  ]
+    LeftNavbarComponent,
+    TranslateModule
+  ],
+  providers: [ChangeLogService, ActualService, ConfigService]
 })
 export class NewVersionCreationComponent implements OnInit {
   public programId: number;

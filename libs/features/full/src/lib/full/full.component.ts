@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { PageChangeEvent, PagerModule } from '@progress/kendo-angular-pager';
 import { cloneDeep } from 'lodash';
@@ -42,8 +42,10 @@ export interface DisplayableSajatTomb {
     PagerModule,
     ButtonModule,
     ChangeLogItemComponent,
-    RouterLink
-  ]
+    RouterLink,
+    TranslateModule
+  ],
+  providers: [ChangeLogService, ActualService, ConfigService]
 })
 
 export class FullComponent implements OnInit {

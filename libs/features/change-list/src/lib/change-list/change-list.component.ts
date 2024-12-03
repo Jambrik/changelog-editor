@@ -9,7 +9,7 @@ import { LeftNavbarComponent } from '@changelog-editor/feature/left-navbar';
 import { Constants } from '@changelog-editor/util/constants';
 import { ConfigHelper, StringHelpers } from '@changelog-editor/util/helpers';
 import { Program, VersionMetaData, VersionChangeLog, ChangeLogItem, LabelValue, ITagInfosCheckBox, I18n, TagInfoImpl } from '@changelog-editor/util/models';
-import { ChangeLogService, ActualService, ConfigService } from '@changelog-editor/util/services';
+import { ChangeLogService, ActualService, ConfigService, GoogleTranslateService } from '@changelog-editor/util/services';
 import { ChangeLogAction } from '@changelog-editor/util/types';
 import { FormsModule } from '@angular/forms';
 import { ChangeLogItemComponent } from '@changelog-editor/feature/change-log-item';
@@ -29,7 +29,8 @@ import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
     ChangeLogItemComponent,
     RouterLink,
     DatePickerModule
-  ]
+  ],
+  providers: [ChangeLogService, ActualService, ConfigService, NotificationService, GoogleTranslateService]
 })
 export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
@@ -414,7 +415,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     return this.translateService.currentLang;
   }
 
-  public selectedTypesChange(event: string[], type) {
+  public selectedTypesChange(event: string[], type: any) {
     console.log('selectedTypesChange', event, type);
     if (event) {
       this.selectedTypes.push(type.value);
@@ -424,7 +425,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.changeList = this.filter(this.actualService.oriChangeList);
   }
 
-  public selectedImportancesChange(event: string[], importance) {
+  public selectedImportancesChange(event: string[], importance: any) {
     console.log('selectedImportancesChange', event, importance);
     if (event) {
       this.selectedImportances.push(importance.value);
@@ -434,7 +435,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
     this.changeList = this.filter(this.actualService.oriChangeList);
   }
 
-  public selectedLangsChange(event: string[], lang) {
+  public selectedLangsChange(event: string[], lang: any) {
     console.log('selectedLangsChange', event, lang);
     if (event) {
       this.selectedLangs.push(lang.value);
