@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
@@ -26,9 +26,9 @@ import { ActualService, ChangeLogService, ConfigService } from '@changelog-edito
     CommonModule,
     DropDownListModule,
     RouterLink,
-    TranslateModule
+    TranslateModule,
   ],
-  providers: [ChangeLogService, ActualService, ConfigService]
+  providers: [DatePipe]
 })
 
 
@@ -126,11 +126,11 @@ export class CompactComponent implements OnInit, OnChanges {
 
 
   constructor(
-    private actualService: ActualService,
-    private changeLogService: ChangeLogService,
+    @Inject(ActualService) private actualService: ActualService,
+    @Inject(ChangeLogService) private changeLogService: ChangeLogService,
     private translateService: TranslateService,
     private route: ActivatedRoute,
-    private configService: ConfigService,
+    @Inject(ConfigService) private configService: ConfigService,
     private datePipe: DatePipe
   ) { }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SharedModule } from '@progress/kendo-angular-inputs';
@@ -18,20 +18,19 @@ import { ActualService, ConfigService, ChangeLogService } from '@changelog-edito
     FormsModule,
     LeftNavbarComponent,
     TranslateModule
-  ],
-  providers: [ChangeLogService, ActualService, ConfigService]
+  ]
 })
 export class NewVersionCreationComponent implements OnInit {
   public programId: number;
   public versionNumber: string;
   public smaller: Boolean = false;
   constructor(
-    private actualService: ActualService,
+    @Inject(ActualService) private actualService: ActualService,
     private route: ActivatedRoute,
-    private configService: ConfigService,
+    @Inject(ConfigService) private configService: ConfigService,
     private router: Router,
     private translateService: TranslateService,
-    private changeLogService: ChangeLogService
+    @Inject(ChangeLogService) private changeLogService: ChangeLogService
   ) { }
 
   ngOnInit() {

@@ -106,12 +106,12 @@
                     <div style="width: 100%; min-height: 80px;  " [innerHTML]="description.text | safeHtml"></div>
                     }
                     @if (isEditing()&&isEditor) {
-                    <kendo-editor [(ngModel)]="description.text" [style]="{'height':'150px'}">
+                    <kendo-editor [(ngModel)]="description.text" [style]="{'height':'150px'}" name="editor">
                     </kendo-editor>
                     }
                     @if (isEditing()&&!isEditor) {
-                    <textarea cols="30" rows="10" style="width: 100%; height: 80px"
-                      [(ngModel)]="description.text"></textarea>
+                    <textarea cols="30" rows="10" style="width: 100%; height: 80px" [(ngModel)]="description.text"
+                      name="textarea"></textarea>
                     }
                   </div>
                 </div>

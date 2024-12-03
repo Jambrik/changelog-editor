@@ -1,8 +1,8 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ConfigHelper } from '@changelog-editor/util/helpers';
 import { Program } from '@changelog-editor/util/models';
-import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/data-access-core';
+import { ActualService, ConfigService } from '@changelog-editor/data-access-core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -17,16 +17,16 @@ import 'rxjs/add/operator/switchMap';
   templateUrl: './top-navbar.component.html',
   styleUrls: ['./top-navbar.component.scss'],
   standalone: true,
-  imports: [RouterLink, TranslateModule],
-  providers: [ConfigService, ActualService, ChangeLogService]
+  imports: [RouterLink, TranslateModule]
 })
 export class TopNavbarComponent implements OnInit, OnChanges {
   public filterText: string;
   public programs: Program[];
   public searchTerm$ = new Subject<string>();
+
   constructor(
-    private configService: ConfigService,
-    public actualService: ActualService,
+    @Inject(ConfigService) private configService: ConfigService,
+    @Inject(ActualService) public actualService: ActualService,
     private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router
@@ -37,7 +37,7 @@ export class TopNavbarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.route.queryParams.subscribe(queryParams => {
-      const lang = queryParams['lang'];
+      const lang = queryParams['lang'] ?? 'hu';
       console.log('languae from top navbar:', lang);
       this.translate.use(lang);
       const filter = queryParams['filter'];

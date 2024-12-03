@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
@@ -14,7 +14,7 @@ import { LoaderModule } from '@progress/kendo-angular-indicators';
 import { Constants } from '@changelog-editor/util/constants';
 import { ConfigHelper, StringHelpers } from '@changelog-editor/util/helpers';
 import { ChangeLogItem, Program, VersionMetaData, VersionChangeLog, LabelValue, ITagInfosCheckBox, RendezCompact, I18n, TagInfoImpl } from '@changelog-editor/util/models';
-import { ChangeLogService, ActualService, ConfigService } from '@changelog-editor/data-access-core';
+import { ChangeLogService, ActualService, ConfigService, GoogleTranslateService } from '@changelog-editor/data-access-core';
 import { ChangeLogAction } from '@changelog-editor/util/types';
 import { ChangeLogItemComponent } from '@changelog-editor/feature/change-log-item';
 
@@ -45,7 +45,7 @@ export interface DisplayableSajatTomb {
     RouterLink,
     TranslateModule
   ],
-  providers: [ChangeLogService, ActualService, ConfigService]
+  providers: [NotificationService, DatePipe, GoogleTranslateService]
 })
 
 export class FullComponent implements OnInit {
@@ -125,9 +125,9 @@ export class FullComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private changeLogService: ChangeLogService,
-    private actualService: ActualService,
-    private configService: ConfigService,
+    @Inject(ChangeLogService) private changeLogService: ChangeLogService,
+    @Inject(ActualService) private actualService: ActualService,
+    @Inject(ConfigService) private configService: ConfigService,
     private translateService: TranslateService,
     private router: Router,
     private notificationService: NotificationService,

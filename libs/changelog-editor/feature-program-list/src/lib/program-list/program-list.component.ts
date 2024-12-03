@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ConfigHelper } from '@changelog-editor/util/helpers';
 import { Program } from '@changelog-editor/util/models';
-import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/data-access-core';
+import { ConfigService, ActualService } from '@changelog-editor/data-access-core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -15,13 +15,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     FormsModule,
     RouterLink,
     TranslateModule
-  ],
-  providers: [ConfigService, ActualService, ChangeLogService]
+  ]
 })
 export class ProgramListComponent implements OnInit {
   public programs: Program[];
-  constructor(private configService: ConfigService,
-    private actualService: ActualService,
+  constructor(@Inject(ConfigService) private configService: ConfigService,
+    @Inject(ActualService) private actualService: ActualService,
     private translateService: TranslateService
   ) { }
 

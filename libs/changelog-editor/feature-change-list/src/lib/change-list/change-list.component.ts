@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
@@ -30,7 +30,10 @@ import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
     RouterLink,
     DatePickerModule
   ],
-  providers: [ChangeLogService, ActualService, ConfigService, NotificationService, GoogleTranslateService]
+  providers: [
+    NotificationService,
+    GoogleTranslateService,
+  ]
 })
 export class ChangeListComponent implements OnInit, OnChanges {
   public programId: number;
@@ -58,7 +61,7 @@ export class ChangeListComponent implements OnInit, OnChanges {
   constructor(
     private route: ActivatedRoute,
     private changeLogService: ChangeLogService,
-    private actualService: ActualService,
+    @Inject(ActualService) private actualService: ActualService,
     private configService: ConfigService,
     private translateService: TranslateService,
     private router: Router,

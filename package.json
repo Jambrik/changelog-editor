@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "nx",
     "start": "nx run hu.libra.commons.changelog.editor:serve:development",
-    "build": "nx build --prod --localize",
+    "build": "nx run hu.libra.commons.changelog.editor:build --prod --localize",
     "test": "nx test",
     "lint": "nx lint",
     "e2e": "nx run e2e"

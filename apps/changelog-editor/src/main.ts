@@ -10,6 +10,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { provideRouter, withComponentInputBinding, withHashLocation } from '@angular/router';
 import { appRoutes } from './app/app-routing.module';
+import { ActualService, ChangeLogService, ConfigService } from '@changelog-editor/data-access-core';
 
 export function getHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,6 +33,9 @@ const bootstrap = () => bootstrapApplication(AppComponent, {
     provideHttpClient(),
     provideRouter(appRoutes, withHashLocation()),
     provideRouter(appRoutes, withComponentInputBinding()),
+    ChangeLogService,
+    ActualService,
+    ConfigService
   ]
 });
 

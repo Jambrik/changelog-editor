@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { FormsModule } from '@angular/forms';
@@ -34,7 +34,7 @@ export class ConfigEditorComponent implements OnInit {
 
   cols: any[];
 
-  constructor(private configService: ConfigService) { }
+  constructor(@Inject(ConfigService) private configService: ConfigService) { }
 
   ngOnInit() {
     this.configRefresh();

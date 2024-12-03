@@ -42,7 +42,6 @@
       "!{projectRoot}/test-setup.[jt]s"
     ]
   },
-  "nxCloudId": "67498d92e1073f1a1fcc5e13",
   "generators": {
     "@nx/angular:library": {
       "linter": "eslint",
