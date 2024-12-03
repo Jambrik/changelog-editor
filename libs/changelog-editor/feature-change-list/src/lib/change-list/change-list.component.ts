@@ -9,7 +9,7 @@ import { LeftNavbarComponent } from '@changelog-editor/feature/left-navbar';
 import { Constants } from '@changelog-editor/util/constants';
 import { ConfigHelper, StringHelpers } from '@changelog-editor/util/helpers';
 import { Program, VersionMetaData, VersionChangeLog, ChangeLogItem, LabelValue, ITagInfosCheckBox, I18n, TagInfoImpl } from '@changelog-editor/util/models';
-import { ChangeLogService, ActualService, ConfigService, GoogleTranslateService } from '@changelog-editor/util/services';
+import { ChangeLogService, ActualService, ConfigService, GoogleTranslateService } from '@changelog-editor/data-access-core';
 import { ChangeLogAction } from '@changelog-editor/util/types';
 import { FormsModule } from '@angular/forms';
 import { ChangeLogItemComponent } from '@changelog-editor/feature/change-log-item';

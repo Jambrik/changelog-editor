@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { ProgramImpl } from '@changelog-editor/util/models';
-import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/util/services';
+import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/data-access-core';
 
 @Component({
   selector: 'app-config-editor',

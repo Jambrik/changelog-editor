@@ -1,4 +1,5 @@
-import { I18n } from '../../../models/src/lib/I18N';
+import { I18n } from "@changelog-editor/util/models";
+
 
 export class ListHelper {
     public static getCurrentCaption(captions: I18n[], lang: string): string {

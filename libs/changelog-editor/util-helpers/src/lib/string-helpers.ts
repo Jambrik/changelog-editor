@@ -1,4 +1,5 @@
-import { BoolString } from '../../../models/src/lib/BoolString';
+import { BoolString } from "@changelog-editor/util/models";
+
 
 export class StringHelpers {
     public static sortAsc(a: any, b: any) {

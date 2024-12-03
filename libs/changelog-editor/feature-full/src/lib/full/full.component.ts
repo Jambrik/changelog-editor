@@ -14,7 +14,7 @@ import { LoaderModule } from '@progress/kendo-angular-indicators';
 import { Constants } from '@changelog-editor/util/constants';
 import { ConfigHelper, StringHelpers } from '@changelog-editor/util/helpers';
 import { ChangeLogItem, Program, VersionMetaData, VersionChangeLog, LabelValue, ITagInfosCheckBox, RendezCompact, I18n, TagInfoImpl } from '@changelog-editor/util/models';
-import { ChangeLogService, ActualService, ConfigService } from '@changelog-editor/util/services';
+import { ChangeLogService, ActualService, ConfigService } from '@changelog-editor/data-access-core';
 import { ChangeLogAction } from '@changelog-editor/util/types';
 import { ChangeLogItemComponent } from '@changelog-editor/feature/change-log-item';
 

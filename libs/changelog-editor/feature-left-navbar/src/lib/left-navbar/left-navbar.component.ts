@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { VersionMetaData } from '@changelog-editor/util/models';
-import { ActualService } from '@changelog-editor/util/services';
+import { ActualService } from '@changelog-editor/data-access-core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ConfigHelper } from '@changelog-editor/util/helpers';
 import { Program } from '@changelog-editor/util/models';
-import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/util/services';
+import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/data-access-core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({

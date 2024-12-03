@@ -1,5 +1,5 @@
-import { Program } from '../../../models/src/lib/Program';
-import { VersionMetaData } from '../../../models/src/lib/VersionMetaData';
+import { Program, VersionMetaData } from "@changelog-editor/util/models";
+
 
 export class ConfigHelper {
     static getProgramById(programs: Program[], id: number) {

@@ -11,7 +11,7 @@ import { LeftNavbarComponent } from '@changelog-editor/feature/left-navbar';
 import { Constants } from '@changelog-editor/util/constants';
 import { ConfigHelper } from '@changelog-editor/util/helpers';
 import { ITagInfosCheckBox, VersionChangeLog, VersionMetaData, ChangeLogItem, LabelValue, TagImpl, I18n, RendezCompact, TagInfoImpl, Program } from '@changelog-editor/util/models';
-import { ActualService, ChangeLogService, ConfigService } from '@changelog-editor/util/services';
+import { ActualService, ChangeLogService, ConfigService } from '@changelog-editor/data-access-core';
 
 @Component({
   selector: 'app-compact',

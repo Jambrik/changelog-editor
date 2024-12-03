@@ -18,41 +18,62 @@
     "downlevelIteration": true,
     "paths": {
       "@changelog-editor/feature/change-list": [
-        "libs/features/change-list/src/index.ts"
+        "libs/changelog-editor/feature-change-list/src/index.ts"
       ],
       "@changelog-editor/feature/change-log-item": [
-        "libs/features/change-log-item/src/index.ts"
+        "libs/changelog-editor/feature-change-log-item/src/index.ts"
       ],
       "@changelog-editor/feature/compact": [
-        "libs/features/compact/src/index.ts"
+        "libs/changelog-editor/feature-compact/src/index.ts"
       ],
       "@changelog-editor/feature/config-editor": [
-        "libs/features/config-editor/src/index.ts"
+        "libs/changelog-editor/feature-config-editor/src/index.ts"
       ],
-      "@changelog-editor/feature/full": ["libs/features/full/src/index.ts"],
+      "@changelog-editor/feature/full": [
+        "libs/changelog-editor/feature-full/src/index.ts"
+      ],
       "@changelog-editor/feature/left-navbar": [
-        "libs/features/left-navbar/src/index.ts"
+        "libs/changelog-editor/feature-left-navbar/src/index.ts"
       ],
       "@changelog-editor/feature/new-version-creation": [
-        "libs/features/new-version-creation/src/index.ts"
+        "libs/changelog-editor/feature-new-version-creation/src/index.ts"
       ],
       "@changelog-editor/feature/program-list": [
-        "libs/features/program-list/src/index.ts"
+        "libs/changelog-editor/feature-program-list/src/index.ts"
       ],
-      "@changelog-editor/feature/tag": ["libs/features/tag/src/index.ts"],
-      "@changelog-editor/feature/tags": ["libs/features/tags/src/index.ts"],
+      "@changelog-editor/feature/tag": [
+        "libs/changelog-editor/feature-tag/src/index.ts"
+      ],
+      "@changelog-editor/feature/tags": [
+        "libs/changelog-editor/feature-tags/src/index.ts"
+      ],
       "@changelog-editor/feature/top-navbar": [
-        "libs/features/top-navbar/src/index.ts"
+        "libs/changelog-editor/feature-top-navbar/src/index.ts"
       ],
-      "@changelog-editor/util": ["libs/util/src/index.ts"],
-      "@changelog-editor/util/constants": ["libs/util/constants/src/index.ts"],
-      "@changelog-editor/util/helpers": ["libs/util/helpers/src/index.ts"],
-      "@changelog-editor/util/models": ["libs/util/models/src/index.ts"],
-      "@changelog-editor/util/pipes": ["libs/util/pipes/src/index.ts"],
-      "@changelog-editor/util/services": ["libs/util/services/src/index.ts"],
-      "@changelog-editor/util/types": ["libs/util/types/src/index.ts"],
+      "@changelog-editor/util": ["libs/changelog-editor/util-src/index.ts"],
+      "@changelog-editor/util/constants": [
+        "libs/changelog-editor/util-constants/src/index.ts"
+      ],
+      "@changelog-editor/util/helpers": [
+        "libs/changelog-editor/util-helpers/src/index.ts"
+      ],
+      "@changelog-editor/util/models": [
+        "libs/changelog-editor/util-models/src/index.ts"
+      ],
+      "@changelog-editor/util/pipes": [
+        "libs/changelog-editor/util-pipes/src/index.ts"
+      ],
+      "@changelog-editor/data-access-core": [
+        "libs/changelog-editor/data-access-core/src/index.ts"
+      ],
+      "@changelog-editor/util/types": [
+        "libs/changelog-editor/util-types/src/index.ts"
+      ],
       "@changelog-editor/components/*": [
         "apps/changelog-editor/src/app/components/*"
+      ],
+      "@changelog-editor/environment": [
+        "apps/changelog-editor/src/environments/environment"
       ]
     },
     "rootDir": ".",

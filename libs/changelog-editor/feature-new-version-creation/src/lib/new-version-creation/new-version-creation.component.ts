@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { LeftNavbarComponent } from '@changelog-editor/feature/left-navbar';
 import { ConfigHelper } from '@changelog-editor/util/helpers';
 import { Program, VersionMetaData } from '@changelog-editor/util/models';
-import { ActualService, ConfigService, ChangeLogService } from '@changelog-editor/util/services';
+import { ActualService, ConfigService, ChangeLogService } from '@changelog-editor/data-access-core';
 
 @Component({
   selector: 'app-new-version-creation',

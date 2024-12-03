@@ -2,10 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { VersionChangeLog } from '../../../models/src/lib/VersionChangeLog';
-import { VersionMetaData } from '../../../models/src/lib/VersionMetaData';
-import { ChangeLogItem } from '@changelog-editor/util/models';
-import { environment } from 'apps/changelog-editor/src/environments/environment';
+import { ChangeLogItem, VersionChangeLog, VersionMetaData } from '@changelog-editor/util/models';
+import { environment } from '@changelog-editor/environment';
 
 @Injectable()
 export class ChangeLogService {
