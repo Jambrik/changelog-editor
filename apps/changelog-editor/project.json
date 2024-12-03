@@ -13,12 +13,8 @@
         "tsConfig": "apps/changelog-editor/tsconfig.app.json",
         "polyfills": "apps/changelog-editor/src/polyfills.ts",
         "assets": [
-          "apps/changelog-editor/src/favicon.png",
-          {
-            "input": "assets",
-            "glob": "**/*",
-            "output": "assets"
-          }
+          "apps/changelog-editor/src/favicon.ico",
+          "apps/changelog-editor/src/assets"
         ],
         "styles": [
           {
@@ -106,7 +102,7 @@
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
         "main": "apps/changelog-editor/src/test.ts",
-        "karmaConfig": "apps/changelog-editor/karma.conf.js",
+        "karmaConfig": "karma.conf.js",
         "polyfills": "apps/changelog-editor/src/polyfills.ts",
         "tsConfig": "apps/changelog-editor/tsconfig.spec.json",
         "scripts": [
@@ -126,11 +122,7 @@
         ],
         "assets": [
           "apps/changelog-editor/src/favicon.ico",
-          {
-            "input": "assets",
-            "glob": "**/*",
-            "output": "assets"
-          }
+          "apps/changelog-editor/src/assets"
         ]
       }
     }
