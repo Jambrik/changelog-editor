@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { ProgramImpl } from '@changelog-editor/util/models';
 import { ConfigService, ActualService, ChangeLogService } from '@changelog-editor/data-access-core';
+import { ButtonModule } from '@progress/kendo-angular-buttons';
 
 @Component({
   selector: 'app-config-editor',
@@ -16,7 +17,8 @@ import { ConfigService, ActualService, ChangeLogService } from '@changelog-edito
     DialogModule,
     FormsModule,
     TranslateModule,
-    GridModule
+    GridModule,
+    ButtonModule
   ],
   providers: [ConfigService, ActualService, ChangeLogService]
 })

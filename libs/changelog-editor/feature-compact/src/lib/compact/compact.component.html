@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="row">
     <app-left-navbar [viewMode]="'COMPACT'"></app-left-navbar>
-    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+    <main role="main" class="col-sm-9 ms-sm-auto col-md-10 pt-3">
       <div class="pb-5">
-        <div class="pl-5 pt-4 pull-right">
+        <div class="ps-5 pt-4 pull-right">
         </div>
       </div>
       <div class="clearfix">
@@ -25,7 +25,7 @@
       </div>
       <div class="row m-0" translate>
         STARTING DATE
-        <div>
+        <div class="col">
           <kendo-datepicker [(ngModel)]="startDate" format="yyyy/MM/dd" [formatPlaceholder]="{
           year: 'YYYY',
           month: 'MM',
@@ -122,7 +122,7 @@
 
 
 
-      <div class="col-md-10 pl-0">
+      <div class="col-md-10 ps-0">
         <div>
           <table class="table table-hover table-bordered mt-3 mb-3" style="padding-top: 5%;">
             <thead class="thead-dark">

@@ -1,9 +1,9 @@
-import { Component, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, forwardRef, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { cloneDeep } from 'lodash';
-import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { ButtonComponent, ButtonGroupModule, ButtonModule } from '@progress/kendo-angular-buttons';
 import { LoaderModule } from '@progress/kendo-angular-indicators';
 import { LeftNavbarComponent } from '@changelog-editor/feature/left-navbar';
 import { Constants } from '@changelog-editor/util/constants';
@@ -11,7 +11,7 @@ import { ConfigHelper, StringHelpers } from '@changelog-editor/util/helpers';
 import { Program, VersionMetaData, VersionChangeLog, ChangeLogItem, LabelValue, ITagInfosCheckBox, I18n, TagInfoImpl } from '@changelog-editor/util/models';
 import { ChangeLogService, ActualService, ConfigService, GoogleTranslateService } from '@changelog-editor/data-access-core';
 import { ChangeLogAction } from '@changelog-editor/util/types';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ChangeLogItemComponent } from '@changelog-editor/feature/change-log-item';
 import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
 
@@ -22,17 +22,23 @@ import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
   standalone: true,
   imports: [
     LeftNavbarComponent,
-    ButtonsModule,
+    ButtonGroupModule,
     LoaderModule,
     TranslateModule,
     FormsModule,
     ChangeLogItemComponent,
     RouterLink,
-    DatePickerModule
+    DatePickerModule,
+    ButtonModule
   ],
   providers: [
     NotificationService,
     GoogleTranslateService,
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ButtonComponent),
+      multi: true
+    }
   ]
 })
 export class ChangeListComponent implements OnInit, OnChanges {

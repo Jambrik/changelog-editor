@@ -56,7 +56,7 @@
     "@progress/kendo-svg-icons": "^1.0.0",
     "@progress/kendo-theme-default": "latest",
     "body-parser": "~1.20.2",
-    "bootstrap": "~4.6.0",
+    "bootstrap": "^5.3.3",
     "chart.js": "^2.9.4",
     "cookie-parser": "~1.4.6",
     "core-js": "^3.2.1",

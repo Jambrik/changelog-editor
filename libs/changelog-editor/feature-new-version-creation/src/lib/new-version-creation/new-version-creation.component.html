@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div class="row">
     <app-left-navbar></app-left-navbar>
-    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+    <main role="main" class="col-sm-9 ms-sm-auto col-md-10 pt-3">
       @if (program) {
-        <h1>
-          {{program.name}}
-        </h1>
+      <h1>
+        {{program.name}}
+      </h1>
       }
 
       <div class="card">
@@ -17,9 +17,9 @@
               <label for="float-input" translate>VERSION</label>
             </span>
             @if (smaller) {
-              <div class="p-2 alert alert-warning">
-                <span>A verziószámnak nagyobbnak kell lenni a megelőző verziónál!</span>
-              </div>
+            <div class="p-2 alert alert-warning">
+              <span>A verziószámnak nagyobbnak kell lenni a megelőző verziónál!</span>
+            </div>
             }
           </div>
           <a href="/" class="btn btn-secondary pull-right" (click)="cancel($event)">

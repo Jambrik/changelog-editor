@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { VersionMetaData } from '@changelog-editor/util/models';
 import { ActualService } from '@changelog-editor/data-access-core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -22,7 +22,8 @@ export class LeftNavbarComponent implements OnInit {
   @Input() viewMode: 'NORMAL' | 'COMPACT';
   constructor(
     private actualService: ActualService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
 
   ) { }
 
@@ -67,6 +68,10 @@ export class LeftNavbarComponent implements OnInit {
     } else {
       return ['/compact', this.actualProgramId, versionNumber];
     }
+  }
+
+  public get selectedItem(): VersionMetaData {
+    return this.versions.find(x => this.router.url.includes(x.version));
   }
 
 }

@@ -1,12 +1,12 @@
 <div class="container-fluid">
   <div class="row">
     <app-left-navbar [viewMode]="'NORMAL'"></app-left-navbar>
-    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+    <main role="main" class="col-sm-9 ms-sm-auto col-md-10 pt-3">
       <div class="pb-4">
-        <div class="pl-2 pull-left" style="font-size: 32pt">
+        <div class="ps-2 pull-left" style="font-size: 32pt">
           {{'VERSION' | translate}}: {{printVersion()}}
         </div>
-        <div class="pl-4 pt-2 pull-right">
+        <div class="ps-4 pt-2 pull-right">
           <span translate>RELEASE_DATE</span>:
           @if (changeList && (changeList != null)) {
           <span>
@@ -17,7 +17,7 @@
             }" style="width:170px" name="releaseDate"></kendo-datepicker>
           </span>
           }
-          <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)">
+          <a href="/" class="btn btn-success" (click)="saveReleaseDate($event)" [name]="'saveReleaseDate'">
             <span class="fa fa-save"></span>
           </a>
         </div>
@@ -25,34 +25,35 @@
       <div class="clearfix">
       </div>
       <div class="row">
-        <div class="pl-4">
+        <div class="col ps-4">
           <span translate>SHOWN_LANGS</span>:
-          <kendo-buttongroup selection="multiple">
-            @for (lang of langs; track lang) {
+          <kendo-buttongroup selection="multiple" name="languageGroup">
+            @for (lang of langs; track lang; let i = $index) {
             <button kendoButton [toggleable]="true" [(ngModel)]="selectedLangs"
-              [selected]="selectedLangs.includes(lang.value)" (selectedChange)="selectedLangsChange($event, lang)">
+              [selected]="selectedLangs.includes(lang.value)" (selectedChange)="selectedLangsChange($event, lang)"
+              [name]="'lang'+i">
               {{lang.label}}
             </button>
             }
           </kendo-buttongroup>
         </div>
-        <div class="pl-4">
+        <div class="col ps-4">
           <span translate>IMPORTANCE</span>:
-          <kendo-buttongroup selection="multiple">
-            @for (importance of importances; track importance) {
+          <kendo-buttongroup selection="multiple" name="importanceGroup">
+            @for (importance of importances; track importance; let i = $index) {
             <button kendoButton [toggleable]="true" [selected]="selectedImportances.includes(importance.value)"
-              (selectedChange)="selectedImportancesChange($event, importance)">
+              (selectedChange)="selectedImportancesChange($event, importance)" [name]="'importance'+i">
               {{importance.label}}
             </button>
             }
           </kendo-buttongroup>
         </div>
-        <div class="pl-4">
+        <div class="col ps-4">
           <span translate>TYPE</span>:
-          <kendo-buttongroup selection="multiple">
-            @for (type of types; track type) {
+          <kendo-buttongroup selection="multiple" name="typeGroup">
+            @for (type of types; track type; let i = $index) {
             <button kendoButton [toggleable]="true" [selected]="selectedTypes.includes(type.value)"
-              (selectedChange)="selectedTypesChange($event, type)">
+              (selectedChange)="selectedTypesChange($event, type)" [name]="'type'+i">
               {{type.label}}
             </button>
             }
@@ -64,18 +65,18 @@
         @if (isReading()) {
         <a href="/" class="btn btn-primary pull-right"
           [routerLink]="['/change-list', programId, versionNumber, 'new', 'null']"
-          [queryParams]="{lang: getActualLang()}">
+          [queryParams]="{lang: getActualLang()}" name="newChangeLog">
           <span class="fa fa-plus" translate>NEW_CHANGE_LOG</span>
         </a>
         }
-        <div class="pl-2">
+        <div class="ps-2">
           @if (isReading()) {
           <a class="btn btn-success pull-left" style="color:white" (click)="goCompactView($event)">
             <span class="fa" translate>COMPACT_VIEW</span>
           </a>
           }
         </div>
-        <div class="pl-2" style="margin-left: 170px;">
+        <div class="ps-2" style="margin-left: 170px;">
           @if (isReading()) {
           <a class="btn btn-success pull-left" style="color:white" (click)="goFullScreen($event)">
             <span class="fa" translate>FUll_SCREEN</span>

@@ -1,45 +1,45 @@
 <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
   @if (actualProgramName) {
-    <div class="card-header">
-      <h4>
-        {{actualProgramName}}
-      </h4>
-    </div>
+  <div class="card-header ms-2">
+    <h4>
+      {{actualProgramName}}
+    </h4>
+  </div>
   }
   @if (!actualProgramName) {
-    <h4 translate>
-      NO_PROGRAM_CHOSEN
-    </h4>
+  <h4 translate>
+    NO_PROGRAM_CHOSEN
+  </h4>
   }
   @if (isReading()) {
-    <ul class="nav nav-pills flex-column">
-      @if (actualProgramName && viewMode=='NORMAL') {
-        <li class="nav-item">
-          <a class="nav-link" href="/" [routerLink]="['/new-version', actualProgramId]" routerLinkActive="active"
-            [queryParams]="{lang: getActualLang()}" translate>
-            NEW_VERSION_CREATION
-          </a>
-        </li>
-      }
-      <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>
-      @for (version of versions; track version) {
-        <li class="nav-item">
-          <a class="nav-link" href="/" [routerLink]="openVersionChanges(version.version)" routerLinkActive="active"
-            [queryParams]="{lang: getActualLang()}">
-            {{version.version}} {{version?.releaseDate ? '('+(version.releaseDate | date : 'yyyy.MM.dd')+')' : ''}}
-          </a>
-        </li>
-      }
-    </ul>
+  <ul class="nav nav-pills flex-column">
+    @if (actualProgramName && viewMode=='NORMAL') {
+    <li class="nav-item">
+      <a class="nav-link" href="/" [routerLink]="['/new-version', actualProgramId]" routerLinkActive="active"
+        [queryParams]="{lang: getActualLang()}" translate>
+        NEW_VERSION_CREATION
+      </a>
+    </li>
+    }
+    <div style="width: 100%; border-bottom-style: inset; border-bottom-width: 3px"> </div>
+    @for (version of versions; track version) {
+    <li [class]="version==selectedItem?'nav-item nav-item-background  ':'nav-item'">
+      <a class="nav-link" href="/" [routerLink]="openVersionChanges(version.version)" routerLinkActive="active"
+        [queryParams]="{lang: getActualLang()}">
+        {{version.version}} {{version?.releaseDate ? '('+(version.releaseDate | date : 'yyyy.MM.dd')+')' : ''}}
+      </a>
+    </li>
+    }
+  </ul>
   }
   @if (!isReading()) {
-    <ul class="nav nav-pills flex-column">
-      @for (version of versions; track version) {
-        <li class="nav-link active" [class.active]="isActual(version)">
-          {{version.version}} {{version?.releaseDate ? '('+(version.releaseDate | date : 'yyyy.MM.dd')+')' : ''}}
-        </li>
-      }
-    </ul>
+  <ul class="nav nav-pills flex-column">
+    @for (version of versions; track version) {
+    <li class="nav-link active" [class.active]="isActual(version)">
+      {{version.version}} {{version?.releaseDate ? '('+(version.releaseDate | date : 'yyyy.MM.dd')+')' : ''}}
+    </li>
+    }
+  </ul>
   }
 
 </nav>

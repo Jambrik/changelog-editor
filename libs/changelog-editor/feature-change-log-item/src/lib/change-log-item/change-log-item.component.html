@@ -13,14 +13,14 @@
         </span>
         }
         @if (isEditing()) {
-        <input type="text" name="" id="" [(ngModel)]="changeLogItem.ticketNumber">
+        <input type="text" name="tickerNumber" id="" [(ngModel)]="changeLogItem.ticketNumber">
         }
       </div>
       <div class="col-2">
         @if (isEditing()) {
         <span>
           Okos szerkesztő:
-          <kendo-switch onLabel="Igen" offLabel="Nem" [(ngModel)]="isEditor"></kendo-switch>
+          <kendo-switch onLabel="Igen" offLabel="Nem" [(ngModel)]="isEditor" name="okosSzerkesztoSwitch"></kendo-switch>
         </span>
         }
       </div>
@@ -46,11 +46,11 @@
             }
             @if (isEditing()) {
             <kendo-dropdownlist [data]="types" [(ngModel)]="changeLogItem.type" textField="label" valueField="value"
-              [valuePrimitive]="true" style="width:100px;"></kendo-dropdownlist>
+              [valuePrimitive]="true" style="width:100px;" name="changeLogItemType"></kendo-dropdownlist>
             }
           </span>
         </div>
-        <div class="pull-right pr-4">
+        <div class="pull-right pe-4">
           <span style="font-weight: bold" translate>IMPORTANCE</span>:
           @if (!isEditing()) {
           <span [class.text-primary]="changeLogItem.importance == 'high'"
@@ -78,20 +78,19 @@
                 <div class="row bortder border border-bottom-0 border-right-0 border-info">
                   <div class="col-lg-1 col-md-3 col-sm-6 border border-info bg-info text-light rounded">
                     {{description.lang}}
-                    <div class="p-2 pl-3 row">
-                      @if (description.lang=='hu' ) {
-                      <a class=" pl-0 pr-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)"
-                        style="background-color:black">
-                        <span class="row border-bottom-0 border-right-0 border-info">
-                          <div class="col-lg-1" style="color:white">
-                            <img src="../../../../../assets/masol.png">
-                          </div>
-                        </span>
-                      </a>
-                      }
-                    </div>
+                    @if (description.lang=='hu' ) {
+                    <a class=" ps-0 pe-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)"
+                      style="background-color:black">
+                      <span class="row border-bottom-0 border-right-0 border-info">
+                        <div class="col-lg-1" style="color:white">
+                          <img src="../../../../../assets/masol.png">
+                        </div>
+                      </span>
+                    </a>
+                    }
+
                     @if (description.lang=='en' ) {
-                    <a class="pl-0 pr-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)"
+                    <a class="ps-0 pe-0" (click)="copyMessageUnique(description.text,changeLogItem.ticketNumber)"
                       style="background-color:black">
                       <span class="row border-bottom-0 border-right-0 border-info">
                         <div class="col-lg-1" style="color:white">
@@ -106,7 +105,8 @@
                     <div style="width: 100%; min-height: 80px;  " [innerHTML]="description.text | safeHtml"></div>
                     }
                     @if (isEditing()&&isEditor) {
-                    <kendo-editor [(ngModel)]="description.text" [style]="{'height':'150px'}" name="editor">
+                    <kendo-editor [(ngModel)]="description.text"
+                      [style]="{'height':'150px','width':'100%','display':'block'}" name="editor">
                     </kendo-editor>
                     }
                     @if (isEditing()&&!isEditor) {
@@ -166,25 +166,25 @@
       year: 'YYYY',
       month: 'MM',
       day: 'DD'
-    }" style="width:170px"></kendo-datepicker>
+    }" style="width:170px" name="changeLogItemDate"></kendo-datepicker>
     @if (canBeModified()) {
-    <a href="/" class="btn btn-danger pull-right" (click)="deleteMessageShow($event)">
+    <a href="/" class="btn btn-danger pull-right" (click)="deleteMessageShow($event)" name="delete">
       <span class="fa fa-trash"></span>
     </a>
     }
     @if (canBeModified()) {
-    <a href="/" class="btn btn-primary pull-right" (click)="clickMod($event)">
+    <a href="/" class="btn btn-primary pull-right" (click)="clickMod($event)" name="edit">
       <span class="fa fa-edit"></span>
     </a>
     }
 
     @if (isEditing()) {
-    <a href="/" class="btn btn-secondary pull-right" (click)="cancelMod($event)">
+    <a href="/" class="btn btn-secondary pull-right" (click)="cancelMod($event)" [name]="'cancel'">
       <span class="fa fa-close"></span>
     </a>
     }
     @if (isEditing()) {
-    <a href="/" class="btn btn-success pull-right" (click)="save($event)">
+    <a href="/" class="btn btn-success pull-right" (click)="save($event)" [name]="'save'">
       <span class="fa fa-save"></span>
     </a>
     }

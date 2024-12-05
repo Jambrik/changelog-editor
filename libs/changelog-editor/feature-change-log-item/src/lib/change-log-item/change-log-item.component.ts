@@ -15,6 +15,7 @@ import { ButtonGroupModule, ButtonModule } from '@progress/kendo-angular-buttons
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 import { TagsComponent } from '@changelog-editor/feature/tags';
 import { SafeHtmlPipe } from '@changelog-editor/util/pipes';
+import { EditorModule } from '@progress/kendo-angular-editor';
 
 @Component({
   selector: 'app-change-log-item',
@@ -32,7 +33,8 @@ import { SafeHtmlPipe } from '@changelog-editor/util/pipes';
     DropDownListModule,
     TagsComponent,
     FormsModule,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    EditorModule
   ],
 })
 export class ChangeLogItemComponent implements OnInit, OnChanges {
