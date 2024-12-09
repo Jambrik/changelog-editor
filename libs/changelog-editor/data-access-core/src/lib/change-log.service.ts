@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@changelog-editor/environment';
+import { ChangeLogItem, VersionChangeLog, VersionMetaData } from '@changelog-editor/util/models';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { ChangeLogItem, VersionChangeLog, VersionMetaData } from '@changelog-editor/util/models';
-import { environment } from '@changelog-editor/environment';
 
 @Injectable()
 export class ChangeLogService {
@@ -16,15 +16,15 @@ export class ChangeLogService {
 
 
   public getVersionsForProgramId(programId: number): Observable<VersionMetaData[]> {
-    return this.http.get<VersionMetaData[]>(environment.backEndUrl + 'rest/changelog/versions/' + programId);
+    return this.http.get<VersionMetaData[]>(environment.backEndUrl + '/rest/changelog/versions/' + programId);
   }
 
   public getChangeLogs(programId: number, versionNumber: string): Observable<VersionChangeLog> {
-    return this.http.get<VersionChangeLog>(environment.backEndUrl + 'rest/changelog/load/' + programId + '/' + versionNumber);
+    return this.http.get<VersionChangeLog>(environment.backEndUrl + '/rest/changelog/load/' + programId + '/' + versionNumber);
   }
 
   public changeLogWrite(programId: number, versionNumber: string, item: ChangeLogItem) {
-    return this.http.post(environment.backEndUrl + 'rest/changelog/write',
+    return this.http.post(environment.backEndUrl + '/rest/changelog/write',
       {
         programId: programId,
         version: versionNumber,
@@ -34,7 +34,7 @@ export class ChangeLogService {
   }
 
   public changeLogDelete(programId: number, versionNumber: string, id: string) {
-    return this.http.post(environment.backEndUrl + 'rest/changelog/delete',
+    return this.http.post(environment.backEndUrl + '/rest/changelog/delete',
       {
         programId: programId,
         version: versionNumber,
@@ -45,7 +45,7 @@ export class ChangeLogService {
 
 
   public changeLogRelease(programId: number, versionNumber: string, releaseDate: Date) {
-    return this.http.post(environment.backEndUrl + 'rest/changelog/release',
+    return this.http.post(environment.backEndUrl + '/rest/changelog/release',
       {
         programId: programId,
         version: versionNumber,
@@ -55,7 +55,7 @@ export class ChangeLogService {
   }
 
   public createNewVersion(programId: number, version: string) {
-    return this.http.get<VersionChangeLog>(environment.backEndUrl + 'rest/changelog/new-version/' + programId + '/' + version);
+    return this.http.get<VersionChangeLog>(environment.backEndUrl + '/rest/changelog/new-version/' + programId + '/' + version);
   }
 
 }

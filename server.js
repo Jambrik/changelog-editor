@@ -22,10 +22,14 @@ router.use(function (req, res, next) {
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
-// test route to make sure everything is working (accessed at GET http://localhost:3333/api)
-router.get('/', function (req, res) {
-  res.json({ message: 'Welcome! It is a light weight change-log app-api!' });
-});
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/dist/en-US/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 router.route('/changelog/load/:program_id/:version')
   .get(function (req, res) {

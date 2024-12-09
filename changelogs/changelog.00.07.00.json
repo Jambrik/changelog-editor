@@ -1,0 +1,42 @@
+{
+	"version": "00.07.00",
+	"changes": [
+		{
+			"id": "047a86a0-b612-11ef-a925-898bd0ec688c",
+			"type": "bugfix",
+			"importance": "normal",
+			"ticketNumber": null,
+			"date": "2024-12-09T09:40:33.698Z",
+			"descriptions": [
+				{
+					"lang": "hu",
+					"text": "<p>A build fájl nem működött. A statikus angular tartalom nem töltött be, illetve hibásav volt több helyen használva relatív és abszolút url hivatkozás képekre, nyelvi fájlokra. Javítva.</p>"
+				},
+				{
+					"lang": "en",
+					"text": "<p>The production build did not work. Static content was not used properly (relative - absolute rest calls, assets using, language files using)</p>"
+				}
+			],
+			"tags": [
+				{
+					"code": "PAGE",
+					"values": []
+				},
+				{
+					"code": "TECHNICAL_CHANGE",
+					"values": [],
+					"value": false
+				},
+				{
+					"code": "WORK_HOURS",
+					"values": [],
+					"value": 2
+				}
+			],
+			"cru": "RJAMBRIK",
+			"crd": "2024-12-09T09:43:17.185Z",
+			"lmu": "RJAMBRIK",
+			"lmd": "2024-12-09T09:43:24.304Z"
+		}
+	]
+}

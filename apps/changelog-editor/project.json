@@ -6,7 +6,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "options": {
+      "options": {        
         "outputPath": "dist",
         "index": "apps/changelog-editor/src/index.html",
         "main": "apps/changelog-editor/src/main.ts",
